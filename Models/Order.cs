@@ -11,6 +11,7 @@ namespace AaronColacoAsp.NETProject.Models
 
         public int TotalPrice { get; set; }
 
+        public Gift Gifts { get; set; }
 
 
 

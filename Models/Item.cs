@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AaronColacoAsp.NETProject.Models
 {
@@ -12,7 +13,14 @@ namespace AaronColacoAsp.NETProject.Models
             public decimal CostToProduce { get; set; }
             public string ImageURL { get; set; }
 
-        }
+           [ForeignKey("Category")]
+            public int CategoryId { get; set; }
+            public Category Categorys { get; set; }
+            
+
+
+
+    }
 
  
 }

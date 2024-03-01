@@ -8,5 +8,7 @@ namespace AaronColacoAsp.NETProject.Models
         public int OrderNoteId { get; set; }
 
         public string Note { get; set; }
+
+
     }
 }

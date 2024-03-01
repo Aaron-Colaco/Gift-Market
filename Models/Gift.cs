@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AaronColacoAsp.NETProject.Models
 {
@@ -13,7 +14,11 @@ namespace AaronColacoAsp.NETProject.Models
 
         public string BoxColour { get; set; }
 
-       
+        [ForeignKey("Item")]
+        public int OrderId { get; set; }
+        public Order Order { get; set; }
+
+
 
 
 
