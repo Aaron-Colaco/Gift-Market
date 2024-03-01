@@ -1,10 +1,12 @@
-﻿namespace AaronColacoAsp.NETProject.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AaronColacoAsp.NETProject.Models
 {
 
         public class Items
         {
-
-            public int ItemID { get; set; }
+           [Key]
+            public int ItemId { get; set; }
             public string Name { get; set; }
             public decimal Price { get; set; }
             public decimal CostToProduce { get; set; }
