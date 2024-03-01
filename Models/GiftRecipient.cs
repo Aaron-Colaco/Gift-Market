@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AaronColacoAsp.NETProject.Models
 {
@@ -13,6 +14,11 @@ namespace AaronColacoAsp.NETProject.Models
 
         public string City { get; set; }
 
+        [ForeignKey("Gift")]
+        public int GiftId { get; set; }
+        public Gift Gift { get; set; }
        
+
+
     }
 }

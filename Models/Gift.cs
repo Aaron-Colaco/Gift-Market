@@ -19,6 +19,7 @@ namespace AaronColacoAsp.NETProject.Models
         public Order Order { get; set; }
 
 
+        public GiftRecipient giftRecipient { get; set; }
 
 
 

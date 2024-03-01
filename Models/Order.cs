@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AaronColacoAsp.NETProject.Models
 {
@@ -13,6 +14,11 @@ namespace AaronColacoAsp.NETProject.Models
 
         public Gift Gifts { get; set; }
 
+        public ICollection<OrderItem> OrderItems { get; set; }
+
+        [ForeignKey("Status")]
+        public int StatusId { get; set; }
+        public Status Status { get; set; }
 
 
 

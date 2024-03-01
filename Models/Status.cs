@@ -9,5 +9,6 @@ namespace AaronColacoAsp.NETProject.Models
 
         public string Name { get; set; }
 
+        public ICollection<Order> Orders { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AaronColacoAsp.NETProject.Models
 {
@@ -9,6 +10,11 @@ namespace AaronColacoAsp.NETProject.Models
 
         public string Note { get; set; }
 
+
+        [ForeignKey("Order")]
+        public int OrderId { get; set; }
+
+        public Order Orders { get; set; }
 
     }
 }
