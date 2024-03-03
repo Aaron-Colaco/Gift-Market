@@ -6,7 +6,7 @@ namespace AaronColacoAsp.NETProject.Models
     public class Gift
     {
         [Key]
-        public int GiftId { get; set; }
+        public string GiftId { get; set; }
 
         public string Message { get; set; }
 
@@ -15,7 +15,7 @@ namespace AaronColacoAsp.NETProject.Models
         public string BoxColour { get; set; }
 
         [ForeignKey("Item")]
-        public int OrderId { get; set; }
+        public string OrderId { get; set; }
         public Order Order { get; set; }
 
 

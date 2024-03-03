@@ -6,7 +6,7 @@ namespace AaronColacoAsp.NETProject.Models
     public class Order
     {
         [Key]
-        public int OrderId { get; set; }
+        public string OrderId { get; set; }
     
         public DateTime OrderTime { get; set; }
 
