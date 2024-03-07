@@ -48,7 +48,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         // GET: Items/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId");
+            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Name");
             return View();
         }
 
@@ -59,13 +59,13 @@ namespace AaronColacoAsp.NETProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ItemId,Name,Price,CostToProduce,ImageURL,CategoryId")] Item item)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(item);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", item.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", item.Categorys.Name);
             return View(item);
         }
 
@@ -82,7 +82,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", item.CategoryId);
+            ViewData["CategoryList"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", item.Categorys.Name);
             return View(item);
         }
 
@@ -98,7 +98,7 @@ namespace AaronColacoAsp.NETProject.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
@@ -118,7 +118,7 @@ namespace AaronColacoAsp.NETProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", item.CategoryId);
+            ViewData["CategoryList"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", item.Categorys.Name);
             return View(item);
         }
 
