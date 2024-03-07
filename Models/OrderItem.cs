@@ -1,17 +1,20 @@
 ﻿
+using AaronColacoAsp.NETProject.Models;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 public class OrderItem
 {
-	public OrderItem()
-	{
-	   [key]
+
+	   [Key]
 	   public string OrderItemId { get; set; }
 	   public int Quantity { get; set; }
 
 	   [ForeignKey("Order")]
-       public string  OrderId { get; set; } { get; set; }
-       public Orders Orders { get; set; }
+       public string  OrderId { get; set; }
+       public Order Orders { get; set; }
 
 
        [ForeignKey("Item")]
@@ -19,5 +22,5 @@ public class OrderItem
        public Item Items { get; set; }
 
 
-{ 
+ 
 }

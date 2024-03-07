@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AaronColacoAsp.NETProject.Models
 {
 
-        public class Items
+        public class Item
         {
            [Key]
             public int ItemId { get; set; }

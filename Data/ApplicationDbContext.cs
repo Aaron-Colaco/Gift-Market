@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using AaronColacoAsp.NETProject.Models;
 
 namespace AaronColacoAsp.NETProject.Data
 {
@@ -9,5 +10,6 @@ namespace AaronColacoAsp.NETProject.Data
             : base(options)
         {
         }
+        public DbSet<AaronColacoAsp.NETProject.Models.Item> Item { get; set; } = default!;
     }
 }
