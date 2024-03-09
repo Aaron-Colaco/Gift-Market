@@ -23,7 +23,19 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="Index">See Items</a>
+                        </li>
+
+                        <li>
+
+                            <form asp-action="Search" asp-controller="Items">
+
+                                <input name="SearchTerm" type="text" placeholder="Search An Item"/>
+
+                                <input class="btn btn-primary" type="submit" />
+
+                            </form>
+
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

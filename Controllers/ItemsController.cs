@@ -19,12 +19,20 @@ namespace AaronColacoAsp.NETProject.Controllers
             _context = context;
         }
 
+        
         // GET: Items
+        public async Task<IActionResult> Search(string SearchTerm)
+        {
+            var Results = _context.Item.Where(i => i.Name.Contains(SearchTerm)).Include(i => i.Categorys);
+            return View("Index", await Results.ToListAsync());
+        }
+
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Item.Include(i => i.Categorys);
             return View(await applicationDbContext.ToListAsync());
         }
+
 
         // GET: Items/Details/5
         public async Task<IActionResult> Details(int? id)

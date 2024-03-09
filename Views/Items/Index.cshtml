@@ -9,6 +9,14 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-action="Search" asp-controller="Items">
+
+    <input name="SearchTerm" type="text" placeholder="Search An Item"/>
+   
+    <input type="submit" class="btn btn-primary"/>
+</form>
+
 <table class="table">
     <thead>
         <tr>
