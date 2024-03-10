@@ -17,6 +17,17 @@
     <input type="submit" class="btn btn-primary"/>
 </form>
 
+<form asp-action="Filter" asp-controller="Items">
+
+    <label for="MinPrice">Min</label>
+    <input name="MinPrice" type="number" placeholder="0" />
+    <label for="MinPrice">Max</label>
+    <input name="MaxPrice" type="number" placeholder="100" />
+
+    <input type="Filter" class="btn btn-primary" />
+</form>
+
+
 <table class="table">
     <thead>
         <tr>
