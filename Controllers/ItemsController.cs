@@ -27,9 +27,9 @@ namespace AaronColacoAsp.NETProject.Controllers
             return View("Index", await Results.ToListAsync());
         }
 
-        public async Task<IActionResult> Filter(int MinPrice, int MaxPrice)
+        public async Task<IActionResult> Filter(int MinPrice, int MaxPrice,string Category)
         {
-            var Results = _context.Item.Where(i => i.Price >= MinPrice && i.Price <= MaxPrice).Include(i => i.Categorys);
+            var Results = _context.Item.Where(i => i.Price >= MinPrice && i.Price <= MaxPrice && i.Categorys.Name.Equals(Category)).Include(i => i.Categorys);
 
             return View("Index", await Results.ToListAsync());
         }

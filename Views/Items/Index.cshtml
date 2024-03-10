@@ -17,15 +17,25 @@
     <input type="submit" class="btn btn-primary"/>
 </form>
 
-<form asp-action="Filter" asp-controller="Items">
+<form asp-action="Filter" asp-controller="Items" >
 
     <label for="MinPrice">Min</label>
     <input name="MinPrice" type="number" placeholder="0" />
     <label for="MinPrice">Max</label>
     <input name="MaxPrice" type="number" placeholder="100" />
 
-    <input type="Filter" class="btn btn-primary" />
-</form>
+
+  <select id="Category" name="Category">
+    <option value="sweet"> sweet</option>
+    <option value="drinks"> drinks </option>
+    <option value="souvenirs"> souvenirs</option>
+    <option value="">All</option>
+
+    <input type="submit" class="btn btn-primary" />
+
+    </select>
+  </form>
+
 
 
 <table class="table">
