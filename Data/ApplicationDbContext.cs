@@ -11,5 +11,8 @@ namespace AaronColacoAsp.NETProject.Data
         {
         }
         public DbSet<AaronColacoAsp.NETProject.Models.Item> Item { get; set; } = default!;
+        public DbSet<AaronColacoAsp.NETProject.Models.Category> Category { get; set; } = default!;
+
+
     }
 }
