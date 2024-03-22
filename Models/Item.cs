@@ -12,11 +12,13 @@ namespace AaronColacoAsp.NETProject.Models
             public decimal Price { get; set; }
             public decimal CostToProduce { get; set; }
             public string ImageURL { get; set; }
+            public string description { get; set; }
 
-           [ForeignKey("Category")]
+            [ForeignKey("Category")]
             public int CategoryId { get; set; }
             public Category Categorys { get; set; }
             
+        
 
 
 

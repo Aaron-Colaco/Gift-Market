@@ -21,6 +21,10 @@ namespace AaronColacoAsp.NETProject.Models
         public Status Status { get; set; }
 
 
+        [ForeignKey("Customer")]
+        public string  CustomerId{ get; set; }
+
+        public Customer Customers { get; set; }
 
     }
 }
