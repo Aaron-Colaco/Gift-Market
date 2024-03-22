@@ -1,5 +1,6 @@
 using AaronColacoAsp.NETProject.Models;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,90 +13,100 @@ namespace AaronColacoAsp.NETProject.Data
 
     public class DataForDatabase
     {
-        public static void Initialize(ApplicationDbContext Context)
+
+
+        public static void AddData(IApplicationBuilder applicationBuilder)
         {
-            Context.Database.EnsureCreated();
-
-            //check if any items already exist
-            if (Context.Item.Any())
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
-                //database has data 
-                return;
-            }
-            
+                var Context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
 
-            var Categorys = new Category[]
-            {
-                new Category { Name = "Food" },
+                Context.Database.EnsureCreated();
+
+
+                //check if any items already exist
+
+
+                if (Context.Category.Any())
+                {
+                    return;
+                }
+                else
+                {
+                    var Categorys = new Category[]
+              {
+                new Category { Name = "Food"},
                 new Category { Name = "Drinks" },
-                new Category { Name = "Physical Products" },
+                new Category { Name = "Physical Products"},
                 new Category { Name = "Pre-Packed" },
 
 
-            };
-
-            var Items = new Item[]
-            {
-                new Item{Name = "Whittaker's Creamny Milk",CategoryId=1,ImageURL="",CostToProduce=5, Price= 7},
-                new Item{Name = "Whittaker's Peanut Slab",CategoryId=1,ImageURL="",CostToProduce=2, Price=4 },
-                new Item{Name = "Pineapple Lumps",CategoryId=1,ImageURL="",CostToProduce=3, Price=4 },
-                new Item{Name = "Original Cookie Time Pack",CategoryId=1,ImageURL="",CostToProduce=5, Price=8 },
-                new Item{Name = "Delsio Chips",CategoryId=1,ImageURL="",CostToProduce=4, Price=6 },
-                new Item{Name = "Manuka Honey",CategoryId=1,ImageURL="",CostToProduce=75, Price=150 },
-                new Item{Name = "Kumara Chips",CategoryId=1,ImageURL="",CostToProduce=4, Price=6 },
+              };
+                    Context.Category.AddRange(Categorys);
+                    Context.SaveChanges();
 
 
-                new Item{Name = "L & P Orignal",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 },
-                new Item{Name = "RARO Navel Orange",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 },
-                new Item{Name = "V Refresh Green apple",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 },
-                new Item{Name = "V Refresh Pineapple and watermelon ",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 },
-                new Item{Name = "VIBE Grape sparkilng Water",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 },
-                new Item{Name = "JEDS Coffee",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 },
-                new Item{Name = "Just Jucie ",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 },
-                new Item{Name = "V Refresh Green apple Pack",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 },
-
-
-                new Item{Name = "Prezzy Card $100",CategoryId=3,ImageURL="",CostToProduce=2, Price=4 },
-                new Item{Name = "Prezzy Card $50",CategoryId=3,ImageURL="",CostToProduce=2, Price=4 },
-                new Item{Name = "Prezzy Card $25",CategoryId=3,ImageURL="",CostToProduce=2, Price=4 },
-                new Item{Name = "Delsis",CategoryId=3,ImageURL="",CostToProduce=4, Price=6 },
-                new Item{Name = "Manuka Honey Soap",CategoryId=3,ImageURL="",CostToProduce=4, Price=6 },
-                new Item{Name = "LemonGrass Soap",CategoryId=3,ImageURL="",CostToProduce=4, Price=6 },
-                new Item{Name = "All Blacks Shirt",CategoryId=3,ImageURL="",CostToProduce=4, Price=6 },
-                new Item{Name = "Black Caps Shirt",CategoryId=3,ImageURL="",CostToProduce=4, Price=6 },
-                new Item{Name = "New Zealand flag",CategoryId=1,ImageURL="",CostToProduce=4, Price=6 }
-            };
-
-            Context.Category.AddRange(Categorys);
-            Context.Item.AddRange(Items);
-            
+                }
+                if (Context.Item.Any())
+                {
+                    return;
+                }
+                else
+                {
 
 
 
+                    var Items = new Item[]
+                    {
+                new Item{Name = "Whittaker's Creamny Milk",CategoryId=1,ImageURL="",CostToProduce=5, Price= 7 ,description ="highQualty"},
+                new Item{Name = "Whittaker's Peanut Slab",CategoryId=1,ImageURL="",CostToProduce=2, Price=4,description ="highQualty" },
+                new Item{Name = "Pineapple Lumps",CategoryId=1,ImageURL="",CostToProduce=3, Price=4,description ="highQualty" },
+                new Item{Name = "Original Cookie Time Pack",CategoryId=1,ImageURL="",CostToProduce=5, Price=8,description ="highQualty" },
+                new Item{Name = "Delsio Chips",CategoryId=1,ImageURL="",CostToProduce=4, Price=6 ,description ="highQualty"},
+                new Item{Name = "Manuka Honey",CategoryId=1,ImageURL="",CostToProduce=75, Price=150 ,description ="highQualty"},
+                new Item{Name = "Kumara Chips",CategoryId=1,ImageURL="",CostToProduce=4, Price=6,description ="highQualty" },
 
 
+                new Item{Name = "L & P Orignal",CategoryId=2,ImageURL="",CostToProduce=2, Price=4, description ="highQualty"},
+                new Item{Name = "RARO Navel Orange",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,description ="highQualty" },
+                new Item{Name = "V Refresh Green apple",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 ,description ="highQualty"},
+                new Item{Name = "V Refresh Pineapple and watermelon ",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,description ="highQualty" },
+                new Item{Name = "VIBE Grape sparkilng Water",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,description ="highQualty" },
+                new Item{Name = "JEDS Coffee",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,description ="highQualty" },
+                new Item{Name = "Just Jucie ",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 ,description ="highQualty"},
+                new Item{Name = "V Refresh Green apple Pack",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,description ="highQualty" },
 
 
+                new Item{Name = "Prezzy Card $100",CategoryId=3,ImageURL="",CostToProduce=2, Price=4,description ="highQualty"},
+                new Item{Name = "Prezzy Card $50",CategoryId=3,ImageURL="",CostToProduce=2, Price=4 ,description ="highQualty"},
+                new Item{Name = "Prezzy Card $25",CategoryId=3,ImageURL="",CostToProduce=2, Price=4 ,description ="highQualty"},
+                new Item{Name = "Delsis",CategoryId=3,ImageURL="",CostToProduce=4, Price=6,description ="highQualty" },
+                new Item{Name = "Manuka Honey Soap",CategoryId=3,ImageURL="",CostToProduce=4, Price=6,description ="highQualty" },
+                new Item{Name = "LemonGrass Soap",CategoryId=3,ImageURL="",CostToProduce=4, Price=6 ,description ="highQualty"},
+                new Item{Name = "All Blacks Shirt",CategoryId=3,ImageURL="",CostToProduce=4, Price=6,description ="highQualty" },
+                new Item{Name = "Black Caps Shirt",CategoryId=3,ImageURL="",CostToProduce=4, Price=6,description ="highQualty" },
+                new Item{Name = "New Zealand flag",CategoryId=1,ImageURL="",CostToProduce=4, Price=6,description ="highQualty" }
+                    };
 
 
+                    Context.Item.AddRange(Items);
 
-
-
-
-
-
-
-
+                    Context.SaveChanges();
+                }
             }
-
-
-
 
 
 
         }
 
-
     }
+}
+
+
+
+
+
+
+
 
 

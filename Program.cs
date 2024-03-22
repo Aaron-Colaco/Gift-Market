@@ -46,6 +46,8 @@ namespace AaronColacoAsp.NETProject
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
+            DataForDatabase.AddData(app);
+
             app.Run();
         }
     }
