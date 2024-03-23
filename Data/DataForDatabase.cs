@@ -138,14 +138,14 @@ namespace AaronColacoAsp.NETProject.Data
                     new OrderItem{OrderId = "1a",ItemId=6,Quantity=5,OrderItemId="4a"},
 
                     new OrderItem{OrderId = "2a",ItemId=1,Quantity=2,OrderItemId="5a"},
-                    new OrderItem{OrderId = "3a",ItemId=4,Quantity=1,OrderItemId="6a"},
+                    new OrderItem{OrderId = "2a",ItemId=4,Quantity=1,OrderItemId="6a"},
                     new OrderItem{OrderId = "4a",ItemId=5,Quantity=3,OrderItemId="7a"},
-                    new OrderItem{OrderId = "5a",ItemId=6,Quantity=5,OrderItemId="8a"},
+                    new OrderItem{OrderId = "4a",ItemId=6,Quantity=5,OrderItemId="8a"},
 
                     new OrderItem{OrderId = "3a",ItemId=1,Quantity=2,OrderItemId="9a"},
-                    new OrderItem{OrderId = "4a",ItemId=4,Quantity=1,OrderItemId="10a"},
-                    new OrderItem{OrderId = "5a",ItemId=5,Quantity=3,OrderItemId="11a"},
-                    new OrderItem{OrderId = "6a",ItemId=6,Quantity=5,OrderItemId="12a"},
+                    new OrderItem{OrderId = "3a",ItemId=4,Quantity=1,OrderItemId="10a"},
+                    new OrderItem{OrderId = "3a",ItemId=5,Quantity=3,OrderItemId="11a"},
+                    new OrderItem{OrderId = "3a",ItemId=6,Quantity=5,OrderItemId="12a"},
                     };
 
 
@@ -161,7 +161,7 @@ namespace AaronColacoAsp.NETProject.Data
                     var GiftsData = new Gift[]
                     {
                     new Gift {OrderId ="1a",BoxColour="red",RibbonColour="purple",Message="thank you very Much",GiftId="gifttest"},
-                    new Gift {OrderId ="2a",BoxColour="green",RibbonColour="purple",Message="thank you very Much Bob"},
+                    new Gift {OrderId ="2a",BoxColour="green",RibbonColour="purple",Message="thank you very Much Bob",GiftId="GiftIDtest2"},
 
                     };
 

@@ -60,7 +60,7 @@ color: white;
 
  
 
-<div class="Sales">  
+<div class="Sales" style="color:whitesmoke">  
 
  
 
@@ -105,15 +105,15 @@ color: white;
 
 </div> 
 
- 
+    <h1>  @ViewBag.TotalProductsSold</h1>
 
 <div class="SalesInformationBox">  
 
  
 
-<h3 class="WidgetText">Total Gifts Ordered</h3> 
+<h3 class="WidgetText">Total Gifts Ordered</h3>
 
- 
+        <h1>  @ViewBag.TotalGifts</h1>
 
 </div> 
 
@@ -123,10 +123,12 @@ color: white;
 
  
 
-<h3 class="WidgetText"> Average Order Cost</h3> 
+<h3 class="WidgetText"> Average Order Cost</h3>
 
-</div> 
 
+        <h1>
+           @ViewBag.AverageOrderCost
+        </h1>
  
 
 </div> 

@@ -16,9 +16,11 @@ namespace AaronColacoAsp.NETProject.Controllers
         {
 
             var OrderData = _context.Order;
+            var GiftData = _context.Gift;
+
             var OrderItemData = _context.OrderItem;
 
-            decimal TotalSales = OrderData.Sum(a => a.TotalPrice);
+            decimal TotalSales = OrderItemData.Sum(a => a.Items.Price * a.Quantity);
             ViewBag.TotalSales = TotalSales;
 
             decimal TotalExpense = OrderItemData.Sum(a => a.Items.CostToProduce * a.Quantity);
@@ -28,6 +30,14 @@ namespace AaronColacoAsp.NETProject.Controllers
             decimal Profit = TotalSales - TotalExpense;
             ViewBag.Profit = Profit;
 
+            int TotalGifts = GiftData.Count();
+            ViewBag.TotalGifts = TotalGifts;
+
+            var TotalProductsSold = OrderItemData.Sum(a => a.Quantity);
+            ViewBag.TotalProductsSold = TotalProductsSold;
+
+            var AverageOrderCost = OrderData.Average(a => a.TotalPrice);
+            ViewBag.AverageOrderCost = AverageOrderCost;
 
 
 
