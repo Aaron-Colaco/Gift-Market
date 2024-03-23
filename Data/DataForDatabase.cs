@@ -27,7 +27,7 @@ namespace AaronColacoAsp.NETProject.Data
                 //check if any items already exist
 
 
-                if (Context.Category.Any() || Context.Item.Any() || Context.Status.Any() || Context.Order.Any() || Context.OrderItem.Any() || Context.Gift.Any() || Context.GiftRecipient.Any() || Context.OrderNote.Any())
+                if (Context.Category.Any() || Context.Item.Any() || Context.Status.Any() || Context.Order.Any() || Context.OrderItem.Any() || Context.Gift.Any() || Context.GiftRecipient.Any() || Context.OrderNote.Any() )
                 {
                     return;
                 }
@@ -102,9 +102,17 @@ namespace AaronColacoAsp.NETProject.Data
                     Context.SaveChanges();
 
 
+                    var CustomerData = new Customer[]
+                    {
+                        new Customer{Id="58a",PasswordHash="#($**#*",UserName="Colacolaaron@gmail.com",FullName="Aaron Coaclo"}
+                    };
+              
+                Context.Customer.AddRange(CustomerData);
+
+                Context.SaveChanges();
 
 
-                    var OrderData = new Order[]
+                var OrderData = new Order[]
                     {
                     new Order{OrderTime = DateTime.Now, CustomerId="58a", StatusId=1,OrderId="1a",TotalPrice=0},
                     new Order{OrderTime = DateTime.Now, CustomerId="58a", StatusId=1,OrderId="2a",TotalPrice=0},
@@ -124,20 +132,20 @@ namespace AaronColacoAsp.NETProject.Data
 
                     var OrderItemData = new OrderItem[]
                     {
-                    new OrderItem{OrderId = "1a",ItemId=1,Quantity=2},
-                    new OrderItem{OrderId = "1a",ItemId=4,Quantity=1},
-                    new OrderItem{OrderId = "1a",ItemId=5,Quantity=3},
-                    new OrderItem{OrderId = "1a",ItemId=6,Quantity=5},
+                    new OrderItem{OrderId = "1a",ItemId=1,Quantity=2,OrderItemId="1a"},
+                    new OrderItem{OrderId = "1a",ItemId=4,Quantity=1,OrderItemId="2a"},
+                    new OrderItem{OrderId = "1a",ItemId=5,Quantity=3, OrderItemId="3a"},
+                    new OrderItem{OrderId = "1a",ItemId=6,Quantity=5,OrderItemId="4a"},
 
-                    new OrderItem{OrderId = "2a",ItemId=1,Quantity=2},
-                    new OrderItem{OrderId = "3a",ItemId=4,Quantity=1},
-                    new OrderItem{OrderId = "4a",ItemId=5,Quantity=3},
-                    new OrderItem{OrderId = "5a",ItemId=6,Quantity=5},
+                    new OrderItem{OrderId = "2a",ItemId=1,Quantity=2,OrderItemId="5a"},
+                    new OrderItem{OrderId = "3a",ItemId=4,Quantity=1,OrderItemId="6a"},
+                    new OrderItem{OrderId = "4a",ItemId=5,Quantity=3,OrderItemId="7a"},
+                    new OrderItem{OrderId = "5a",ItemId=6,Quantity=5,OrderItemId="8a"},
 
-                    new OrderItem{OrderId = "3a",ItemId=1,Quantity=2},
-                    new OrderItem{OrderId = "4a",ItemId=4,Quantity=1},
-                    new OrderItem{OrderId = "5a",ItemId=5,Quantity=3},
-                    new OrderItem{OrderId = "6a",ItemId=6,Quantity=5},
+                    new OrderItem{OrderId = "3a",ItemId=1,Quantity=2,OrderItemId="9a"},
+                    new OrderItem{OrderId = "4a",ItemId=4,Quantity=1,OrderItemId="10a"},
+                    new OrderItem{OrderId = "5a",ItemId=5,Quantity=3,OrderItemId="11a"},
+                    new OrderItem{OrderId = "6a",ItemId=6,Quantity=5,OrderItemId="12a"},
                     };
 
 
@@ -189,7 +197,7 @@ namespace AaronColacoAsp.NETProject.Data
     }
 
 }
-}
+
 
 
 

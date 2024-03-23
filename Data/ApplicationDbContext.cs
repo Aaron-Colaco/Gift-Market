@@ -22,8 +22,12 @@ namespace AaronColacoAsp.NETProject.Data
         public DbSet<AaronColacoAsp.NETProject.Models.GiftRecipient> GiftRecipient { get; set; } = default!;
 
         public DbSet<AaronColacoAsp.NETProject.Models.Status> Status { get; set; } = default!;
-
         public DbSet<AaronColacoAsp.NETProject.Models.OrderNote> OrderNote { get; set; } = default!;
+       
+        public DbSet<AaronColacoAsp.NETProject.Models.Customer> Customer { get; set; } = default!;
+
+
+
 
 
 
