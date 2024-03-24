@@ -12,14 +12,19 @@ namespace AaronColacoAsp.NETProject.Controllers
             _context = context;
         }
 
-        public IActionResult SalesDashboard()
+        public IActionResult DatePicker()
+        {
+            return View();
+        }
+
+        public IActionResult SalesDashboard(DateTime Date1, DateTime Date2)
         {
 
-            var OrderData = _context.Order;
-            var GiftData = _context.Gift;
+            var OrderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2);
+            var GiftData = _context.Gift.Where(a => a.Order.OrderTime >= Date1 && a.Order.OrderTime <= Date2); ;
+            var OrderItemData = _context.OrderItem.Where(a => a.Orders.OrderTime >= Date1 && a.Orders.OrderTime <= Date2); ;
 
-            var OrderItemData = _context.OrderItem;
-
+           
             decimal TotalSales = OrderItemData.Sum(a => a.Items.Price * a.Quantity);
             ViewBag.TotalSales = TotalSales;
 

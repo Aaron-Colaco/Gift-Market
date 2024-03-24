@@ -1,0 +1,20 @@
+
+@{
+    ViewData["Title"] = "DatePicker";
+}
+
+
+<form asp-controller="SalesData" asp-action="SalesDashboard">
+
+    <h1>Please Select Two Dates to see Sales Data From</h1>
+
+
+    <label for="Date 1">Date 1 </label>
+    <input required type="datetime" name="Date1" placeholder="00/00/000" />
+   
+    <label for="Date2">Date 2 </label>
+    <input required type="datetime" name="Date2" placeholder="00/00/000" />
+
+
+    <input type="submit" /> 
+</form>
