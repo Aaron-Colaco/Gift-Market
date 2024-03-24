@@ -101,7 +101,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryList"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", item.Categorys.Name);
+            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", item.Categorys.Name);
             return View(item);
         }
 
