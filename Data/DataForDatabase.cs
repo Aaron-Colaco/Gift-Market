@@ -174,7 +174,7 @@ namespace AaronColacoAsp.NETProject.Data
 
                     var GiftReceiver = new GiftRecipient[]
                     {
-                    new GiftRecipient{GiftId="gifttest",Address="123 road avondale",City="Auckland",Name="bob", PhoneNumber="0226765505"}
+                    new GiftRecipient{GiftId="gifttest",Address="123 road avondale",City="Auckland",Name="bob", PhoneNumber="0226765505",RecipientId="1q"}
                     };
 
 
