@@ -24,7 +24,7 @@ namespace AaronColacoAsp.NETProject.Models
             public string ImageURL { get; set; }
            
             [MaxLength(100)]
-            public string description { get; set; }
+            public string Description { get; set; }
 
             [ForeignKey("Category"),Required]
             public int CategoryId { get; set; }

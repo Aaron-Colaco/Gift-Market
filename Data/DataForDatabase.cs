@@ -47,34 +47,34 @@ namespace AaronColacoAsp.NETProject.Data
 
                   var ItemsData = new Item[]
                     {
-                new Item{Name = "Whittaker's Creamny Milk",CategoryId=1,ImageURL="",CostToProduce=5, Price= 7 ,description ="highQualty"},
-                new Item{Name = "Whittaker's Peanut Slab",CategoryId=1,ImageURL="",CostToProduce=2, Price=4,description ="highQualty" },
-                new Item{Name = "Pineapple Lumps",CategoryId=1,ImageURL="",CostToProduce=3, Price=4,description ="highQualty" },
-                new Item{Name = "Original Cookie Time Pack",CategoryId=1,ImageURL="",CostToProduce=5, Price=8,description ="highQualty" },
-                new Item{Name = "Delsio Chips",CategoryId=1,ImageURL="",CostToProduce=4, Price=6 ,description ="highQualty"},
-                new Item{Name = "Manuka Honey",CategoryId=1,ImageURL="",CostToProduce=75, Price=150 ,description ="highQualty"},
-                new Item{Name = "Kumara Chips",CategoryId=1,ImageURL="",CostToProduce=4, Price=6,description ="highQualty" },
+                new Item{Name = "Whittaker's Creamny Milk",CategoryId=1,ImageURL="",CostToProduce=5, Price= 7 ,Description ="highQualty"},
+                new Item{Name = "Whittaker's Peanut Slab",CategoryId=1,ImageURL="",CostToProduce=2, Price=4,Description ="highQualty" },
+                new Item{Name = "Pineapple Lumps",CategoryId=1,ImageURL="",CostToProduce=3, Price=4,Description ="highQualty" },
+                new Item{Name = "Original Cookie Time Pack",CategoryId=1,ImageURL="",CostToProduce=5, Price=8,Description ="highQualty" },
+                new Item{Name = "Delsio Chips",CategoryId=1,ImageURL="",CostToProduce=4, Price=6 ,Description ="highQualty"},
+                new Item{Name = "Manuka Honey",CategoryId=1,ImageURL="",CostToProduce=75, Price=150 ,Description ="highQualty"},
+                new Item{Name = "Kumara Chips",CategoryId=1,ImageURL="",CostToProduce=4, Price=6,Description ="highQualty" },
 
 
-                new Item{Name = "L & P Orignal",CategoryId=2,ImageURL="",CostToProduce=2, Price=4, description ="highQualty"},
-                new Item{Name = "RARO Navel Orange",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,description ="highQualty" },
-                new Item{Name = "V Refresh Green apple",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 ,description ="highQualty"},
-                new Item{Name = "V Refresh Pineapple and watermelon ",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,description ="highQualty" },
-                new Item{Name = "VIBE Grape sparkilng Water",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,description ="highQualty" },
-                new Item{Name = "JEDS Coffee",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,description ="highQualty" },
-                new Item{Name = "Just Jucie ",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 ,description ="highQualty"},
-                new Item{Name = "V Refresh Green apple Pack",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,description ="highQualty" },
+                new Item{Name = "L & P Orignal",CategoryId=2,ImageURL="",CostToProduce=2, Price=4, Description ="highQualty"},
+                new Item{Name = "RARO Navel Orange",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,Description ="highQualty" },
+                new Item{Name = "V Refresh Green apple",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 ,Description ="highQualty"},
+                new Item{Name = "V Refresh Pineapple and watermelon ",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,Description ="highQualty" },
+                new Item{Name = "VIBE Grape sparkilng Water",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,Description ="highQualty" },
+                new Item{Name = "JEDS Coffee",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,Description ="highQualty" },
+                new Item{Name = "Just Jucie ",CategoryId=2,ImageURL="",CostToProduce=2, Price=4 ,Description ="highQualty"},
+                new Item{Name = "V Refresh Green apple Pack",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,Description ="highQualty" },
 
 
-                new Item{Name = "Prezzy Card $100",CategoryId=3,ImageURL="",CostToProduce=2, Price=4,description ="highQualty"},
-                new Item{Name = "Prezzy Card $50",CategoryId=3,ImageURL="",CostToProduce=2, Price=4 ,description ="highQualty"},
-                new Item{Name = "Prezzy Card $25",CategoryId=3,ImageURL="",CostToProduce=2, Price=4 ,description ="highQualty"},
-                new Item{Name = "Delsis",CategoryId=3,ImageURL="",CostToProduce=4, Price=6,description ="highQualty" },
-                new Item{Name = "Manuka Honey Soap",CategoryId=3,ImageURL="",CostToProduce=4, Price=6,description ="highQualty" },
-                new Item{Name = "LemonGrass Soap",CategoryId=3,ImageURL="",CostToProduce=4, Price=6 ,description ="highQualty"},
-                new Item{Name = "All Blacks Shirt",CategoryId=3,ImageURL="",CostToProduce=4, Price=6,description ="highQualty" },
-                new Item{Name = "Black Caps Shirt",CategoryId=3,ImageURL="",CostToProduce=4, Price=6,description ="highQualty" },
-                new Item{Name = "New Zealand flag",CategoryId=1,ImageURL="",CostToProduce=4, Price=6,description ="highQualty" }
+                new Item{Name = "Prezzy Card $100",CategoryId=3,ImageURL="",CostToProduce=2, Price=4,Description ="highQualty"},
+                new Item{Name = "Prezzy Card $50",CategoryId=3,ImageURL="",CostToProduce=2, Price=4 ,Description ="highQualty"},
+                new Item{Name = "Prezzy Card $25",CategoryId=3,ImageURL="",CostToProduce=2, Price=4 ,Description ="highQualty"},
+                new Item{Name = "Delsis",CategoryId=3,ImageURL="",CostToProduce=4, Price=6,Description ="highQualty" },
+                new Item{Name = "Manuka Honey Soap",CategoryId=3,ImageURL="",CostToProduce=4, Price=6,Description ="highQualty" },
+                new Item{Name = "LemonGrass Soap",CategoryId=3,ImageURL="",CostToProduce=4, Price=6 ,Description ="highQualty"},
+                new Item{Name = "All Blacks Shirt",CategoryId=3,ImageURL="",CostToProduce=4, Price=6,Description ="highQualty" },
+                new Item{Name = "Black Caps Shirt",CategoryId=3,ImageURL="",CostToProduce=4, Price=6,Description ="highQualty" },
+                new Item{Name = "New Zealand flag",CategoryId=1,ImageURL="",CostToProduce=4, Price=6,Description ="highQualty" }
                     };
 
 

@@ -76,7 +76,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemId,Name,Price,CostToProduce,ImageURL,CategoryId")] Item item)
+        public async Task<IActionResult> Create([Bind("ItemId,Name,Price,CostToProduce,ImageURL,Description,CategoryId")] Item item)
         {
             if (!ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", item.Categorys.Name);
+            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Name");
             return View(item);
         }
 
@@ -110,7 +110,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ItemId,Name,Price,CostToProduce,ImageURL,CategoryId")] Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("ItemId,Name,Price,CostToProduce,ImageURL,Descrpition,CategoryId")] Item item)
         {
             if (id != item.ItemId)
             {
