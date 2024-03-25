@@ -8,6 +8,8 @@ namespace AaronColacoAsp.NETProject.Models
         [Key]
         public string OrderNoteId { get; set; }
 
+        [Required]
+        [MaxLength(120)]
         public string Note { get; set; }
 
 

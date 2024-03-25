@@ -7,11 +7,18 @@ namespace AaronColacoAsp.NETProject.Models
     {
         [Key]
         public string RecipientId { get; set; }
+
+
+        [Required,MaxLength(50)]
         public string Name { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
+        [Required,MaxLength(100)]
         public  string Address { get; set; }
 
+        [Required, MaxLength(50)]
         public string City { get; set; }
 
         [ForeignKey("Gift")]

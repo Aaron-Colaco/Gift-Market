@@ -14,7 +14,10 @@ namespace AaronColacoAsp.NETProject.Models
 
         [Key]
         public string OrderItemId { get; set; }
-        public int Quantity { get; set; }
+
+        [Range(0,10),Required]
+                
+        public int Quantity { get; set; } = 1;
 
         [ForeignKey("Order")]
         public string OrderId { get; set; }

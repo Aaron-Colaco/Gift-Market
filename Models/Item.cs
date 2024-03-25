@@ -8,13 +8,25 @@ namespace AaronColacoAsp.NETProject.Models
         {
            [Key]
             public int ItemId { get; set; }
+            
+            [Required, MaxLength (50)]
             public string Name { get; set; }
+
+
+            [Required,DataType(DataType.Currency),Range(0,600)]
             public decimal Price { get; set; }
+
+
+            [Required,DataType(DataType.Currency),Range(0,500)]
             public decimal CostToProduce { get; set; }
+
+            [MaxLength(1000),DataType(DataType.Url)]
             public string ImageURL { get; set; }
+           
+            [MaxLength(100)]
             public string description { get; set; }
 
-            [ForeignKey("Category")]
+            [ForeignKey("Category"),Required]
             public int CategoryId { get; set; }
             public Category Categorys { get; set; }
             

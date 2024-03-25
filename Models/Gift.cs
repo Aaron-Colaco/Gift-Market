@@ -8,10 +8,13 @@ namespace AaronColacoAsp.NETProject.Models
         [Key]
         public string GiftId { get; set; }
 
+        [MaxLength(200)]
         public string Message { get; set; }
 
+        [MaxLength(100)]
         public string RibbonColour { get; set; }
 
+        [MaxLength(100)]
         public string BoxColour { get; set; }
 
         [ForeignKey("Item")]

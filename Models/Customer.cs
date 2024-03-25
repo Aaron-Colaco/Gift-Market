@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace AaronColacoAsp.NETProject.Models
 {
     public class Customer: IdentityUser
     {
+        [MaxLength(100)]
         public string FullName { get; set; }
+
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        [DataType(DataType.PhoneNumber)]
         public int PhoneNumebr { get; set; }
 
         public List <Order> Orders{ get; set; }
