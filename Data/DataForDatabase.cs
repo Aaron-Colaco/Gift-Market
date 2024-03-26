@@ -93,7 +93,10 @@ namespace AaronColacoAsp.NETProject.Data
                     var StatusData = new Status[]
                     {
                     new Status{Name = "Pending"},
-                    new Status{Name = "Processing" }
+                    new Status{Name = "Processing" },
+                    new Status{Name ="Dilivering"},
+                    new Status{Name ="Fullfilled"}
+
                     };
 
 
