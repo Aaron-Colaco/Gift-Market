@@ -104,7 +104,7 @@ namespace AaronColacoAsp.NETProject.Data
 
                     var CustomerData = new Customer[]
                     {
-                        new Customer{Id="58a",PasswordHash="#($**#*",UserName="Colacolaaron@gmail.com",FullName="Aaron Coaclo"}
+                        new Customer{Id="58a",PasswordHash="#($**#*",UserName="Colacolaaron@gmail.com",FullName="Aaron Coaclo",DeliveryAddress="123 street",PostalCode= 0600}
                     };
               
                 Context.Customer.AddRange(CustomerData);
@@ -174,7 +174,7 @@ namespace AaronColacoAsp.NETProject.Data
 
                     var GiftReceiver = new GiftRecipient[]
                     {
-                    new GiftRecipient{GiftId="gifttest",Address="123 road avondale",City="Auckland",Name="bob", PhoneNumber="0226765505",RecipientId="1q"}
+                    new GiftRecipient{GiftId="gifttest",Name="bob", PhoneNumber="0226765505",RecipientId="1q"}
                     };
 
 

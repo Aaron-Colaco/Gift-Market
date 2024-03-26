@@ -29,8 +29,10 @@ namespace AaronColacoAsp.NETProject.Models
             [ForeignKey("Category"),Required]
             public int CategoryId { get; set; }
             public Category Categorys { get; set; }
-            
-        
+
+        [Range(1,100)]
+        public int stockLevel { get; set; } = 0;
+
 
 
 

@@ -41,7 +41,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             var TotalProductsSold = OrderItemData.Sum(a => a.Quantity);
             ViewBag.TotalProductsSold = TotalProductsSold;
 
-            var AverageOrderCost = OrderData.Average(a => a.TotalPrice);
+            decimal AverageOrderCost = OrderData.Average(a => a.TotalPrice);
             ViewBag.AverageOrderCost = AverageOrderCost;
 
 

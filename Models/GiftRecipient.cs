@@ -15,12 +15,7 @@ namespace AaronColacoAsp.NETProject.Models
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-        [Required,MaxLength(100)]
-        public  string Address { get; set; }
-
-        [Required, MaxLength(50)]
-        public string City { get; set; }
-
+ 
         [ForeignKey("Gift")]
         public string GiftId { get; set; }
         public Gift Gift { get; set; }
