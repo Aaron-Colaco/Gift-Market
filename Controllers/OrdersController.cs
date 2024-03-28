@@ -20,22 +20,22 @@ namespace AaronColacoAsp.NETProject.Controllers
         }
 
 
-        public async Task<IActionResult> SearchByCustomer(string Customer)
+        public async Task<IActionResult> SearchByCustomer(string CustomerName)
         {
-            var Results = _context.Order.Where(a => a.Customers.FullName.Contains(Customer) || a.Customers.Email.Contains(Customer) && a.StatusId != 1);
+            var Results = _context.Order.Where(a => a.Customers.FullName.Contains(CustomerName) || a.Customers.Email.Contains(CustomerName) && a.StatusId != 1).Include(a => a.Customers).Include(a => a.Status);
             return View("Index", await Results.ToListAsync());
         }
         public async Task< IActionResult> FilterOrdersByDate(DateTime Date1, DateTime Date2)
         {
 
-            var OrderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2 && a.StatusId != 1);
+            var OrderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2 && a.StatusId != 1).Include(a => a.Status).Include(a => a.Customers); ; ;
             return View("Index", await OrderData.ToListAsync());
         }
 
             // GET: Orders
             public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Order.Include(o => o.Customers).Where(a => a.StatusId != 1).Include(o => o.Status);
+            var applicationDbContext = _context.Order.Include(o => o.Customers).Include(o => o.Status);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -74,7 +74,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("OrderId,OrderTime,TotalPrice,StatusId,CustomerId")] Order order)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(order);
                 await _context.SaveChangesAsync();
@@ -115,7 +115,7 @@ namespace AaronColacoAsp.NETProject.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
