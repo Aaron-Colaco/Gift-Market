@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AaronColacoAsp.NETProject.Data;
 using AaronColacoAsp.NETProject.Models;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 
 namespace AaronColacoAsp.NETProject.Controllers
 {
@@ -44,6 +45,43 @@ namespace AaronColacoAsp.NETProject.Controllers
 
             ViewBag.OrderId = OrderId;
             return View(CheckOut);
+
+        }
+
+        public IActionResult ProcessOrder(string OrderId, string FullName, string PhoneNumber, string BoxColor, string RibbionColour,String GiftMessage, string RecipientPhone,string RecipientName, string DeliveryAddres, string City, int PostalCode)
+        {
+            var OrderToProcess = _context.Order.Where(a => a.OrderId.Equals(OrderId)).First();
+            var Customer = _context.Customer.Where(a => a.Id.Equals(OrderToProcess.CustomerId)).First();
+
+
+            Customer.FullName = FullName;
+            Customer.PhoneNumber = PhoneNumber;
+            OrderToProcess.StatusId = 2;
+            OrderToProcess.OrderTime = DateTime.Now;
+            OrderToProcess.DeliveryAddress = DeliveryAddres;
+            OrderToProcess.City = City;
+            OrderToProcess.PostalCode = PostalCode;
+
+
+            var Gift = new Gift
+            {
+                OrderId = OrderId,
+                BoxColour = BoxColor,
+                RibbonColour = RibbionColour,
+                Message = GiftMessage
+            };
+
+            var GiftRecipient = new GiftRecipient
+            {
+                GiftId = Gift.GiftId,
+                Name = RecipientName,
+                PhoneNumber = RecipientPhone
+
+            };
+
+           
+            
+
 
         }
 
