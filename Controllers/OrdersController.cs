@@ -39,6 +39,14 @@ namespace AaronColacoAsp.NETProject.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        public IActionResult CheckOut(string OrderId)
+        {
+
+            ViewBag.OrderId = OrderId;
+            return View(CheckOut);
+
+        }
+
         // GET: Orders/Details/5
         public async Task<IActionResult> Details(string id)
         {
