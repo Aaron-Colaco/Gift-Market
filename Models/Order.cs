@@ -21,10 +21,10 @@ namespace AaronColacoAsp.NETProject.Models
         public ICollection<OrderItem> OrderItems { get; set; }
 
         [Required, MaxLength(100)]
-        public string DeliveryAddress { get; set; }
+        public string DeliveryAddress { get; set; } = "";
 
         [Required, MaxLength(50)]
-        public string City { get; set; }
+        public string City { get; set; }= "";
 
         [Required, DataType(DataType.PostalCode)]
         public int PostalCode { get; set; }

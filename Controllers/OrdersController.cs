@@ -40,47 +40,66 @@ namespace AaronColacoAsp.NETProject.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        public IActionResult CheckOut(string OrderId)
+        public IActionResult CheckOut(string id)
         {
 
-            ViewBag.OrderId = OrderId;
+            ViewBag.OrderId = id;
             return View(CheckOut);
 
         }
 
-        public IActionResult ProcessOrder(string OrderId, string FullName, string PhoneNumber, string BoxColor, string RibbionColour,String GiftMessage, string RecipientPhone,string RecipientName, string DeliveryAddres, string City, int PostalCode)
+        public async Task<IActionResult> ProcessOrder(string OrderId, string FullName, string PhoneNumber, string BoxColour, string RibbionColour,String GiftMessage, string RecipientPhone,string RecipientName, string DeliveryAddress, string City, int PostalCode)
         {
-            var OrderToProcess = _context.Order.Where(a => a.OrderId.Equals(OrderId)).First();
-            var Customer = _context.Customer.Where(a => a.Id.Equals(OrderToProcess.CustomerId)).First();
 
-
-            Customer.FullName = FullName;
-            Customer.PhoneNumber = PhoneNumber;
-            OrderToProcess.StatusId = 2;
-            OrderToProcess.OrderTime = DateTime.Now;
-            OrderToProcess.DeliveryAddress = DeliveryAddres;
-            OrderToProcess.City = City;
-            OrderToProcess.PostalCode = PostalCode;
-
-
-            var Gift = new Gift
+            try
             {
-                OrderId = OrderId,
-                BoxColour = BoxColor,
-                RibbonColour = RibbionColour,
-                Message = GiftMessage
-            };
 
-            var GiftRecipient = new GiftRecipient
-            {
-                GiftId = Gift.GiftId,
-                Name = RecipientName,
-                PhoneNumber = RecipientPhone
 
-            };
+                var OrderToProcess = _context.Order.Where(a => a.OrderId.Equals(OrderId)).First();
+                var Customer = _context.Customer.Where(a => a.Id.Equals(OrderToProcess.CustomerId)).First();
 
-           
+
+                Customer.FullName = FullName;
+                Customer.PhoneNumber = PhoneNumber;
+                OrderToProcess.StatusId = 2;
+                OrderToProcess.OrderTime = DateTime.Now;
+                OrderToProcess.DeliveryAddress = DeliveryAddress;
+                OrderToProcess.City = City;
+                OrderToProcess.PostalCode = PostalCode;
+
+
+                var Gift = new Gift
+                {
+                    GiftId = OrderId,
+                    OrderId = OrderId,
+                    BoxColour = BoxColour,
+                    RibbonColour = RibbionColour,
+                    Message = GiftMessage
+                };
+
+                _context.Gift.Add(Gift);
+
+                await _context.SaveChangesAsync();
+
+                var GiftRecipient = new GiftRecipient
+                {
+                    RecipientId = OrderId,
+                    GiftId = Gift.GiftId,
+                    Name = RecipientName,
+                    PhoneNumber = RecipientPhone
+
+                };
+                _context.GiftRecipient.Add(GiftRecipient);
+
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException) {
+
+                return RedirectToAction("Error");
+            }
             
+
+            return RedirectToAction("Index");
 
 
         }
