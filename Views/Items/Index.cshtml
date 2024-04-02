@@ -38,51 +38,79 @@
 
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CostToProduce)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageURL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categorys)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CostToProduce)
-            </td>
-            <td>
-                <img style="width: 40%; height:30%;"src="@item.ImageURL" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categorys.CategoryId)
-            </td>
-            <td>
+        
+    
+    <div class="ItemsPage">
+
+        @foreach (var item in Model) {
+
+        <div class="Item">
+
+       
+        
+             <img class="ItemImgage" src="@item.ImageURL" />
+             <br />
+
+                 @Html.DisplayFor(modelItem => item.Name)
+
+                <h1> @Html.DisplayFor(modelItem => item.Price)</h1>
+           
+                
+
+
+                <p>  @Html.DisplayFor(modelItem => item.Categorys.Name) </p>
+
+
+                <p> cost to produce   @Html.DisplayFor(modelItem => item.CostToProduce) </p>
+
+
+
+
+
                 <a asp-action="Edit" asp-route-id="@item.ItemId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ItemId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ItemId">Delete</a>
-            </td>
-        </tr>
+            
+        <br /> <br />
+        </div>
+        }
+
+    </div>
+
+
+<style>
+    @@media only screen and (max-Width: 800px){
+        .ItemsPage{
+           
+            grid-template-columns: 32% 32%;
+        }
+        
+
+    }
+
+    @@media only screen and (min-Width: 800px) {
+        .ItemsPage {
+            grid-template-columns: 32% 32% 32%;
+ 
+        }
+    }
+.ItemsPage{
+    display:grid;
+    
+    
 }
-    </tbody>
-</table>
+image
+
+.ImgageBox{
+    
+    height: fit-content;
+    width:fit-content;
+    margin:auto;
+}
+
+ .ItemImgage{
+           width:75%;
+           height: auto;
+ }
+
+</style>
