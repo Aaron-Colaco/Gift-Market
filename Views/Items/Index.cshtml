@@ -5,11 +5,12 @@
 }
 
 <h1>Index</h1>
+<a asp-action="Create">Create New</a>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 
+
+
+  
 <form asp-action="Search" asp-controller="Items">
 
     <input name="SearchTerm" type="text" placeholder="Search An Item"/>
@@ -20,37 +21,41 @@
 <form asp-action="Filter" asp-controller="Items" >
 
     <label for="MinPrice">Min</label>
-    <input name="MinPrice" type="number" placeholder="0" />
+    <input name="MinPrice" type="number" placeholder="0" /><br />
     <label for="MinPrice">Max</label>
     <input name="MaxPrice" type="number" placeholder="100" />
 
-
-  <select id="Category" name="Category">
-    <option value="sweet"> sweet</option>
-    <option value="drinks"> drinks </option>
-    <option value="souvenirs"> souvenirs</option>
-    <option value="">All</option>
-
     <input type="submit" class="btn btn-primary" />
-
-    </select>
   </form>
 
+<h3>
+    <a asp-action="FilterByCategroy" asp-route-id=4> <li>Pre Packed Boxes</li></a>
+    <a asp-action="FilterByCategroy" asp-route-id=1> <li>Food</li></a>
+    <a asp-action="FilterByCategroy" asp-route-id=2> <li>Drinks</li></a>
+    <a asp-action="FilterByCategroy" asp-route-id=3> <li>Physcial Products</li> </a>
+    <a asp-action="Index" > <li>See All</li> </a>
 
 
-        
     
+</h3>
+  
+
     <div class="ItemsPage">
+        
+ 
 
         @foreach (var item in Model) {
+
+
+
 
         <div class="Item">
 
        
+      
         
              <img class="ItemImgage" src="@item.ImageURL" />
-             <br />
-
+             <br /> 
                  @Html.DisplayFor(modelItem => item.Name)
 
                 <h1> @Html.DisplayFor(modelItem => item.Price)</h1>
@@ -67,7 +72,7 @@
 
 
 
-                <a asp-action="Edit" asp-route-id="@item.ItemId">Edit</a> |
+                <a asp-action="Edit" asp-route-id="@item.ItemId">Edit</a>
                 <a asp-action="Details" asp-route-id="@item.ItemId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ItemId">Delete</a>
             
@@ -83,6 +88,9 @@
         .ItemsPage{
            
             grid-template-columns: 32% 32%;
+            grid-column-gap: 40%;
+            margin-left: 10%;
+        
         }
         
 
@@ -91,26 +99,26 @@
     @@media only screen and (min-Width: 800px) {
         .ItemsPage {
             grid-template-columns: 32% 32% 32%;
+     
  
         }
     }
 .ItemsPage{
     display:grid;
-    
-    
+        grid-column-gap: 3%;
+        margin-left: 20%;
+        grid-row-gap: 3%;
 }
-image
+items{
+    width: fit-content;
+}
 
-.ImgageBox{
-    
-    height: fit-content;
-    width:fit-content;
-    margin:auto;
-}
+
 
  .ItemImgage{
-           width:75%;
-           height: auto;
+           height: 55%;
+           width: 75%;
+           
  }
 
 </style>

@@ -108,6 +108,7 @@ namespace AaronColacoAsp.NETProject.Data
                     var CustomerData = new Customer[]
                     {
                         new Customer{Id="58a",PasswordHash="#($**#*",UserName="Colacolaaron@gmail.com",FullName="Aaron Coaclo"}
+
                     };
               
                 Context.Customer.AddRange(CustomerData);
