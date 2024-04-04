@@ -10,10 +10,10 @@
 
 
     <label for="FullName">Enter Your Full Name</label>
-    <input name="FullName" />
+    <input name="FullName" required maxlength="100" />
     <br><br />
     <label for="PhoneNumber ">Enter Your Phone Number</label>
-    <input name="PhoneNumber" />
+    <input type="number" name="PhoneNumber" maxlength="15"/>
 
     <br /> <br />
 
@@ -66,13 +66,13 @@
     <label>Delviery information If you are gifitng this order, please type detials of Recipeint</label>
 
     <label for="Address">Delivery Address</label>
-    <input name="DeliveryAddress" placeholder="123 road"/> <br>
+    <input required minlenght="10" maxlenght="100" name="DeliveryAddress" placeholder="123 road"/> <br>
     <label for="City">City</label>
-    <input name="City" placeholder="Auckland" /><br>
-    <label for="PostalCode" placeholde="0000">Postal Code</label>
-    <input name="PostalCode"/><br>
+    <input required minlenght="2" maxlenght="50" name="City" placeholder="Auckland" /><br>
+    <label maxlenght="0" for="PostalCode" placeholde="0000">Postal Code</label>
+    <input required name="PostalCode"/><br>
 
-    <input type="submit" />
+    <input vlaue="Go to Payment" type="submit" />
 
 </form>
 

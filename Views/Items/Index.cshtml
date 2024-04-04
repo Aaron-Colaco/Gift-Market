@@ -3,8 +3,12 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<div class="ItemsPage">
 <h1>Index</h1>
+
+
+<div>
+
 <a asp-action="Create">Create New</a>
 
 
@@ -14,33 +18,27 @@
 <form asp-action="Search" asp-controller="Items">
 
     <input name="SearchTerm" type="text" placeholder="Search An Item"/>
-   
-    <input type="submit" class="btn btn-primary"/>
+    <input type="submit" value="Search" class="btn btn-primary" maxlength="50"/>
 </form>
-
+<br />
 <form asp-action="Filter" asp-controller="Items" >
 
     <label for="MinPrice">Min</label>
-    <input name="MinPrice" type="number" placeholder="0" /><br />
-    <label for="MinPrice">Max</label>
-    <input name="MaxPrice" type="number" placeholder="100" />
-
-    <input type="submit" class="btn btn-primary" />
+    <input style="width: 10%;" name="MinPrice" type="number" placeholder="000" max="300" min="0" /><br />
+    <label for="MaxPrice">Max</label>
+    <input style="width: 10%;" name="MaxPrice" type="number" placeholder="100" />        
+    <input style="margin-top:-3%;"type="submit" Value ="Filter" class="btn btn-primary" max="300" min="0" />
   </form>
-
-<h3>
-    <a asp-action="FilterByCategroy" asp-route-id=4> <li>Pre Packed Boxes</li></a>
-    <a asp-action="FilterByCategroy" asp-route-id=1> <li>Food</li></a>
-    <a asp-action="FilterByCategroy" asp-route-id=2> <li>Drinks</li></a>
-    <a asp-action="FilterByCategroy" asp-route-id=3> <li>Physcial Products</li> </a>
-    <a asp-action="Index" > <li>See All</li> </a>
-
-
-    
-</h3>
+     <br />
+    <a class="FilterButtons" asp-action="FilterByCategroy" asp-route-id=4> Pre Packed Boxes</a>
+    <a class="FilterButtons"asp-action="FilterByCategroy" asp-route-id=1> Food</a>
+    <a class="FilterButtons" asp-action="FilterByCategroy" asp-route-id=2> Drinks</a>
+    <a class="FilterButtons" asp-action="FilterByCategroy" asp-route-id=3> Physcial Products</a>
+    <a class="FilterButtons"  asp-action="Index"> See All</a>
+</div>
   
-
-    <div class="ItemsPage">
+ 
+   <div class="ItemsBox">
         
  
 
@@ -73,7 +71,7 @@
 
 
                 <a asp-action="Edit" asp-route-id="@item.ItemId">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.ItemId">Details</a> |
+                <a asp-action="Details" asp-route-id="@item.ItemId">Details</a> 
                 <a asp-action="Delete" asp-route-id="@item.ItemId">Delete</a>
             
         <br /> <br />
@@ -81,6 +79,7 @@
         }
 
     </div>
+</div>
 
 
 <style>
@@ -88,8 +87,9 @@
         .ItemsPage{
            
             grid-template-columns: 32% 32%;
-            grid-column-gap: 40%;
+            grid-column-gap: 3%;
             margin-left: 10%;
+     
         
         }
         
@@ -97,28 +97,46 @@
     }
 
     @@media only screen and (min-Width: 800px) {
-        .ItemsPage {
+        .ItemsBox {
             grid-template-columns: 32% 32% 32%;
-     
- 
+            margin-top: -35%;
+            margin-left: 28%;
+        }
+
+        ItemsPage{
+            display: grid;
+            grid-template-columns: 20% 80%;
+        }
+
+        .FilterButtons {
+            display:block;
         }
     }
-.ItemsPage{
+
+.ItemsBox{
     display:grid;
         grid-column-gap: 3%;
-        margin-left: 20%;
-        grid-row-gap: 3%;
+        grid-row-gap: 4%;
 }
-items{
-    width: fit-content;
+.ItemsBox{
+    width: 80%;
+    height: 70%;
 }
 
 
 
  .ItemImgage{
-           height: 55%;
-           width: 75%;
+           height: 60%;
+           width: 70%;
            
  }
+
+ .FilterButtons{
+        text-decoration:none;
+        color: forestgreen;
+        font-size: 2rem;
+        padding-left: 3%;
+    }
+
 
 </style>
