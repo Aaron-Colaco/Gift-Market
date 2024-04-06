@@ -50,9 +50,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers)
-            </th>
+           
             <th></th>
         </tr>
     </thead>
@@ -68,10 +66,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status.StatusId)
             </td>
+     
+
             <td>
-                @Html.DisplayFor(modelItem => item.Customers.Id)
-            </td>
-            <td>
+               
                 <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> 
                 <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> 
                 <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>

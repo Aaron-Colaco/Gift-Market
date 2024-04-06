@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using AaronColacoAsp.NETProject.Data;
 using AaronColacoAsp.NETProject.Models;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using System.Security.Claims;
+using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AaronColacoAsp.NETProject.Controllers
 {
@@ -29,14 +32,14 @@ namespace AaronColacoAsp.NETProject.Controllers
         public async Task< IActionResult> FilterOrdersByDate(DateTime Date1, DateTime Date2)
         {
 
-            var OrderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2 && a.StatusId != 1).Include(a => a.Status).Include(a => a.Customers); ; ;
+            var OrderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2 && a.StatusId != 1).Include(a => a.Status).Include(a => a.Customers); 
             return View("Index", await OrderData.ToListAsync());
         }
 
             // GET: Orders
             public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Order.Include(o => o.Customers).Include(o => o.Status);
+            var applicationDbContext = _context.Order.Include(o => o.Status);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -124,7 +127,8 @@ namespace AaronColacoAsp.NETProject.Controllers
             return View(order);
         }
 
-        // GET: Orders/Create
+]        // GET: Orders/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["CustomerId"] = new SelectList(_context.Customer, "Id", "Id");
@@ -132,15 +136,15 @@ namespace AaronColacoAsp.NETProject.Controllers
             return View();
         }
 
-        // POST: Orders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderId,OrderTime,TotalPrice,StatusId,CustomerId")] Order order)
+        public async Task<IActionResult> Create([Bind("OrderTime,TotalPrice,StatusId")] Order order)
         {
             if (!ModelState.IsValid)
             {
+                order.CustomerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -7,6 +7,7 @@ namespace AaronColacoAsp.NETProject.Models
     public class Order
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderId { get; set; }
 
 
