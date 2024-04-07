@@ -24,23 +24,23 @@ namespace AaronColacoAsp.NETProject.Controllers
         }
 
 
-        public async Task<IActionResult> SearchByCustomer(string CustomerName)
-        {
-            var Results = _context.Order.Where(a => a.Customers.FullName.Contains(CustomerName) || a.Customers.Email.Contains(CustomerName) && a.StatusId != 1).Include(a => a.Customers).Include(a => a.Status);
-            return View("Index", await Results.ToListAsync());
-        }
+     //   public async Task<IActionResult> SearchByCustomer(string CustomerName)
+     //  {
+     //   var Results = _context.Order.Where(a => a.Customers.FullName.Contains(CustomerName) || a.Customers.Email.Contains(CustomerName) && a.StatusId != 1).Include(a => a.Customers).Include(a => a.Status);
+     //   return View("Index", await Results.ToListAsync());
+     //   }
         public async Task< IActionResult> FilterOrdersByDate(DateTime Date1, DateTime Date2)
         {
 
-            var OrderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2 && a.StatusId != 1).Include(a => a.Status).Include(a => a.Customers); 
+            var OrderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2 && a.StatusId != 1).Include(a => a.Status);
             return View("Index", await OrderData.ToListAsync());
         }
 
             // GET: Orders
             public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Order.Include(o => o.Status);
-            return View(await applicationDbContext.ToListAsync());
+            var Order = _context.Order.Include(o => o.Status);
+            return View(await Order.ToListAsync());
         }
 
         public IActionResult CheckOut(string id)
@@ -116,7 +116,6 @@ namespace AaronColacoAsp.NETProject.Controllers
             }
 
             var order = await _context.Order
-                .Include(o => o.Customers)
                 .Include(o => o.Status)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
@@ -127,11 +126,11 @@ namespace AaronColacoAsp.NETProject.Controllers
             return View(order);
         }
 
-]        // GET: Orders/Create
+     // GET: Orders/Create
         [Authorize]
         public IActionResult Create()
         {
-            ViewData["CustomerId"] = new SelectList(_context.Customer, "Id", "Id");
+           
             ViewData["StatusId"] = new SelectList(_context.Status, "StatusId", "StatusId");
             return View();
         }

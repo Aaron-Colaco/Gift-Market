@@ -41,10 +41,17 @@ namespace AaronColacoAsp.NETProject.Controllers
             var TotalProductsSold = OrderItemData.Sum(a => a.Quantity);
             ViewBag.TotalProductsSold = TotalProductsSold;
 
-            decimal AverageOrderCost = OrderData.Average(a => a.TotalPrice);
+            decimal AverageOrderCost;
+            if (TotalProductsSold == 0)
+            {
+                AverageOrderCost = 0;
+            }
+            else
+            {
+                AverageOrderCost = OrderData.Average(a => a.TotalPrice);
+            }
+
             ViewBag.AverageOrderCost = AverageOrderCost;
-
-
 
             return View();
 

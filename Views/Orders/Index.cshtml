@@ -7,6 +7,7 @@
 <h1>Orders Page</h1>
 
 
+/*
 <form asp-action="SearchByCustomer" asp-controller="Orders">
 
 
@@ -18,7 +19,7 @@
 
 
 
-
+/*
 <form asp-controller="Orders" asp-action="FilterOrdersByDate">
 
     <h1>Please Select Two Dates to see Orders From</h1>
@@ -42,14 +43,18 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.OrderTime)
+              Order Time
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
+              Total Price
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+              Satatus 
             </th>
+            <th>
+               Customer Id
+            </th>
+           
            
             <th></th>
         </tr>
@@ -64,8 +69,11 @@
                 @Html.DisplayFor(modelItem => item.TotalPrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status.StatusId)
+                @Html.DisplayFor(modelItem => item.Status.Name)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
      
 
             <td>
@@ -73,7 +81,10 @@
                 <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> 
                 <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> 
                 <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
-                <a asp-action="CheckOut" asp-route-id="@item.OrderId">CheckOut</a>
+
+                @if(item.StatusId == 1){
+                    <a asp-action="CheckOut" asp-route-id="@item.OrderId">CheckOut</a>
+                }
             </td>
         </tr>
 }

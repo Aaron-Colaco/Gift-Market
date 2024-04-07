@@ -29,11 +29,20 @@
             @Html.DisplayFor(model => model.Status.StatusId)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Customers)
+            @Html.DisplayNameFor(model => model.CustomerId)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customers.UserName)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerId)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DeliveryAddress)
+        <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DeliveryAddress)
+                @Html.DisplayFor(model => model.City)
+                @Html.DisplayFor(model => model.PostalCode)
+        </dd>
+        </dt>
+      
     </dl>
 </div>
 <div>

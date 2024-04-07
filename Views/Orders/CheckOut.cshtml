@@ -10,10 +10,11 @@
 
 
     <label for="FullName">Enter Your Full Name</label>
-    <input name="FullName" required maxlength="100" />
+    <input type="text" id="FullName" name="FullName" required maxlength="35" />
     <br><br />
-    <label for="PhoneNumber ">Enter Your Phone Number</label>
-    <input type="number" name="PhoneNumber" maxlength="15"/>
+    <label for="PhoneNumber">Enter Your Phone Number</label>
+    <input type="tel" id="PhoneNumber" name="PhoneNumber" required maxlength="13" />
+
 
     <br /> <br />
 
@@ -28,17 +29,20 @@
 
         <label for="RecipeintName">Gift Recipeint Name</label> 
         <br /> 
-        <input name="RecipientName" placeholder="Name"/> <br>
+        <input name="RecipientName" required maxlenght="30" placeholder="Name" /> <br>
         <br /> <br />
        
+
+
+
         <label for="BoxColour">Pick Gift Box Colour</label>
-        <input name="BoxColour" type="color" id="BoxColour" onchange="ChangeBox()" />
+        <input name="BoxColour" required type="color" id="BoxColour" onchange="ChangeBox()" />
         
         
         <br>
 
         <label  for="RibbionColour">Pick Gift Ribbon Colour</label>
-        <input name="RibbionColour" type="color" id="RibbonColour" onchange="ChangeRibbion()" /> 
+        <input name="RibbionColour" required type="color" id="RibbonColour" onchange="ChangeRibbion()" />
 
         <br />
 
@@ -55,22 +59,23 @@
         <br /> <br />
         <label for="GiftMessage">Add a card with a personalized message to your gift</label>
         <br /> <br />
-        <textarea name="GiftMessage" style="height: 30vh; width: 50%;"/></textarea>
+        <textarea required maxlenght="100"name="GiftMessage" style="height: 30vh; width: 50%;"> </textarea>
 
         <br /> <br />
      
         <label for="RibbionColour">Enter Recipients Phone number</label>
-        <input name="RecipientPhone" placeholder="000 000 0000"  /><br>
+        <input type="number" name="RecipientPhone"  maxlenght="13" required placeholder="000 000 0000"  /><br>
     </div>
 
     <label>Delviery information If you are gifitng this order, please type detials of Recipeint</label>
+    <label for="DeliveryAddress">Delivery Address</label>
+    <input type="text" id="DeliveryAddress" name="DeliveryAddress" required minlength="10" maxlength="28" placeholder="123 road" /> <br>
 
-    <label for="Address">Delivery Address</label>
-    <input required minlenght="10" maxlenght="100" name="DeliveryAddress" placeholder="123 road"/> <br>
     <label for="City">City</label>
-    <input required minlenght="2" maxlenght="50" name="City" placeholder="Auckland" /><br>
-    <label maxlenght="0" for="PostalCode" placeholde="0000">Postal Code</label>
-    <input required name="PostalCode"/><br>
+    <input type="text" id="City" name="City" required minlength="2" maxlength="50" value="Auckland" /><br>
+
+    <label for="PostalCode">Postal Code</label>
+    <input type="text" id="PostalCode" name="PostalCode" maxlength="4" required placeholder="0000" /><br>
 
     <input vlaue="Go to Payment" type="submit" />
 
@@ -83,7 +88,7 @@
 
 <script>
     function ChangeRibbion() {
-        console.log("hii")
+
     
         let Ribbon = document.querySelectorAll(".Ribbon");
 
