@@ -116,8 +116,8 @@ namespace AaronColacoAsp.NETProject.Data
 
                 var OrderData = new Order[]
                     {
-                    new Order{OrderTime = DateTime.Now, CustomerId="58a", StatusId=1,OrderId="1a",TotalPrice=0},
-                    new Order{OrderTime = DateTime.Now, CustomerId="58a", StatusId=1,OrderId="2a",TotalPrice=0},
+                    new Order{OrderTime = DateTime.Now, CustomerId="58a", StatusId=2,OrderId="1a",TotalPrice=0},
+                    new Order{OrderTime = DateTime.Now, CustomerId="58a", StatusId=2,OrderId="2a",TotalPrice=0},
                     new Order{OrderTime = DateTime.Now, CustomerId="58a", StatusId=1,OrderId="3a",TotalPrice=0},
                     new Order{OrderTime = DateTime.Now, CustomerId="58a", StatusId=1,OrderId="4a",TotalPrice=0}
                     };

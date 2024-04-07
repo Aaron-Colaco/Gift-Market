@@ -59,10 +59,11 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
                 var OrderToProcess = _context.Order.Where(a => a.OrderId.Equals(OrderId)).First();
-                var Customer = _context.Customer.Where(a => a.Id.Equals(OrderToProcess.CustomerId)).First();
+                var Customer = _context.Users.Where(a => a.Id.Equals(User.FindFirstValue(ClaimTypes.NameIdentifier))).First();
+               
 
-
-                Customer.FullName = FullName;
+                
+                
                 Customer.PhoneNumber = PhoneNumber;
                 OrderToProcess.StatusId = 2;
                 OrderToProcess.OrderTime = DateTime.Now;
