@@ -59,7 +59,7 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
                 var OrderToProcess = _context.Order.Where(a => a.OrderId.Equals(OrderId)).First();
-                var Customer = _context.Users.Where(a => a.Id.Equals(User.FindFirstValue(ClaimTypes.NameIdentifier))).First();
+                var Customer = _context.Users.Where(a => a.Id.Equals(OrderToProcess.CustomerId)).First();
                
 
                 
