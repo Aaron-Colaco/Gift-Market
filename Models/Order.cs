@@ -14,7 +14,7 @@ namespace AaronColacoAsp.NETProject.Models
         [Required]
         public DateTime OrderTime { get; set; } = DateTime.Now;
 
-        [DataType(DataType.Currency),Range(0,1000)]
+        [DataType(DataType.Currency),Range(1,1000)]
         public decimal TotalPrice { get; set; }
 
         public Gift Gifts { get; set; }

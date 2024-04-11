@@ -13,11 +13,11 @@ namespace AaronColacoAsp.NETProject.Models
             public string Name { get; set; }
 
 
-            [Required,DataType(DataType.Currency),Range(0,600)]
+            [Required,DataType(DataType.Currency),Range(1,600)]
             public decimal Price { get; set; }
 
 
-            [Required,DataType(DataType.Currency),Range(0,500)]
+            [Required,DataType(DataType.Currency),Range(1,500)]
             public decimal CostToProduce { get; set; }
 
             [MaxLength(1000),DataType(DataType.Url)]
@@ -30,8 +30,8 @@ namespace AaronColacoAsp.NETProject.Models
             public int CategoryId { get; set; }
             public Category Categorys { get; set; }
 
-        [Range(1,100)]
-        public int stockLevel { get; set; } = 0;
+            [Range(1,100)]
+            public int stockLevel { get; set; } = 0;
 
 
 
