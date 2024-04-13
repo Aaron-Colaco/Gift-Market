@@ -42,6 +42,21 @@
                 @Html.DisplayFor(model => model.PostalCode)
         </dd>
         </dt>
+
+        <dt class="col-sm-2">
+           Gift Details
+        <dd class="col-sm-10">
+            <h3>Gift Recipient Name</h3>   @Html.DisplayFor(model => model.Gifts.giftRecipient.Name)
+            <h3>Gift Recipient Number </h3>   @Html.DisplayFor(model => model.Gifts.giftRecipient.PhoneNumber)
+           
+
+             <h3>Gift Message</h3>   @Html.DisplayFor(model => model.Gifts.Message)
+            <h3>Ribbion Colour</h3>   @Html.DisplayFor(model => model.Gifts.RibbonColour)
+            <h3>Box Colour Colour</h3>   @Html.DisplayFor(model => model.Gifts.BoxColour)
+
+              
+        </dd>
+        </dt>
       
     </dl>
 </div>

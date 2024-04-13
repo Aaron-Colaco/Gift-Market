@@ -24,22 +24,22 @@ namespace AaronColacoAsp.NETProject.Controllers
         }
 
 
-     //   public async Task<IActionResult> SearchByCustomer(string CustomerName)
-     //  {
-     //   var Results = _context.Order.Where(a => a.Customers.FullName.Contains(CustomerName) || a.Customers.Email.Contains(CustomerName) && a.StatusId != 1).Include(a => a.Customers).Include(a => a.Status);
-     //   return View("Index", await Results.ToListAsync());
-     //   }
+       public async Task<IActionResult> SearchByCustomer(string CustomerName)
+      {
+        var Results = _context.Order.Where(a => a.Customers.FullName.Contains(CustomerName) || a.Customers.Email.Contains(CustomerName) && a.StatusId != 1).Include(a => a.Customers).Include(a => a.Status);
+        return View("Index", await Results.ToListAsync());
+       }
         public async Task< IActionResult> FilterOrdersByDate(DateTime Date1, DateTime Date2)
         {
 
-            var OrderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2 && a.StatusId != 1).Include(a => a.Status);
+            var OrderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2 && a.StatusId != 1).Include(a => a.Status).Include(a => a.Customers);
             return View("Index", await OrderData.ToListAsync());
         }
 
             // GET: Orders
             public async Task<IActionResult> Index()
         {
-            var Order = _context.Order.Include(o => o.Status);
+            var Order = _context.Order.Include(o => o.Status).Include(a => a.Customers); 
             return View(await Order.ToListAsync());
         }
 
@@ -59,11 +59,11 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
                 var OrderToProcess = _context.Order.Where(a => a.OrderId.Equals(OrderId)).First();
-                var Customer = _context.Users.Where(a => a.Id.Equals(OrderToProcess.CustomerId)).First();
-               
+                var Customer = _context.Customer.Where(a => a.Id.Equals(OrderToProcess.CustomerId)).First();
 
-                
-                
+
+
+                Customer.FullName = FullName;
                 Customer.PhoneNumber = PhoneNumber;
                 OrderToProcess.StatusId = 2;
                 OrderToProcess.OrderTime = DateTime.Now;
@@ -118,6 +118,8 @@ namespace AaronColacoAsp.NETProject.Controllers
 
             var order = await _context.Order
                 .Include(o => o.Status)
+                .Include(a => a.Customers)
+                .Include(a => a.Gifts).ThenInclude(a => a.giftRecipient)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
             {

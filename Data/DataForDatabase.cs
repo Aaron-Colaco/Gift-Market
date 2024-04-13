@@ -163,7 +163,7 @@ namespace AaronColacoAsp.NETProject.Data
                     var GiftsData = new Gift[]
                     {
                     new Gift {OrderId ="1a",BoxColour="red",RibbonColour="purple",Message="thank you very Much",GiftId="gifttest"},
-                    new Gift {OrderId ="2a",BoxColour="green",RibbonColour="purple",Message="thank you very Much Bob",GiftId="GiftIDtest2"},
+                    new Gift {OrderId ="2a",BoxColour="green",RibbonColour="purple",Message="thank you very Much Bob"}
 
                     };
 
@@ -177,6 +177,7 @@ namespace AaronColacoAsp.NETProject.Data
                     var GiftReceiver = new GiftRecipient[]
                     {
                     new GiftRecipient{GiftId="gifttest",Name="bob", PhoneNumber="0226765505",RecipientId="1q"}
+                   
                     };
 
 

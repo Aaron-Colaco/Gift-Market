@@ -54,6 +54,9 @@
             <th>
                Customer Id
             </th>
+             <th>
+               Customer Email
+            </th>
            
            
             <th></th>
@@ -72,7 +75,8 @@
                 @Html.DisplayFor(modelItem => item.Status.Name)
             </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CustomerId)
+                    @Html.DisplayFor(modelItem => item.Customers.Email)
+        
                 </td>
      
 
