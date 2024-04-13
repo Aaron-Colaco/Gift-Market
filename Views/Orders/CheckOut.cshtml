@@ -6,20 +6,10 @@
 
 <form asp-controller="Orders" asp-action="ProcessOrder">
 
-    <h1>Please Enter Your Details</h1>
-
-
-    <label for="FullName">Enter Your Full Name</label>
-    <input type="text" id="FullName" name="FullName" required maxlength="35" />
-    <br><br />
-    <label for="PhoneNumber">Enter Your Phone Number</label>
-    <input type="tel" id="PhoneNumber" name="PhoneNumber" required maxlength="13" />
-
-
-    <br /> <br />
+    
 
       <h1>
-            Would You like To make this a gift
+            Would You like To Make <br />This The Perfect Gift
        </h1>
    
     <div id="GiftDetials">
@@ -27,27 +17,22 @@
         <input name="OrderId" value="@ViewBag.OrderId" type="hidden"/>
 
 
-        <label for="RecipeintName">Gift Recipeint Name</label> 
-        <br /> 
-        <input name="RecipientName" required maxlenght="30" placeholder="Name" /> <br>
-        <br /> <br />
        
-
-
-
+       
         <label for="BoxColour">Pick Gift Box Colour</label>
         <input name="BoxColour" required type="color" id="BoxColour" onchange="ChangeBox()" />
         
         
-        <br>
+        <br /> 
+       
 
         <label  for="RibbionColour">Pick Gift Ribbon Colour</label>
-        <input name="RibbionColour" required type="color" id="RibbonColour" onchange="ChangeRibbion()" />
+        <input  name="RibbionColour" required type="color" id="RibbonColour" onchange="ChangeRibbion()" />
 
-        <br />
+        <br /> <br  /><br /> 
 
 
-        <svg height="40vh" width="50%" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        <svg class="GiftBox" height="40vh" width="50%" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
        
         
         viewBox="0 0 512 512" xml:space="preserve">
@@ -59,18 +44,34 @@
         <br /> <br />
         <label for="GiftMessage">Add a card with a personalized message to your gift</label>
         <br /> <br />
-        <textarea required maxlenght="100"name="GiftMessage" style="height: 30vh; width: 50%;"> </textarea>
+        <textarea required maxlenght="100"name="GiftMessage" style="height: 30vh;"> </textarea>
 
         <br /> <br />
      
-        <label for="RibbionColour">Enter Recipients Phone number</label>
-        <input type="number" name="RecipientPhone"  maxlenght="13" required placeholder="000 000 0000"  /><br>
+        <label for="RibbionColour">Enter Recipients Phone Number</label>
+        <input name="RecipientPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="eg 022 656 5505 "required/>
+        <br>
+        <label for="RecipeintName">Gift Recipeint Name</label>
+
+      <input name="RecipientName" required maxlenght="30" placeholder="Name" /> <br>
+        <br /> 
     </div>
+    <br />
+    <h3>Please Enter Your Details</h3>
+   
+
+    <label for="FullName">Enter Your Full Name</label>
+    <input type="text" id="FullName" name="FullName" required maxlength="35" title="Enter your Name" />
+    <br />
+    <label for="PhoneNumber">Enter Your Phone Number</label>
+    <input name="RecipientPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="eg 022 656 5505 " required />
+    <br /> <br />
 
     <label>Delviery information If you are gifitng this order, please type detials of Recipeint</label>
+    <br />
     <label for="DeliveryAddress">Delivery Address</label>
     <input type="text" id="DeliveryAddress" name="DeliveryAddress" required minlength="10" maxlength="28" placeholder="123 road" /> <br>
-
+    
     <label for="City">City</label>
     <input type="text" id="City" name="City" required minlength="2" maxlength="50" value="Auckland" /><br>
 
@@ -82,7 +83,50 @@
 </form>
 
 
-<br>
+<style>
+  textarea{
+    border-radius: 28px;
+    border-color: black;
+  }
+
+    #BoxColour, #RibbonColour {
+      border-radius: 50px;
+      border: none;
+      padding: 10px;
+      height: 5vh;
+        width: 6%;
+      
+      
+      
+  }
+
+    @@media only screen and (max-Width: 1200px) {
+
+        textarea {
+        margin: auto;
+        width: 100%;
+        
+        }
+
+    }
+
+    @@media only screen and (min-Width: 1200px) {
+
+        textarea {
+            margin: auto;
+            width: 50%;
+
+            
+        }
+  
+
+    }
+
+
+
+
+</style>
+
 
 
 
