@@ -8,9 +8,8 @@ namespace AaronColacoAsp.NETProject.Models
         [MaxLength(100)]
         public string FullName { get; set; }
 
-     
 
-        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\+?\d{1,3}[- ]?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}$", ErrorMessage = "Invalid phone number format")]
         public int PhoneNumebr { get; set; }
 
         public List <Order> Orders{ get; set; }

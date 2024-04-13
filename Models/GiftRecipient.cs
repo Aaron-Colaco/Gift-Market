@@ -12,7 +12,7 @@ namespace AaronColacoAsp.NETProject.Models
         [Required,MaxLength(50)]
         public string Name { get; set; }
 
-        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\+?\d{1,3}[- ]?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}$", ErrorMessage = "Invalid phone number format")]
         public string PhoneNumber { get; set; }
 
  
