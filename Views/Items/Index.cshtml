@@ -4,12 +4,13 @@
     ViewData["Title"] = "Index";
 }
 <div class="ItemsPage">
-<h1>Index</h1>
+<h1>Shop & <br />Gift</></h1>
 
 
 <div>
-
+    @if(User.IsInRole("Admin")){
 <a asp-action="Create">Create New</a>
+    }
 
 
 
@@ -17,18 +18,19 @@
 
 <form asp-action="Search" asp-controller="Items">
 
-    <input name="SearchTerm" type="text" placeholder="Search An Item"/>
-    <input type="submit" value="Search" class="btn btn-primary" maxlength="50"/>
+    <input style="border-width: 2px; border-style:solid; height:4vh; border-radius:2px;"name="SearchTerm" type="text" placeholder="Search Item"/>
+            <input value="Search" style=" background-color: #245b73; color:white;" class="btn btn-outline-primary" type="submit" />
+
 </form>
 <br />
 
 <form asp-action="Filter" asp-controller="Items" >
 
-    <label for="MinPrice">Min</label>
-    <input style="width: 10%;" name="MinPrice" type="number" placeholder="000" max="300" min="0" /><br />
-    <label for="MaxPrice">Max</label>
-    <input style="width: 10%;" name="MaxPrice" type="number" placeholder="100" />        
-    <input style="margin-top:-3%;"type="submit" Value ="Filter" class="btn btn-primary" max="300" min="0" />
+
+            <input style="width: 5%; border-width: 2px; border-style:solid; height:4vh; border-radius:2px;" name="MinPrice" type="number" placeholder="Min" max="300" min="0" />
+   
+            <input style="width: 5%; border-width: 2px; border-style:solid; height:4vh; border-radius:2px;" name="MaxPrice" type="number" placeholder="Max" />
+            <input type="submit" Value="Filter" style="background-color: #245b68; color:white;" class="btn btn-outline-primary" />
   </form>
      <br />
     <a class="FilterButtons" asp-action="FilterByCategroy" asp-route-id=4> Pre Packed Boxes</a>
@@ -64,6 +66,13 @@
 
                 <p>  @Html.DisplayFor(modelItem => item.Categorys.Name) </p>
 
+
+                <form>
+
+
+                 <input type="submit" value="Add To Cart" class="AddToCart"/>
+                </form>
+
                 @if(User.IsInRole("Admin")){
 
                 <p> cost to produce   @Html.DisplayFor(modelItem => item.CostToProduce) </p>
@@ -91,9 +100,9 @@
            
             grid-template-columns: 32% 32%;
             grid-column-gap: 3%;
-            grid-row-gap: 2%;
             margin-left: 10%;
-           
+            width: 96%;
+        grid-row-gap: 1%;
      
         
         }
@@ -121,7 +130,7 @@
 .ItemsBox{
     display:grid;
         grid-column-gap: 3%;
-        grid-row-gap: 4%;
+        grid-row-gap: 3%;
 }
 .ItemsBox{
     width: 80%;
@@ -138,10 +147,40 @@
 
  .FilterButtons{
         text-decoration:none;
-        color: forestgreen;
+        color: #245b73;
         font-size: 2rem;
-        padding-left: 3%;
+       
     }
+
+
+
+.AddToCart{
+
+font-size: 1rem;
+color: #fff;
+border: none;
+ background-color: #245b73;
+padding: 10px 30px;
+border-radius: 50px;
+transition : 1000ms;
+align-items: center;
+cursor: pointer;
+}
+
+  .AddToCart:hover {
+transition : 1000ms;
+padding: 10px 50px;
+background-color: #1463c9;
+border: solid 2px #0066cc;
+}
+
+
+
+</style>
+
+
+
+<button class="btn"></button>
 
 
 </style>
