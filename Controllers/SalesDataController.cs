@@ -1,4 +1,5 @@
 ﻿using AaronColacoAsp.NETProject.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,12 +12,13 @@ namespace AaronColacoAsp.NETProject.Controllers
         {
             _context = context;
         }
-
-        public IActionResult DatePicker()
+        [Authorize(Roles = "Admin")]
+       public IActionResult DatePicker()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult SalesDashboard(DateTime Date1, DateTime Date2)
         {
 

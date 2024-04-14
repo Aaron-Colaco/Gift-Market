@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AaronColacoAsp.NETProject.Data;
 using AaronColacoAsp.NETProject.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AaronColacoAsp.NETProject.Controllers
 {
@@ -20,7 +21,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         }
 
 
-        // GET: Items
+        
         public async Task<IActionResult> Search(string SearchTerm)
         {
             var Results = _context.Item.Where(i => i.Name.Contains(SearchTerm)).Include(i => i.Categorys);
@@ -72,7 +73,10 @@ namespace AaronColacoAsp.NETProject.Controllers
             return View(item);
         }
 
-        // GET: Items/Create
+
+
+        [Authorize(Roles = "Admin")]
+       
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Name");
@@ -84,6 +88,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("ItemId,Name,Price,CostToProduce,ImageURL,Description,CategoryId")] Item item)
         {
             if (!ModelState.IsValid)
@@ -97,6 +102,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         }
 
         // GET: Items/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -118,6 +124,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ItemId,Name,Price,CostToProduce,ImageURL,Description,CategoryId")] Item item)
         {
             if (id != item.ItemId)
@@ -150,6 +157,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         }
 
         // GET: Items/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -169,6 +177,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         }
 
         // POST: Items/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

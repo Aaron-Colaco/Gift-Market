@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AaronColacoAsp.NETProject.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,8 +24,8 @@ namespace AaronColacoAsp.NETProject.Controllers
             _context = context;
         }
 
-
-       public async Task<IActionResult> SearchByCustomer(string CustomerName)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> SearchByCustomer(string CustomerName)
       {
         var Results = _context.Order.Where(a => a.Customers.FullName.Contains(CustomerName) || a.Customers.Email.Contains(CustomerName) && a.StatusId != 1).Include(a => a.Customers).Include(a => a.Status);
         return View("Index", await Results.ToListAsync());
@@ -39,8 +40,17 @@ namespace AaronColacoAsp.NETProject.Controllers
             // GET: Orders
             public async Task<IActionResult> Index()
         {
-            var Order = _context.Order.Include(o => o.Status).Include(a => a.Customers); 
-            return View(await Order.ToListAsync());
+            if (User.IsInRole("Admin"))
+            {
+                var Order = _context.Order.Include(o => o.Status).Include(a => a.Customers);
+                return View(await Order.ToListAsync());
+            }
+            else
+            {
+                var Order = _context.Order.Include(o => o.Status).Include(a => a.Customers).Where(a => a.CustomerId == User.FindFirstValue(ClaimTypes.NameIdentifier));
+                return View(await Order.ToListAsync());
+            }
+          
         }
 
         public IActionResult CheckOut(string id)
