@@ -163,7 +163,7 @@ namespace AaronColacoAsp.NETProject.Data
                     var GiftsData = new Gift[]
                     {
                     new Gift {OrderId ="1a",BoxColour="red",RibbonColour="purple",Message="thank you very Much",GiftId="gifttest"},
-                    new Gift {OrderId ="2a",BoxColour="green",RibbonColour="purple",Message="thank you very Much Bob"}
+                    new Gift {OrderId ="2a",BoxColour="green",RibbonColour="purple",Message="thank you very Much Bob", GiftId="gifttest2"}
 
                     };
 

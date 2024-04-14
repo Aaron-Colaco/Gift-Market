@@ -7,7 +7,7 @@ namespace AaronColacoAsp.NETProject
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +17,8 @@ namespace AaronColacoAsp.NETProject
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
@@ -49,7 +50,45 @@ namespace AaronColacoAsp.NETProject
 
             DataForDatabase.AddData(app);
 
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+         
+
+            
+                    if(!await roleManager.RoleExistsAsync("Admin"))
+                    await roleManager.CreateAsync(new IdentityRole("Admin"));
+                
+            }
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Customer>>();
+
+
+
+                string adminID = "87612";
+                string AdminPassword ="AdminPassword@2024";
+
+
+                    if (await userManager.FindByEmailAsync("Admin@GiftMarket.co.nz") == null)
+                {
+                    var user = new Customer();
+                    user.Id = adminID;
+                    user.UserName = "Admin@GiftMarket.co.nz"; 
+                    user.Email = "Admin@GiftMarket.co.nz";
+                     
+
+                    await userManager.CreateAsync(user, AdminPassword);
+                    await userManager.AddToRoleAsync(user, "Admin");
+
+                }
+               
+            }
+
             app.Run();
+
         }
     }
 }

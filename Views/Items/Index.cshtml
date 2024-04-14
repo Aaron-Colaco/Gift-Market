@@ -64,6 +64,7 @@
 
                 <p>  @Html.DisplayFor(modelItem => item.Categorys.Name) </p>
 
+                @if(User.IsInRole("Admin")){
 
                 <p> cost to produce   @Html.DisplayFor(modelItem => item.CostToProduce) </p>
 
@@ -74,6 +75,7 @@
                 <a asp-action="Edit" asp-route-id="@item.ItemId">Edit</a>
                 <a asp-action="Details" asp-route-id="@item.ItemId">Details</a> 
                 <a asp-action="Delete" asp-route-id="@item.ItemId">Delete</a>
+                }
             
         <br /> <br />
         </div>
@@ -89,7 +91,9 @@
            
             grid-template-columns: 32% 32%;
             grid-column-gap: 3%;
+            grid-row-gap: 2%;
             margin-left: 10%;
+           
      
         
         }
@@ -99,14 +103,14 @@
 
     @@media only screen and (min-Width: 800px) {
         .ItemsBox {
-            grid-template-columns: 32% 32% 32%;
+            grid-template-columns: 30% 30% 30%;
             margin-top: -35%;
             margin-left: 28%;
         }
 
         ItemsPage{
             display: grid;
-            grid-template-columns: 20% 80%;
+            grid-template-columns: 16% 75%;
         }
 
         .FilterButtons {
