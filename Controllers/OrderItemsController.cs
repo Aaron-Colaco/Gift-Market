@@ -27,15 +27,19 @@ namespace AaronColacoAsp.NETProject.Controllers
                 ItemId = ItemId,
                 Quantity = 1
             };
+            String OrderId = "1a";
             _context.OrderItem.Add(OrderItem);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new {id = OrderId});
         }
         
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string id)
         {
-            var applicationDbContext = _context.OrderItem.Include(o => o.Items).Include(o => o.Orders);
+            ViewBag.OrderId = id;
+            var Order = _context.Order.Where(a => a.OrderId == id).First();
+            ViewBag.StatusId = Order.StatusId;
+            var applicationDbContext = _context.OrderItem.Include(o => o.Items).Where(a => a.OrderId == id).Include(o => o.Orders);
             return View(await applicationDbContext.ToListAsync());
         }
 

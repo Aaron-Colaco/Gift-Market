@@ -6,8 +6,6 @@
 }
 
 <h1>My Cart </h1>
-<h3>Order Cost @OrderCost</h3>
-
 
 <table class="table">
     <thead>
@@ -62,3 +60,14 @@
 }
     </tbody>
 </table>
+
+<h3>Order Cost @OrderCost</h3>
+
+@if (ViewBag.StatusId == 1)
+{
+    <a asp-controller="Orders" asp-action="CheckOut" asp-route-id="@ViewBag.OrderId">CheckOut</a>
+}
+else
+{
+    <h1>Thank You For Ordering</h1>
+}

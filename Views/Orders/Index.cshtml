@@ -35,14 +35,12 @@
     </form>
 }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-              Order Time
+              Order Created
             </th>
             <th>
               Total Price
@@ -53,14 +51,19 @@
             <th>
                Customer Id
             </th>
+              @if(User.IsInRole("Admin")){
              <th>
                Customer Email
             </th>
+              }
            
            
             <th></th>
         </tr>
     </thead>
+   
+    
+    
     <tbody>
 @foreach (var item in Model) {
         <tr>
@@ -73,27 +76,36 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status.Name)
             </td>
+            <td>
+                    <a asp-controller="OrderItems" asp-action="Index" asp-route-id="@item.OrderId">See Items</a>
+                </td>
+
+            @if(User.IsInRole("Admin")){
                 <td>
                     @Html.DisplayFor(modelItem => item.Customers.Email)
+                        <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
         
                 </td>
-     
+            }
+            
+          
 
             <td>
-               
-                <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> 
-
+         
                     @if (item.StatusId != 1)
                     {
                         <a asp-action="Details" asp-route-id="@item.OrderId">Details</a>
                     }
-                <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+             
 
-                @if(item.StatusId == 1){
-                    <a asp-action="CheckOut" asp-route-id="@item.OrderId">CheckOut</a>
-                }
+             
             </td>
+                <td>
+                 
+                </td>
         </tr>
 }
-    </tbody>
+  
+
+</tbody>
 </table>
