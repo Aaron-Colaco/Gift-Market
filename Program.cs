@@ -1,5 +1,6 @@
 using AaronColacoAsp.NETProject.Data;
 using AaronColacoAsp.NETProject.Models;
+using AaronColacoAsp.NETProject.Stripe_Payment_API;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,9 @@ namespace AaronColacoAsp.NETProject
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
+            var key = builder.Configuration.GetValue<string>("StripeSettings:SecretKey");
 
             builder.Services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
