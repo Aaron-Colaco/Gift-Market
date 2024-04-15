@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AaronColacoAsp.NETProject.Data;
 using AaronColacoAsp.NETProject.Models;
+using System.Security.Claims;
+using NuGet.Protocol.Core.Types;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AaronColacoAsp.NETProject.Controllers
 {
@@ -21,19 +24,51 @@ namespace AaronColacoAsp.NETProject.Controllers
 
         public async Task<IActionResult> AddToCart(int ItemId)
         {
+            string OrderId = await CheckUserOrders();
             var OrderItem = new OrderItem
             {         
-                OrderId = "1a",
+                OrderId = OrderId,
                 ItemId = ItemId,
                 Quantity = 1
             };
-            String OrderId = "1a";
+          
             _context.OrderItem.Add(OrderItem);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", new {id = OrderId});
         }
-        
+
+        [HttpPost]
+        [Authorize]
+        public async Task<string> CheckUserOrders()
+        {
+
+            var Customer = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var UserOrder = _context.Order.Where(a => a.CustomerId == Customer).FirstOrDefault();
+
+
+            if (UserOrder == null)
+            {
+
+                    var NewOrder = new Order
+                    {
+                        CustomerId = Customer,
+                        StatusId = 1,
+                        OrderTime = DateTime.Now,
+                    };
+
+                    _context.Order.Add(NewOrder);
+                    await _context.SaveChangesAsync();
+
+                    return NewOrder.OrderId;
+            }
+            else
+            {
+                return (UserOrder.OrderId);
+            }
+        }
+
         public async Task<IActionResult> Index(string id)
         {
             ViewBag.OrderId = id;
