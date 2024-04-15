@@ -37,15 +37,33 @@ namespace AaronColacoAsp.NETProject.Controllers
         public async Task<IActionResult> AddToCart(int ItemId)
         {
             string OrderId = await CheckUserOrders();
-            var OrderItem = new OrderItem
-            {
-                OrderId = OrderId,
-                ItemId = ItemId,
-                Quantity = 1
-            };
 
-            _context.OrderItem.Add(OrderItem);
+
+            var ItemsInOrder = _context.OrderItem.Where(a => a.OrderId == OrderId).Include(a => a.Items);
+
+
+            var ExistingItem = ItemsInOrder.Where(a => a.ItemId == ItemId).FirstOrDefault();
+
+            if (ExistingItem != null)
+            {
+                ExistingItem.Quantity++;
+          
+            }
+            else
+            {
+
+                var OrderItem = new OrderItem
+                {
+                    OrderId = OrderId,
+                    ItemId = ItemId,
+                    Quantity = 1
+                };
+
+                _context.OrderItem.Add(OrderItem);
+            }
+
             await _context.SaveChangesAsync();
+
 
             return RedirectToAction("Index", new { id = OrderId });
         }
@@ -84,20 +102,22 @@ namespace AaronColacoAsp.NETProject.Controllers
         public async Task<IActionResult> Index(string id)
         {
             ViewBag.OrderId = id;
-            var applicationDbContext = _context.OrderItem.Include(o => o.Items).Where(a => a.OrderId == id).Include(o => o.Orders);
-            return View(await applicationDbContext.ToListAsync());
+            var Order = _context.Order.Where(a => a.OrderId == id).First();
+            ViewBag.StatusId = Order.StatusId;
+
+            var OrderItems = _context.OrderItem.Include(o => o.Items).Where(a => a.OrderId == id).Include(o => o.Orders);
+            
+
+
+
+            return View(await OrderItems.ToListAsync());
         }
 
         public async Task<IActionResult> ProcessOrder(string OrderId, string FullName, string PhoneNumber, string BoxColour, string RibbionColour, String GiftMessage, string RecipientPhone, string RecipientName, string DeliveryAddress, string City, int PostalCode)
         {
 
-            try
-            {
-
-
                 var OrderToProcess = _context.Order.Where(a => a.OrderId.Equals(OrderId)).First();
                 var Customer = _context.Customer.Where(a => a.Id.Equals(OrderToProcess.CustomerId)).First();
-
 
 
                 Customer.FullName = FullName;
@@ -133,12 +153,8 @@ namespace AaronColacoAsp.NETProject.Controllers
                 _context.GiftRecipient.Add(GiftRecipient);
 
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-
-                return RedirectToAction("Error");
-            }
+            
+           
 
 
             return RedirectToAction("Payment", new{ OrderId = OrderId });
@@ -160,11 +176,8 @@ namespace AaronColacoAsp.NETProject.Controllers
             var Options = new SessionCreateOptions
             {  
                 LineItems = new List<SessionLineItemOptions>(),
-                CustomerEmail = User.Identity.Name,
-                SuccessUrl ="https://Localhost:7002/Home",
-                Mode = "payment"
-                
-            };
+                CustomerEmail = User.Identity.Name, SuccessUrl ="https://Localhost:7002/Home",Mode = "payment", ClientReferenceId = User.FindFirstValue(ClaimTypes.NameIdentifier),           
+             };
 
             foreach (var item in ItemsInOrder)
             {
@@ -189,6 +202,8 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
             return Redirect(session.Url);
+
+
 
 
         }
