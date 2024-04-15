@@ -1,0 +1,64 @@
+﻿@model IEnumerable<AaronColacoAsp.NETProject.Models.OrderItem>
+
+@{
+    ViewData["Title"] = "Index";
+    decimal OrderCost = 0;
+}
+
+<h1>My Cart </h1>
+<h3>Order Cost @OrderCost</h3>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Item
+            </th>
+            <th>
+               Quantity
+            </th>
+            <th>
+               Orders 
+            </th>
+          
+            <th>
+               Price
+            </th>
+            <th>
+               Total Price
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        
+@foreach (var OrderItem in Model) {
+        <tr>
+             <td>
+              @OrderItem.Items.Name
+             </td>
+            <td>
+              @OrderItem.Quantity
+            </td>
+            <td>
+             @OrderItem.Orders.OrderId
+            </td>
+         
+               <td>
+             @OrderItem.Items.Price
+            </td>
+                <td>
+                    @{
+                        decimal CostOfItem = OrderItem.Items.Price * OrderItem.Quantity;
+                        OrderCost = OrderCost + CostOfItem;                                              
+                    }
+                    <h3> @CostOfItem </h3>
+
+                </td>
+
+
+        </tr>
+}
+    </tbody>
+</table>

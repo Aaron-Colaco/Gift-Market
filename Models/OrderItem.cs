@@ -13,6 +13,7 @@ namespace AaronColacoAsp.NETProject.Models
     {
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderItemId { get; set; }
 
         [Range(0,10),Required]

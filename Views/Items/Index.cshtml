@@ -67,9 +67,9 @@
                 <p>  @Html.DisplayFor(modelItem => item.Categorys.Name) </p>
 
 
-                <form>
+                <form asp-controller="OrderItems" asp-action="AddToCart">
 
-
+                 <input type="hidden" name="ItemId" value="@item.ItemId" />
                  <input type="submit" value="Add To Cart" class="AddToCart"/>
                 </form>
 
