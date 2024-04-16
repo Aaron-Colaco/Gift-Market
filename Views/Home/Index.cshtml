@@ -7,7 +7,8 @@
 <h1 id="MainTitle"> Kiwi Gift Market</h1>
 <p class="Introduction">
         Here at Kiwi Market, we are passionate about all things gifts. You can enjoy shopping our range of 100% New Zealand products and enjoy free delivery on your order
-        <br />
+        <br />  <br />
+
 
 
       <a asp-action="Index" asp-controller="Items">
@@ -19,7 +20,7 @@
 <section id="Gifts">
 
 <div style="margin-left: 10%;">
-    <h5 style="font-size: 3rem; margin-top: 5%;">Customies the prefect<br> Gift for a friend</h1>
+    <h1 style="font-size: 3rem; margin-top: 5%;">Customies the prefect<br> Gift for a friend</h1>
 </div>
     <Br /><Br />
 
@@ -31,8 +32,8 @@ viewBox="0 0 512 512" xml:space="preserve">
 </svg>
 
 </div>
-    <p style="text-align: center; ">
-        When checking out clcik order as gift.<br> You can cusotmise the colour of your box and ribbon and add a personlized message to the recpiant fo the gift FREE for a limited time only.<br> birthday gifts or a great way to say thanks you can wriye out owen message and have your order shipped right to the recpiants door step.<br />
+    <p style="text-align: center; font-size: 1rem">
+        When checking out clcik order as gift.<br> You can cusotmise the colour of your box and ribbon and add a personlized message to the recpiant fo the gift FREE for a limited time only.<br> birthday gifts or a great way to say thanks you can wriye out owen message and have your order shipped right to the recpiants door step.<br /><br />
 
 
         <a asp-action="Index" asp-controller="Items">
@@ -42,17 +43,91 @@ viewBox="0 0 512 512" xml:space="preserve">
     </p>
 </section>
 
+
+<section class="InfoBoxSection">
+
+    <div class="InfoBoxes">
+        <div class="Info">
+
+    
+
+        </div>
+
+        <div class="Info">
+        </div>
+        <div class="Info">
+        </div>
+        <div class="Info">
+        </div>
+    </div>
+</section>
+
+<section id="boxess">
+  
+    <div id="div2" class="colored-div">
+        <h1>
+            100%<br>
+            New <br>
+            Zealnad <br>
+            Premium<br>
+            Products.
+        </h1>
+     
+    </div>
+    <div id="div1" class="colored-div" style="background-color: #ebebeb;">
+        <h1>
+            Wide range<br>
+            For your self
+
+            <br>
+            Or a perfect Git
+        </h1>
+      
+        <Button class="shopNow">
+            Shop Now
+        </Button>
+    </div>
+    <div id="div3" class="colored-div">
+        <h1 style="color: white;">
+            Fresh <br>
+            Food.<br>
+            Fast<br>
+            Free<br>
+            Dilvery<br> Included in your purchase.
+        </h1>
+       
+    </div>
+
+   <section/>
+
+
+
 <style>
     @@media only screen and (max-Width: 800px) {
         #Heading {
+            margin-top: -3%;
             width: 100%;
             height: 80vh;
             background-color: #235b73
+
         }
+
+            .colored-div {
+                width: 90%;
+                margin-left: 5%;
+                margin-right: 5%;
+                margin-top: 5%;
+            }
+
+            #boxess {
+                display: block;
+            }
     }
 
     @@media only screen and (min-Width: 800px) {
         #Heading {
+            margin-top: -2%;
+            padding-top: 2%;
             width: 100%;
             height: 40vh;
             background-color: #235b73
@@ -65,13 +140,13 @@ viewBox="0 0 512 512" xml:space="preserve">
         max-width: 100%;
     }
     .Introduction{
-        
+            margin-top: 4%;
         font-size: 1.6rem;
         text-align: Center;
         margin: auto;
         color: white;
     }
-  
+   
  
    
     	  .ShopNow{
@@ -115,7 +190,7 @@ margin-top: 0;
 }
 #Gifts{
 
-height: 130vh;
+height: 120vh;
 width: 100%;
 }
 
@@ -137,7 +212,7 @@ fill: #ba3636;
 fill: #be2e11;
 }
 100% {
-fill: #e89a1b;;
+fill: #e89a1b;
 }
 }
 
@@ -163,5 +238,63 @@ fill: #c384a1;;
 }
 }
 
+    .InfoBoxes {
+        display: grid;
+        grid-template-columns: 20% 20% 20% 20%;
+        height:60%;
+        gap: 3%;
+        row-gap: 10%;
+        margin-left:10%;
+    }
 
+    .Info{
+        height: 100%;
+        width: 100%;
+        border-radius: 28px;
+        background-color: #ba3636;
+    }
+
+    .InfoBoxSection{
+       height:40vh;
+       width: 100%;
+       
+
+
+    }
+
+        #boxess {
+            display: grid;
+            grid-template-columns: 30% 30% 30%;
+            margin: auto;
+            margin-left: 10%;
+            margin-right: 5%;
+        }
+
+        .colored-div {
+            height: 86vh;
+            width: 90%;
+            margin: auto;
+            padding: 10%;
+            box-sizing: border-box;
+            border-radius: 28px;
+        }
+
+
+
+        #div1 {
+            background-color: rgb(208, 201, 219);
+        }
+
+        #div2 {
+            background-color: rgb(226, 224, 228);
+            overflow: hidden;
+        }
+
+        #div3 {
+            background-color: rgb(0, 0, 0)
+        }
+
+        #div4 {
+            background-color: rgb(180, 234, 205);
+        }
 </style>
