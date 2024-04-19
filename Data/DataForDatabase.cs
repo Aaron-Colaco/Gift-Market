@@ -47,32 +47,38 @@ namespace AaronColacoAsp.NETProject.Data
 
                   var ItemsData = new Item[]
                     {
-                new Item{Name = "Whittaker's Creamny Milk",CategoryId=1,ImageURL="https://assets.woolworths.com.au/images/2010/266869.jpg?impolicy=wowcdxwbjbx&w=900&h=900",CostToProduce=5, Price= 7 ,Description ="highQualty"},
-                new Item{Name = "Whittaker's Peanut Slab",CategoryId=1,ImageURL="https://assets.woolworths.com.au/images/2010/71484.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=2, Price=4,Description ="highQualty" },
-                new Item{Name = "Pineapple Lumps",CategoryId=1,ImageURL="https://assets.woolworths.com.au/images/2010/237591.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=3, Price=4,Description ="highQualty" },
-                new Item{Name = "Original Cookie Time Pack",CategoryId=1,ImageURL="https://assets.woolworths.com.au/images/2010/270991.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=5, Price=8,Description ="highQualty" },
-                new Item{Name = "Delsio Chips",CategoryId=1,ImageURL="https://assets.woolworths.com.au/images/2010/563139.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=4, Price=6 ,Description ="highQualty"},
-                new Item{Name = "Manuka Honey",CategoryId=1,ImageURL="https://assets.woolworths.com.au/images/2010/785361.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=75, Price=150 ,Description ="highQualty"},
-                new Item{Name = "Kumara Chips",CategoryId=1,ImageURL="https://assets.woolworths.com.au/images/2010/267944.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=4, Price=6,Description ="highQualty" },
-
-
-                new Item{Name = "L & P Orignal",CategoryId=2,ImageURL="https://assets.woolworths.com.au/images/2010/757240.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=2, Price=4, Description ="highQualty"},
-                new Item{Name = "RARO Navel Orange",CategoryId=2,ImageURL="https://assets.woolworths.com.au/images/2010/264578.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=2, Price=4,Description ="highQualty" },
-                new Item{Name = "V Refresh Green apple",CategoryId=2,ImageURL="https://assets.woolworths.com.au/images/2010/318574.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=2, Price=4 ,Description ="highQualty"},
-                new Item{Name = "V Refresh Pineapple and watermelon ",CategoryId=2,ImageURL="https://assets.woolworths.com.au/images/2010/228006.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=2, Price=4,Description ="highQualty" },
-                new Item{Name = "VIBE Grape sparkilng Water",CategoryId=2,ImageURL="",CostToProduce=2, Price=4,Description ="highQualty" },
-                new Item{Name = "JEDS Coffee",CategoryId=2,ImageURL="https://assets.woolworths.com.au/images/2010/699704.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=2, Price=4,Description ="highQualty" },
-                new Item{Name = "Just Jucie ",CategoryId=2,ImageURL="https://assets.woolworths.com.au/images/2010/770187.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=2, Price=4 ,Description ="highQualty"},
-                new Item{Name = "V Refresh Lemonade",CategoryId=2,ImageURL="https://assets.woolworths.com.au/images/2010/228013.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=2, Price=4,Description ="highQualty" },
-
-
-                new Item{Name = "Prezzy Card $100",CategoryId=3,ImageURL="",CostToProduce=2, Price=4,Description ="highQualty"},
-                new Item{Name = "Prezzy Card $50",CategoryId=3,ImageURL="",CostToProduce=2, Price=4 ,Description ="highQualty"},
-                new Item{Name = "Prezzy Card $25",CategoryId=3,ImageURL="",CostToProduce=2, Price=4 ,Description ="highQualty"},
-           
-                new Item{Name = "Manuka Honey Soap",CategoryId=3,ImageURL="https://assets.woolworths.com.au/images/2010/268167.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=4, Price=6,Description ="highQualty" },
-                new Item{Name = "LemonGrass Soap",CategoryId=3,ImageURL="https://assets.woolworths.com.au/images/2010/88424.jpg?impolicy=wowcdxwbjbx&w=200&h=200",CostToProduce=4, Price=6 ,Description ="highQualty"},
+                new Item{Name = "Whittaker's Creamny Milk",CategoryId=1,ImageURL="../Images/creamymilk.png",CostToProduce=5, Price= 7 ,Description ="highQualty"},
+                new Item{Name = "Whittaker's White",CategoryId=1,ImageURL="../Images/whitechocolate.png",CostToProduce=5, Price= 7 ,Description ="highQualty"},
+                                new Item{Name = "Whittaker's Berry Biscuit",CategoryId=1,ImageURL="../Images/BerryBiscuit.png",CostToProduce=5, Price= 7 ,Description ="highQualty"},
+                new Item{Name = "Whittaker's Peanut Slab",CategoryId=1,ImageURL="../Images/PeanutSlab.png",CostToProduce=2, Price=4,Description ="highQualty" },
+                  new Item{Name = "Whittaker's Hokey Pokey Crunch",CategoryId=1,ImageURL="../Images/Slab2.png",CostToProduce=2, Price=4,Description ="highQualty" },
+                new Item{Name = "Pineapple Lumps",CategoryId=1,ImageURL="../Images/PineappleLumps.jpg.webp",CostToProduce=3, Price=4,Description ="highQualty" },
+                new Item{Name = "Original Cookie Time Pack",CategoryId=1,ImageURL="../Images/cokkie.jpg.webp",CostToProduce=5, Price=8,Description ="highQualty" },
+                   new Item{Name = "Manuka Honey",CategoryId=1,ImageURL="../Images/honey.jpg.webp",CostToProduce=75, Price=150 ,Description ="highQualty"},
                
+
+
+                new Item{Name = "L & P Orignal",CategoryId=2,ImageURL="../Images/l&P.jpg.avif",CostToProduce=2, Price=4, Description ="highQualty"},
+               new Item{Name = "V Refresh Lemonade",CategoryId=2,ImageURL="../Images/VYellow.png",CostToProduce=2, Price=4,Description ="highQualty" },
+               new Item{Name = "V Refresh Green apple",CategoryId=2,ImageURL="../Images/appleV.png",CostToProduce=2, Price=4 ,Description ="highQualty"},
+                new Item{Name = "V Refresh Pineapple and watermelon ",CategoryId=2,ImageURL="Vpineapple.png",CostToProduce=2, Price=4,Description ="highQualty" },
+                new Item{Name = "VIBE sparkilng Water",CategoryId=2,ImageURL="../Images/rasp-fl.jpg",CostToProduce=2, Price=4,Description ="highQualty" },
+                new Item{Name = "JEDS Coffee",CategoryId=2,ImageURL="../Images/Coffee.webp",CostToProduce=2, Price=4,Description ="highQualty" },
+                new Item{Name = "Just Jucie ",CategoryId=2,ImageURL="../Images/JustJucie.webp",CostToProduce=2, Price=4 ,Description ="highQualty"},
+                
+
+                new Item{Name = "Prezzy Card $100",CategoryId=3,ImageURL="../Images/Prezzy.png",CostToProduce=2, Price=4,Description ="highQualty"},
+                new Item{Name = "Prezzy Card $50",CategoryId=3,ImageURL="../Images/Prezzy.png",CostToProduce=2, Price=4 ,Description ="highQualty"},
+                new Item{Name = "Prezzy Card $25",CategoryId=3,ImageURL="../Images/Prezzy.png",CostToProduce=2, Price=4 ,Description ="highQualty"},
+           
+                
+                 new Item{Name = "Manuka Honey Soap",CategoryId=3,ImageURL="../Images/HoneySoap.jpg.webp",CostToProduce=4, Price=6,Description ="highQualty" },
+                new Item{Name = "LemonGrass Soap",CategoryId=3,ImageURL="../Images/LemonGrass.jpg.webp",CostToProduce=4, Price=6 ,Description ="highQualty"},
+                 new Item{Name = "Mega Gift Bunndle",CategoryId=4,ImageURL="../Images/b1.png",CostToProduce=4, Price=6,Description ="highQualty" },
+                new Item{Name = "Sweet Bunndle",CategoryId=4,ImageURL="../Images/sweetbun.png",CostToProduce=4, Price=6 ,Description ="highQualty"},
+                new Item{Name = "Gift Bunndle",CategoryId=4,ImageURL="../Images/b2.png",CostToProduce=4, Price=6 ,Description ="highQualty"},
+
+
                     };
 
 
