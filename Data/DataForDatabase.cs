@@ -49,19 +49,19 @@ namespace AaronColacoAsp.NETProject.Data
                     {
                 new Item{Name = "Whittaker's Creamny Milk",CategoryId=1,ImageURL="../Images/creamymilk.png",CostToProduce=5, Price= 7 ,Description ="highQualty"},
                 new Item{Name = "Whittaker's White",CategoryId=1,ImageURL="../Images/whitechocolate.png",CostToProduce=5, Price= 7 ,Description ="highQualty"},
-                                new Item{Name = "Whittaker's Berry Biscuit",CategoryId=1,ImageURL="../Images/BerryBiscuit.png",CostToProduce=5, Price= 7 ,Description ="highQualty"},
+                new Item{Name = "Whittaker's Berry Biscuit",CategoryId=1,ImageURL="../Images/BerryBiscuit.png",CostToProduce=5, Price= 7 ,Description ="highQualty"},
                 new Item{Name = "Whittaker's Peanut Slab",CategoryId=1,ImageURL="../Images/PeanutSlab.png",CostToProduce=2, Price=4,Description ="highQualty" },
-                  new Item{Name = "Whittaker's Hokey Pokey Crunch",CategoryId=1,ImageURL="../Images/Slab2.png",CostToProduce=2, Price=4,Description ="highQualty" },
-                new Item{Name = "Pineapple Lumps",CategoryId=1,ImageURL="../Images/PineappleLumps.jpg.webp",CostToProduce=3, Price=4,Description ="highQualty" },
+                new Item{Name = "Whittaker's Hokey Pokey Crunch",CategoryId=1,ImageURL="../Images/Slab2.png",CostToProduce=2, Price=4,Description ="highQualty" },
+                new Item{Name = "Pineapple Lumps",CategoryId=1,ImageURL="../Images/PineappleLumps.png",CostToProduce=3, Price=4,Description ="highQualty" },
                 new Item{Name = "Original Cookie Time Pack",CategoryId=1,ImageURL="../Images/cokkie.jpg.webp",CostToProduce=5, Price=8,Description ="highQualty" },
-                   new Item{Name = "Manuka Honey",CategoryId=1,ImageURL="../Images/honey.jpg.webp",CostToProduce=75, Price=150 ,Description ="highQualty"},
+                new Item{Name = "Manuka Honey",CategoryId=1,ImageURL="../Images/honey.jpg.webp",CostToProduce=75, Price=150 ,Description ="highQualty"},
                
 
 
-                new Item{Name = "L & P Orignal",CategoryId=2,ImageURL="../Images/l&P.jpg.avif",CostToProduce=2, Price=4, Description ="highQualty"},
-               new Item{Name = "V Refresh Lemonade",CategoryId=2,ImageURL="../Images/VYellow.png",CostToProduce=2, Price=4,Description ="highQualty" },
-               new Item{Name = "V Refresh Green apple",CategoryId=2,ImageURL="../Images/appleV.png",CostToProduce=2, Price=4 ,Description ="highQualty"},
-                new Item{Name = "V Refresh Pineapple and watermelon ",CategoryId=2,ImageURL="Vpineapple.png",CostToProduce=2, Price=4,Description ="highQualty" },
+                new Item{Name = "L & P Orignal",CategoryId=2,ImageURL="../Images/lP.png",CostToProduce=2, Price=4, Description ="highQualty"},
+                new Item{Name = "V Refresh Lemonade",CategoryId=2,ImageURL="../Images/VYellow.png",CostToProduce=2, Price=4,Description ="highQualty" },
+                new Item{Name = "V Refresh Green apple",CategoryId=2,ImageURL="../Images/Vgreen.png",CostToProduce=2, Price=4 ,Description ="highQualty"},
+                new Item{Name = "V Refresh Pineapple and watermelon ",CategoryId=2,ImageURL="../Images/Vpink.png",CostToProduce=2, Price=4,Description ="highQualty" },
                 new Item{Name = "VIBE sparkilng Water",CategoryId=2,ImageURL="../Images/rasp-fl.jpg",CostToProduce=2, Price=4,Description ="highQualty" },
                 new Item{Name = "JEDS Coffee",CategoryId=2,ImageURL="../Images/Coffee.webp",CostToProduce=2, Price=4,Description ="highQualty" },
                 new Item{Name = "Just Jucie ",CategoryId=2,ImageURL="../Images/JustJucie.webp",CostToProduce=2, Price=4 ,Description ="highQualty"},

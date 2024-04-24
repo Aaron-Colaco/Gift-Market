@@ -9,9 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="Views\SalesData\SalesDashboard.cshtml\**" />
+    <Compile Remove="~\**" />
     <Content Remove="Views\SalesData\SalesDashboard.cshtml\**" />
+    <Content Remove="~\**" />
     <EmbeddedResource Remove="Views\SalesData\SalesDashboard.cshtml\**" />
+    <EmbeddedResource Remove="~\**" />
     <None Remove="Views\SalesData\SalesDashboard.cshtml\**" />
+    <None Remove="~\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,9 +35,5 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
     <PackageReference Include="Stripe.net" Version="44.1.0" />
   </ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="~\Images\" />
-	</ItemGroup>
 	
 </Project>
