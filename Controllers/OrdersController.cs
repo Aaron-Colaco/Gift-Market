@@ -42,7 +42,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         {
             if (User.IsInRole("Admin"))
             {
-                var Order = _context.Order.Include(o => o.Status).Include(a => a.Customers);
+                var Order = _context.Order.Where(a => a.StatusId != 1).Include(o => o.Status).Include(a => a.Customers);
                 return View(await Order.ToListAsync());
             }
             else

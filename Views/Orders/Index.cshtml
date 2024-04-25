@@ -73,7 +73,7 @@
                     <a asp-controller="OrderItems" asp-action="Index" asp-route-id="@item.OrderId">See Items</a>
                 </td>
 
-            @if(User.IsInRole("Admin")){
+            @if(item.Status.StatusId == 1)){
                 <td>
                     @Html.DisplayFor(modelItem => item.Customers.Email)
                         <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
