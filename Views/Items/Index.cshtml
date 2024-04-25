@@ -3,6 +3,13 @@
 @{
     ViewData["Title"] = "Index";
 }
+@{
+    if( ViewBag.MaxQuantiy == true)
+    {
+        <h1>Your Cart Is Full</h1>
+    }
+}
+
 <div class="ItemsPage">
 <h1>Shop & <br />Gift</></h1>
 

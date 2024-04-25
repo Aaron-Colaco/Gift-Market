@@ -7,6 +7,17 @@
 
 <h1>My Cart </h1>
 
+
+@{
+    if (ViewBag.CartFull == 1)
+    {
+        <h1>Your cart is Full Please Checkout or Remove Items</h1>
+    }
+
+
+}
+
+
 <table class="table">
     <thead>
         <tr>
@@ -15,9 +26,6 @@
             </th>
             <th>
                Quantity
-            </th>
-            <th>
-               Orders 
             </th>
           
             <th>
@@ -38,9 +46,6 @@
              </td>
             <td>
               @OrderItem.Quantity
-            </td>
-            <td>
-             @OrderItem.Orders.OrderId
             </td>
          
                <td>
@@ -79,3 +84,16 @@
 
 }
     
+@{
+    if (ViewBag.MaxQuantiy == true)
+    {
+        <script>
+
+            "The max You can Order of this item is 8"
+
+        </script>
+        ViewBag.MaxQuantiy = false;
+    }
+
+
+}

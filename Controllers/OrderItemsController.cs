@@ -32,8 +32,7 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
 
-
-        [Authorize]
+    [Authorize]
         public async Task<IActionResult> AddToCart(int ItemId)
         {
             string OrderId = await CheckUserOrders();
@@ -41,16 +40,30 @@ namespace AaronColacoAsp.NETProject.Controllers
 
             var ItemsInOrder = _context.OrderItem.Where(a => a.OrderId == OrderId).Include(a => a.Items);
 
+            if (ItemsInOrder.Sum(a => a.Quantity) >= 3)
+            {
+                ViewBag.CartFull = 1;
+
+                return RedirectToAction("Index", new { id = OrderId });
+            }
+
+
 
             var ExistingItem = ItemsInOrder.Where(a => a.ItemId == ItemId).FirstOrDefault();
 
-            if (ExistingItem != null)
+         
+
+            if (ExistingItem != null && ExistingItem.Quantity >= 8)
+            {
+                ViewBag.MaxQuantiy = true;         
+            }
+
+            else if (ExistingItem != null)
             {
                 ExistingItem.Quantity++;
-          
+
             }
-            else
-            {
+            else {
 
                 var OrderItem = new OrderItem
                 {
