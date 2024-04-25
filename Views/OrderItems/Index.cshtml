@@ -9,10 +9,13 @@
 
 
 @{
-    if (ViewBag.CartFull == 1)
+    if (ViewBag.CartFull == true)
     {
-        <h1>Your cart is Full Please Checkout or Remove Items</h1>
+            <h1>Your cart is Full Please Checkout or Remove Items</h1>
     }
+
+
+   
 
 
 }
@@ -70,30 +73,30 @@
 
 @{
     if(ViewBag.StatusId == 1){
-        <a asp-controller="Orders" asp-action="CheckOut" asp-route-id="@ViewBag.OrderId">CheckOut</a>
+            <a asp-controller="Orders" asp-action="CheckOut" asp-route-id="@ViewBag.OrderId">CheckOut</a>
     }
     else
     {
  
    
-          <h2>
-          Thank You for Your Order
-         </h2>
+              <h2>
+              Thank You for Your Order
+             </h2>
 
     }
 
 }
     
 @{
-    if (ViewBag.MaxQuantiy == true)
+    if (ViewBag.MaxQuantity == true)
     {
         <script>
-
-            "The max You can Order of this item is 8"
+            alert("The max you can order of that items is 8");
 
         </script>
-        ViewBag.MaxQuantiy = false;
     }
 
 
 }
+
+

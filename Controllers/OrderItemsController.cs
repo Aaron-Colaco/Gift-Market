@@ -40,11 +40,11 @@ namespace AaronColacoAsp.NETProject.Controllers
 
             var ItemsInOrder = _context.OrderItem.Where(a => a.OrderId == OrderId).Include(a => a.Items);
 
-            if (ItemsInOrder.Sum(a => a.Quantity) >= 3)
+            if (ItemsInOrder.Sum(a => a.Quantity) >= 35)
             {
                 ViewBag.CartFull = 1;
 
-                return RedirectToAction("Index", new { id = OrderId });
+                return RedirectToAction("Index", new { id = OrderId, CartFull = true, });
             }
 
 
@@ -55,13 +55,14 @@ namespace AaronColacoAsp.NETProject.Controllers
 
             if (ExistingItem != null && ExistingItem.Quantity >= 8)
             {
-                ViewBag.MaxQuantiy = true;         
+                ViewBag.MaxQuantiy = true;
+                return RedirectToAction("Index", new { id = OrderId, MaxQuantity = true });
+
             }
 
             else if (ExistingItem != null)
             {
                 ExistingItem.Quantity++;
-
             }
             else {
 
@@ -112,8 +113,11 @@ namespace AaronColacoAsp.NETProject.Controllers
             }
         }
 
-        public async Task<IActionResult> Index(string id)
+        public async Task<IActionResult> Index(string id,  bool CartFull = false, bool MaxQuantity = false)
         {
+
+            ViewBag.CartFull = CartFull;
+            ViewBag.MaxQuantity = MaxQuantity;
             ViewBag.OrderId = id;
             var Order = _context.Order.Where(a => a.OrderId == id).First();
             ViewBag.StatusId = Order.StatusId;
