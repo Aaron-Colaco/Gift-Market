@@ -25,7 +25,7 @@ namespace AaronColacoAsp.NETProject.Controllers
 
             var OrderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2).Where(a => a.StatusId !=1);
             var GiftData = _context.Gift.Where(a => a.Order.OrderTime >= Date1 && a.Order.OrderTime <= Date2).Where(a => a.Order.StatusId != 1);
-            var OrderItemData = _context.OrderItem.Where(a => a.Orders.OrderTime >= Date1 && a.Orders.OrderTime <= Date2).Where(a => a.Orders.StatusId != 1); ; 
+            var OrderItemData = _context.OrderItem.Where(a => a.Orders.OrderTime >= Date1 && a.Orders.OrderTime <= Date2).Where(a => a.Orders.StatusId != 1); 
 
            
             decimal TotalSales = OrderItemData.Sum(a => a.Items.Price * a.Quantity);
