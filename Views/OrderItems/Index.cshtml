@@ -72,8 +72,9 @@
 <h3>Order Cost @OrderCost</h3>
 
 @{
-    if(ViewBag.StatusId == 1){
-            <a asp-controller="Orders" asp-action="CheckOut" asp-route-id="@ViewBag.OrderId">CheckOut</a>
+    var FristOrder = Model.First();
+   if(FristOrder.Orders.StatusId == 1){
+        <a asp-controller="Orders" asp-action="CheckOut" asp-route-id="@ViewBag.OrderId">CheckOut</a>
     }
     else
     {

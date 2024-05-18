@@ -28,13 +28,25 @@ namespace AaronColacoAsp.NETProject.Controllers
         }
 
 
+        public async Task<IActionResult> OpenCart()
+        {
+            string OrderId = await CheckUserOrders();
+
+            var Order = _context.OrderItem.Where(a => a.OrderId == OrderId).Include(a => a.Items);
+
+            return View("Index",await Order.ToListAsync());
+        }
 
 
 
-
-    [Authorize]
+ 
         public async Task<IActionResult> AddToCart(int ItemId)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Identity/Register/Account");
+            }
+
             string OrderId = await CheckUserOrders();
 
 
@@ -44,7 +56,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             {
                 ViewBag.CartFull = 1;
 
-                return RedirectToAction("Index", new { id = OrderId, CartFull = true, });
+                return RedirectToAction("Index", new { id = OrderId, CartFull = true});
             }
 
 
@@ -77,10 +89,10 @@ namespace AaronColacoAsp.NETProject.Controllers
             }
 
             await _context.SaveChangesAsync();
-
-
-            return RedirectToAction("Index", new { id = OrderId });
+            return RedirectToAction("Index","Items", new { displayPopUp = true, item = ItemId});
         }
+
+
 
         [HttpPost]
         [Authorize]
