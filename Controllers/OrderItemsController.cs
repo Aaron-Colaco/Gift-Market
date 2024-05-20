@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using Stripe;
 using Stripe.Checkout;
 using System.Security.Claims;
+using System.Security.Principal;
 using SessionCreateOptions = Stripe.Checkout.SessionCreateOptions;
 
 namespace AaronColacoAsp.NETProject.Controllers
@@ -39,12 +41,14 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
 
- 
+
+
+        [Authorize]
         public async Task<IActionResult> AddToCart(int ItemId)
         {
             if (!User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Identity/Register/Account");
+                return RedirectPermanent("/Identity/Account/Register");
             }
 
             string OrderId = await CheckUserOrders();
