@@ -39,7 +39,17 @@ namespace AaronColacoAsp.NETProject.Controllers
             return View("Index",await Order.ToListAsync());
         }
 
+        public async Task<IActionResult> Delete(int ItemId)
+        {
+         string OrderId = await CheckUserOrders();
 
+        var OrderItemToRemove = _context.OrderItem.Where(a => a.OrderId == OrderId).Include(a => a.Items).Where(a => a.ItemId == ItemId).FirstOrDefault();
+
+            _context.OrderItem.Remove(OrderItemToRemove);
+            _context.SaveChanges();
+
+            return RedirectToAction("OpenCart");
+        }
 
 
 

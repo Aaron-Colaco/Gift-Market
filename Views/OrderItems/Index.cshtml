@@ -11,11 +11,11 @@
 @{
     if (ViewBag.CartFull == true)
     {
-            <h1>Your cart is Full Please Checkout or Remove Items</h1>
+        <h1>Your cart is Full Please Checkout or Remove Items</h1>
     }
 
 
-   
+
 
 
 }
@@ -41,8 +41,8 @@
         </tr>
     </thead>
     <tbody>
-        
-@foreach (var OrderItem in Model) {
+
+        @foreach (var OrderItem in Model) {
         <tr>
              <td>
               @OrderItem.Items.Name
@@ -61,6 +61,12 @@
                     }
                     <h3> @CostOfItem </h3>
 
+                    <form asp-action="Delete" style="margin-top:-13%; margin-left:40%">
+
+                        <input type="hidden" name="ItemId" value="@OrderItem.ItemId"/>
+                        <input type="submit" value="❌" />
+
+                    </form>
                 </td>
 
 
@@ -72,20 +78,19 @@
 <h3>Order Cost @OrderCost</h3>
 
 @{
-    var FristOrder = Model.First();
-   if(FristOrder.Orders.StatusId == 1){
+
+    var firstOrder = Model.FirstOrDefault();
+
+    if (firstOrder != null && firstOrder.Orders.StatusId == 1)
+    {
         <a asp-controller="Orders" asp-action="CheckOut" asp-route-id="@ViewBag.OrderId">CheckOut</a>
     }
     else
     {
- 
-   
-              <h2>
-              Thank You for Your Order
-             </h2>
-
+        <h2>
+            Thank You for Your Order
+        </h2>
     }
-
 }
     
 @{
