@@ -163,11 +163,28 @@
             
         <br /> <br />
         </div>
+
         }
 
     </div>
 </div>
 
+<div>
+    
+        <form asp-action="Index">
+        @{
+            for (int i = 1; i < ViewBag.Pages; i++)
+        {
+     
+            <input name ="Page" value="@i" type="submit" />
+
+        }
+     
+        
+        }
+    </form>
+
+</div>
 
 <style>
     @@media only screen and (max-Width: 800px){

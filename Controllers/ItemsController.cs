@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AaronColacoAsp.NETProject.Data;
 using AaronColacoAsp.NETProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Globalization;
 
 namespace AaronColacoAsp.NETProject.Controllers
 {
@@ -47,12 +48,16 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
 
-        public async Task<IActionResult> Index(int Item = 1,bool displayPopUp = false)
+        public async Task<IActionResult> Index(int page = 1,int Item =1,bool displayPopUp = false)
         {
             ViewBag.Item = _context.Item.Where(a => a.ItemId == Item).FirstOrDefault();
             ViewBag.Dp = displayPopUp;
-            var applicationDbContext = _context.Item.Include(i => i.Categorys);
-            return View(await applicationDbContext.ToListAsync());
+            var Items = _context.Item.Include(i => i.Categorys);
+
+            const int ItemsPerPage = 6;
+            ViewBag.Pages = (int)Math.Ceiling((double)Items.Count()/ItemsPerPage) ;
+            return View(await Items.Skip((page-1)*ItemsPerPage).Take(6).ToListAsync());
+
         }
 
 
