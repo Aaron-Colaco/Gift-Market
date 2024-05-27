@@ -35,7 +35,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             string OrderId = await CheckUserOrders();
 
             var Order = _context.OrderItem.Where(a => a.OrderId == OrderId).Include(a => a.Items);
-
+            ViewBag.OrderId = OrderId;
             return View("Index",await Order.ToListAsync());
         }
 
@@ -43,7 +43,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         {
          string OrderId = await CheckUserOrders();
 
-        var OrderItemToRemove = _context.OrderItem.Where(a => a.OrderId == OrderId).Include(a => a.Items).Where(a => a.ItemId == ItemId).FirstOrDefault();
+            var OrderItemToRemove = _context.OrderItem.Where(a => a.OrderId == OrderId).Include(a => a.Items).Where(a => a.ItemId == ItemId).FirstOrDefault();
 
             _context.OrderItem.Remove(OrderItemToRemove);
             _context.SaveChanges();
