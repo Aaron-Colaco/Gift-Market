@@ -160,7 +160,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         public async Task<IActionResult> ProcessOrder( string FullName, string PhoneNumber, string BoxColour, string RibbionColour, String GiftMessage, string RecipientPhone, string RecipientName, string DeliveryAddress, string City, int PostalCode)
         {
 
-                 string OrderId = await CheckUserOrders();
+                string OrderId = await CheckUserOrders();
                 var OrderToProcess = _context.Order.Where(a => a.OrderId.Equals(OrderId)).First();
                 var Customer = _context.Customer.Where(a => a.Id.Equals(OrderToProcess.CustomerId)).First();
                 
