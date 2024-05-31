@@ -5,11 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using Stripe;
 using Stripe.Checkout;
 using System.Security.Claims;
-using System.Security.Principal;
 using SessionCreateOptions = Stripe.Checkout.SessionCreateOptions;
 
 namespace AaronColacoAsp.NETProject.Controllers
@@ -99,9 +97,10 @@ namespace AaronColacoAsp.NETProject.Controllers
                     Quantity = 1
                 };
 
+                
                 _context.OrderItem.Add(OrderItem);
             }
-
+         
             await _context.SaveChangesAsync();
             return RedirectToAction("Index","Items", new { displayPopUp = true, item = ItemId});
         }
@@ -149,19 +148,22 @@ namespace AaronColacoAsp.NETProject.Controllers
             ViewBag.StatusId = Order.StatusId;
 
             var OrderItems = _context.OrderItem.Include(o => o.Items).Where(a => a.OrderId == id).Include(o => o.Orders);
-            
 
+            Order.TotalPrice = OrderItems.Sum(a => a.Items.Price * a.Quantity);
+
+            ViewBag.TotalPrice = Order.TotalPrice;
 
 
             return View(await OrderItems.ToListAsync());
         }
 
-        public async Task<IActionResult> ProcessOrder(string OrderId, string FullName, string PhoneNumber, string BoxColour, string RibbionColour, String GiftMessage, string RecipientPhone, string RecipientName, string DeliveryAddress, string City, int PostalCode)
+        public async Task<IActionResult> ProcessOrder( string FullName, string PhoneNumber, string BoxColour, string RibbionColour, String GiftMessage, string RecipientPhone, string RecipientName, string DeliveryAddress, string City, int PostalCode)
         {
 
+                 string OrderId = await CheckUserOrders();
                 var OrderToProcess = _context.Order.Where(a => a.OrderId.Equals(OrderId)).First();
                 var Customer = _context.Customer.Where(a => a.Id.Equals(OrderToProcess.CustomerId)).First();
-
+                
 
                 Customer.FullName = FullName;
                 Customer.PhoneNumber = PhoneNumber;

@@ -22,24 +22,27 @@ namespace AaronColacoAsp.NETProject.Controllers
         }
 
 
-        
+
         public async Task<IActionResult> Search(string SearchTerm)
         {
             var Results = _context.Item.Where(i => i.Name.Contains(SearchTerm)).Include(i => i.Categorys);
+            ViewBag.Category = _context.Category;
             return View("Index", await Results.ToListAsync());
         }
 
 
 
-         public async Task<IActionResult> FilterByCategroy(int id)
+        public async Task<IActionResult> FilterByCategroy(int id)
         {
             var Results = _context.Item.Where(i => i.CategoryId == id).Include(i => i.Categorys);
+            ViewBag.Category = _context.Category;
             return View("Index", await Results.ToListAsync());
         }
 
         public async Task<IActionResult> Filter(int MinPrice, int MaxPrice)
         {
             var Results = _context.Item.Where(i => i.Price >= MinPrice && i.Price <= MaxPrice).Include(i => i.Categorys);
+            ViewBag.Category = _context.Category;
 
             return View("Index", await Results.ToListAsync());
         }
@@ -48,15 +51,17 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
 
-        public async Task<IActionResult> Index(int page = 1,int Item =1,bool displayPopUp = false)
+        public async Task<IActionResult> Index(int page = 1, int Item = 1, bool displayPopUp = false)
         {
             ViewBag.Item = _context.Item.Where(a => a.ItemId == Item).FirstOrDefault();
             ViewBag.Dp = displayPopUp;
             var Items = _context.Item.Include(i => i.Categorys);
 
             const int ItemsPerPage = 6;
-            ViewBag.Pages = (int)Math.Ceiling((double)Items.Count()/ItemsPerPage) ;
-            return View(await Items.Skip((page-1)*ItemsPerPage).Take(6).ToListAsync());
+            ViewBag.Pages = (int)Math.Ceiling((double)Items.Count() / ItemsPerPage);
+
+            ViewBag.Category = _context.Category;
+            return View(await Items.Skip((page - 1) * ItemsPerPage).Take(6).ToListAsync());
 
         }
 
@@ -83,7 +88,7 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
         [Authorize(Roles = "Admin")]
-       
+
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Name");

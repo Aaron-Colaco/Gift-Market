@@ -1,142 +1,150 @@
-﻿ @model IEnumerable<AaronColacoAsp.NETProject.Models.Item>
+﻿@model IEnumerable<AaronColacoAsp.NETProject.Models.Item>
 
 @{
     ViewData["Title"] = "Index";
 }
-@{if (ViewBag.Dp == true){
+@{
+    if (ViewBag.Dp == true)
+    {
 
-    <div
-         class="centeredPopUP">
+        <div class="centeredPopUP">
             <h1>Your Item as been added to cart</h1>
 
             @ViewBag.Item.Name
             $@ViewBag.Item.Price
 
-            
+
 
             <form asp-action="Index">
                 <input type="submit" class="continue-shopping-btn active" value="Continue Shopping " />
             </form>
-           <form asp-action="OpenCart" asp-controller="OrderItems" >
+            <form asp-action="OpenCart" asp-controller="OrderItems">
                 <input type="submit" value="Go to Cart" class="add-to-cart-btn" />
 
-    
-           </form>
+
+            </form>
 
 
-    </div>
+        </div>
 
         <style>
-        
-               .centeredPopUP{
-                z-index :1000;
-                position:absolute;
-                top:5%;
+
+            .centeredPopUP {
+                z-index: 1000;
+                position: absolute;
+                top: 5%;
                 left: 20%;
-                right:20%;
-                width: 60%; 
-            
-                margin:auto;
-                padding: 20px; 
-                text-align: center; 
-                background-color: #f0f0f0; 
-                border: 2px solid #333; 
-                border-radius: 10px; 
-                font-size: 24px; 
-                color: #333; 
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+                right: 20%;
+                width: 60%;
+                margin: auto;
+                padding: 20px;
+                text-align: center;
+                background-color: #f0f0f0;
+                border: 2px solid #333;
+                border-radius: 10px;
+                font-size: 24px;
+                color: #333;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
-           .ItemsPage{
-               opacity:20%
-           }
 
-                .centeredPopUP input[type ="submit"]{
-                    background-color: #333;
-                    color: #fff; 
-                    padding: 10px 20px; 
-                    border: none; 
-                    border-radius: 5px; 
-                    font-size: 18px; 
-                    margin-top: 20px; 
-                   
-                }
+            .ItemsPage {
+                opacity: 20%
+            }
 
-        .AddToCart,.FilterButtons{
-            display: none;
-        }
+            .centeredPopUP input[type ="submit"] {
+                background-color: #333;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                font-size: 18px;
+                margin-top: 20px;
+            }
+
+            .AddToCart, .FilterButtons {
+                display: none;
+            }
 
         </style>
-}
+    }
 
 }
 @{
-    if( ViewBag.MaxQuantiy == true)
+    if (ViewBag.MaxQuantiy == true)
     {
         <h1>Your Cart Is Full</h1>
     }
 }
 
 <div class="ItemsPage">
-<h1>Shop & <br />Gift</></h1>
+    <h1>Shop & <br />Gift</></h1>
 
 
-<div>
-    @if(User.IsInRole("Admin")){
-<a asp-action="Create">Create New</a>
-    }
+    <div>
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create">Create New</a>
+        }
 
 
 
 
 
-<form asp-action="Search" asp-controller="Items">
+        <form asp-action="Search" asp-controller="Items">
 
-    <input style="border-width: 2px; border-style:solid; height:4vh; border-radius:2px;"name="SearchTerm" type="text" placeholder="Search Item"/>
+            <input style="border-width: 2px; border-style:solid; height:4vh; border-radius:2px;" name="SearchTerm" type="text" placeholder="Search Item" />
             <input value="Search" style=" background-color: #245b73; color:white;" class="btn btn-outline-primary" type="submit" />
 
-</form>
-<br />
+        </form>
+        <br />
 
-<form asp-action="Filter" asp-controller="Items" >
+        <form asp-action="Filter" asp-controller="Items">
 
 
             <input style="width: 5%; border-width: 2px; border-style:solid; height:4vh; border-radius:2px;" name="MinPrice" type="number" placeholder="Min" max="300" min="0" />
-   
+
             <input style="width: 5%; border-width: 2px; border-style:solid; height:4vh; border-radius:2px;" name="MaxPrice" type="number" placeholder="Max" />
             <input type="submit" Value="Filter" style="background-color: #245b68; color:white;" class="btn btn-outline-primary" />
-  </form>
-     <br />
-    <a class="FilterButtons" asp-action="FilterByCategroy" asp-route-id=4> Pre Packed Boxes</a>
-    <a class="FilterButtons"asp-action="FilterByCategroy" asp-route-id=1> Food</a>
-    <a class="FilterButtons" asp-action="FilterByCategroy" asp-route-id=2> Drinks</a>
-    <a class="FilterButtons" asp-action="FilterByCategroy" asp-route-id=3> Physcial Products</a>
-    <a class="FilterButtons"  asp-action="Index"> See All</a>
-</div>
-  
- 
-   <div class="ItemsBox">
-        
- 
+        </form>
+        <br />
 
-        @foreach (var item in Model) {
+        @{
+
+            foreach (var Category in ViewBag.Category)
+            {
+                <a class="FilterButtons" asp-action="FilterByCategroy" asp-route-id=@Category.CategoryId>@Category.Name</a>
+            }
+        }
+        <a class="FilterButtons" asp-action="Index">See All</a>
 
 
+    </div>
 
 
-        <div class="Item">
+    <div class="ItemsBox">
 
-       
-      
-        
-             <img class="ItemImgage" src="@item.ImageURL" />
-           
 
-  <br /> 
-                 @Html.DisplayFor(modelItem => item.Name)
+
+        @foreach (var item in Model)
+        {
+
+
+
+
+            <div class="Item">
+
+
+
+
+                <img class="ItemImgage" src="@item.ImageURL" />
+
+
+                <br />
+                @Html.DisplayFor(modelItem => item.Name)
 
                 <h1> @Html.DisplayFor(modelItem => item.Price)</h1>
-           
-                
+
+
 
 
                 <p>  @Html.DisplayFor(modelItem => item.Categorys.Name) </p>
@@ -144,25 +152,26 @@
 
                 <form asp-controller="OrderItems" asp-action="AddToCart">
 
-                 <input type="hidden" name="ItemId" value="@item.ItemId" />
-                 <input type="submit" value="Add To Cart" class="AddToCart"/>
+                    <input type="hidden" name="ItemId" value="@item.ItemId" />
+                    <input type="submit" value="Add To Cart" class="AddToCart" />
                 </form>
 
-                @if(User.IsInRole("Admin")){
+                @if (User.IsInRole("Admin"))
+                {
 
-                <p> cost to produce   @Html.DisplayFor(modelItem => item.CostToProduce) </p>
-
-
-
+                    <p> cost to produce   @Html.DisplayFor(modelItem => item.CostToProduce) </p>
 
 
-                <a asp-action="Edit" asp-route-id="@item.ItemId">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.ItemId">Details</a> 
-                <a asp-action="Delete" asp-route-id="@item.ItemId">Delete</a>
+
+
+
+                    <a asp-action="Edit" asp-route-id="@item.ItemId">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.ItemId">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.ItemId">Delete</a>
                 }
-            
-        <br /> <br />
-        </div>
+
+                <br /> <br />
+            </div>
 
         }
 
@@ -170,36 +179,31 @@
 </div>
 
 <div>
-    
-        <form asp-action="Index">
+
+    <form asp-action="Index" style="margin-left:90%">
         @{
             for (int i = 1; i < ViewBag.Pages; i++)
-        {
-     
-            <input name ="Page" value="@i" type="submit" />
+            {
 
-        }
-     
-        
+                <input style="background-color: teal; color:black;"name="Page" value="@i" type="submit" />
+
+            }
+
+
         }
     </form>
 
 </div>
 
 <style>
-    @@media only screen and (max-Width: 800px){
-        .ItemsPage{
-           
+    @@media only screen and (max-Width: 800px) {
+        .ItemsPage {
             grid-template-columns: 32% 32%;
             grid-column-gap: 3%;
             margin-left: 10%;
             width: 96%;
-           grid-row-gap: 1%;
-     
-        
+            grid-row-gap: 1%;
         }
-
-      
     }
 
     @@media only screen and (min-Width: 800px) {
@@ -209,13 +213,13 @@
             margin-left: 28%;
         }
 
-        ItemsPage{
+        ItemsPage {
             display: grid;
             grid-template-columns: 16% 75%;
         }
 
         .FilterButtons {
-            display:block;
+            display: block;
         }
 
         .ItemsBox {
@@ -226,49 +230,44 @@
     }
 
 
-.ItemsBox{
-    width: 80%;
-    height: 70%;
-}
-
-
-
- .ItemImgage{
-           height: 60%;
-           width: 70%;
-           
- }
-
- .FilterButtons{
-        text-decoration:none;
-        color: #245b73;
-        font-size: 2rem;
-       
+    .ItemsBox {
+        width: 80%;
+        height: 70%;
     }
 
 
 
-.AddToCart{
+    .ItemImgage {
+        height: 60%;
+        width: 70%;
+    }
 
-font-size: 1rem;
-color: #fff;
-border: none;
- background-color: #245b73;
-padding: 10px 30px;
-border-radius: 50px;
-transition : 1000ms;
-align-items: center;
-cursor: pointer;
-}
-
-  .AddToCart:hover {
-transition : 1000ms;
-padding: 10px 50px;
-background-color: #1463c9;
-border: solid 2px #0066cc;
-}
+    .FilterButtons {
+        text-decoration: none;
+        color: #245b73;
+        font-size: 2rem;
+    }
 
 
+
+    .AddToCart {
+        font-size: 1rem;
+        color: #fff;
+        border: none;
+        background-color: #245b73;
+        padding: 10px 30px;
+        border-radius: 50px;
+        transition: 1000ms;
+        align-items: center;
+        cursor: pointer;
+    }
+
+        .AddToCart:hover {
+            transition: 1000ms;
+            padding: 10px 50px;
+            background-color: #1463c9;
+            border: solid 2px #0066cc;
+        }
 
 </style>
 
