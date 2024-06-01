@@ -30,18 +30,20 @@ namespace AaronColacoAsp.NETProject.Controllers
 
         public async Task<IActionResult> OpenCart()
         {
-            string OrderId = await CheckUserOrders();
 
-            var Order = _context.OrderItem.Where(a => a.OrderId == OrderId).Include(a => a.Items);
-            ViewBag.OrderId = OrderId;
-            return View("Index",await Order.ToListAsync());
+
+            var Order = await GetOrder();
+
+            return View("Index", Order);
         }
+
 
         public async Task<IActionResult> Delete(int ItemId)
         {
-         string OrderId = await CheckUserOrders();
 
-            var OrderItemToRemove = _context.OrderItem.Where(a => a.OrderId == OrderId).Include(a => a.Items).Where(a => a.ItemId == ItemId).FirstOrDefault();
+            var OrderItems = await GetOrder();
+
+            var OrderItemToRemove = OrderItems.Where(a => a.ItemId == ItemId).FirstOrDefault();
 
             _context.OrderItem.Remove(OrderItemToRemove);
             _context.SaveChanges();
@@ -59,23 +61,28 @@ namespace AaronColacoAsp.NETProject.Controllers
                 return RedirectPermanent("/Identity/Account/Register");
             }
 
+
+
+
+
             string OrderId = await CheckUserOrders();
 
 
-            var ItemsInOrder = _context.OrderItem.Where(a => a.OrderId == OrderId).Include(a => a.Items);
+            var ItemsInOrder = await GetOrder();
+
 
             if (ItemsInOrder.Sum(a => a.Quantity) >= 35)
             {
                 ViewBag.CartFull = 1;
 
-                return RedirectToAction("Index", new { id = OrderId, CartFull = true});
+                return RedirectToAction("Index", new { id = OrderId, CartFull = true });
             }
 
 
 
             var ExistingItem = ItemsInOrder.Where(a => a.ItemId == ItemId).FirstOrDefault();
 
-         
+
 
             if (ExistingItem != null && ExistingItem.Quantity >= 8)
             {
@@ -88,7 +95,8 @@ namespace AaronColacoAsp.NETProject.Controllers
             {
                 ExistingItem.Quantity++;
             }
-            else {
+            else
+            {
 
                 var OrderItem = new OrderItem
                 {
@@ -97,12 +105,23 @@ namespace AaronColacoAsp.NETProject.Controllers
                     Quantity = 1
                 };
 
-                
                 _context.OrderItem.Add(OrderItem);
             }
-         
+
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index","Items", new { displayPopUp = true, item = ItemId});
+
+
+            ItemsInOrder = await GetOrder();
+
+            var Order = _context.Order.Where(a => a.OrderId == OrderId).First();
+
+            Order.TotalPrice = ItemsInOrder.Sum(a => a.Items.Price * a.Quantity);
+
+
+            await _context.SaveChangesAsync();
+
+
+            return RedirectToAction("Index", "Items", new { displayPopUp = true, item = ItemId });
         }
 
 
@@ -138,91 +157,105 @@ namespace AaronColacoAsp.NETProject.Controllers
             }
         }
 
-        public async Task<IActionResult> Index(string id,  bool CartFull = false, bool MaxQuantity = false)
+        public async Task<IActionResult> Index(bool CartFull = false, bool MaxQuantity = false)
         {
+
+
+            string id = await CheckUserOrders();
+            var Order = _context.Order.Where(a => a.OrderId == id).FirstOrDefault();
+
 
             ViewBag.CartFull = CartFull;
             ViewBag.MaxQuantity = MaxQuantity;
-            ViewBag.OrderId = id;
-            var Order = _context.Order.Where(a => a.OrderId == id).First();
             ViewBag.StatusId = Order.StatusId;
+            ViewBag.TotalRrice = Order.TotalPrice;
 
-            var OrderItems = _context.OrderItem.Include(o => o.Items).Where(a => a.OrderId == id).Include(o => o.Orders);
-
-            Order.TotalPrice = OrderItems.Sum(a => a.Items.Price * a.Quantity);
-
-            ViewBag.TotalPrice = Order.TotalPrice;
+            var OrderItems = await GetOrder();
 
 
-            return View(await OrderItems.ToListAsync());
+            return View(GetOrder);
         }
 
-        public async Task<IActionResult> ProcessOrder( string FullName, string PhoneNumber, string BoxColour, string RibbionColour, String GiftMessage, string RecipientPhone, string RecipientName, string DeliveryAddress, string City, int PostalCode)
+        public async Task<IActionResult> ProcessOrder(string FullName, string PhoneNumber, string BoxColour, string RibbionColour, String GiftMessage, string RecipientPhone, string RecipientName, string DeliveryAddress, string City, int PostalCode)
         {
 
-                string OrderId = await CheckUserOrders();
-                var OrderToProcess = _context.Order.Where(a => a.OrderId.Equals(OrderId)).First();
-                var Customer = _context.Customer.Where(a => a.Id.Equals(OrderToProcess.CustomerId)).First();
-                
-
-                Customer.FullName = FullName;
-                Customer.PhoneNumber = PhoneNumber;
-                OrderToProcess.StatusId = 2;
-                OrderToProcess.OrderTime = DateTime.Now;
-                OrderToProcess.DeliveryAddress = DeliveryAddress;
-                OrderToProcess.City = City;
-                OrderToProcess.PostalCode = PostalCode;
+            string OrderId = await CheckUserOrders();
+            var OrderToProcess = _context.Order.Where(a => a.OrderId.Equals(OrderId)).First();
+            var Customer = _context.Customer.Where(a => a.Id.Equals(OrderToProcess.CustomerId)).First();
 
 
-                var Gift = new Gift
-                {
-                    GiftId = OrderId,
-                    OrderId = OrderId,
-                    BoxColour = BoxColour,
-                    RibbonColour = RibbionColour,
-                    Message = GiftMessage
-                };
-
-                _context.Gift.Add(Gift);
-
-                await _context.SaveChangesAsync();
-
-                var GiftRecipient = new GiftRecipient
-                {
-                    RecipientId = OrderId,
-                    GiftId = Gift.GiftId,
-                    Name = RecipientName,
-                    PhoneNumber = RecipientPhone
-
-                };
-                _context.GiftRecipient.Add(GiftRecipient);
-
-                await _context.SaveChangesAsync();
-            
-           
+            Customer.FullName = FullName;
+            Customer.PhoneNumber = PhoneNumber;
+            OrderToProcess.StatusId = 2;
+            OrderToProcess.OrderTime = DateTime.Now;
+            OrderToProcess.DeliveryAddress = DeliveryAddress;
+            OrderToProcess.City = City;
+            OrderToProcess.PostalCode = PostalCode;
 
 
-            return RedirectToAction("Payment", new{ OrderId = OrderId });
+            var Gift = new Gift
+            {
+                GiftId = OrderId,
+                OrderId = OrderId,
+                BoxColour = BoxColour,
+                RibbonColour = RibbionColour,
+                Message = GiftMessage
+            };
+
+            _context.Gift.Add(Gift);
+
+            await _context.SaveChangesAsync();
+
+            var GiftRecipient = new GiftRecipient
+            {
+                RecipientId = OrderId,
+                GiftId = Gift.GiftId,
+                Name = RecipientName,
+                PhoneNumber = RecipientPhone
+
+            };
+            _context.GiftRecipient.Add(GiftRecipient);
+
+            await _context.SaveChangesAsync();
+
+
+
+
+            return RedirectToAction("Payment", new { OrderId = OrderId });
 
 
         }
 
 
+        public async Task<List<OrderItem>> GetOrder()
+        {
+            string orderId = await CheckUserOrders();
 
+            var listOrderItems = await _context.OrderItem
+                .Include(o => o.Items)
+                .Include(o => o.Orders)
+                .Where(a => a.OrderId == orderId)
+                .ToListAsync();
 
+            return listOrderItems;
+        }
 
+  
         public IActionResult Payment(string OrderId)
         {
-         StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
-            
+            StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
+
             var ItemsInOrder = _context.OrderItem.Where(a => a.OrderId == OrderId).Include(a => a.Items);
-           
+
 
             var Options = new SessionCreateOptions
-            {  
+            {
                 LineItems = new List<SessionLineItemOptions>(),
-                CustomerEmail = User.Identity.Name, SuccessUrl ="https://Localhost:7002/Home",Mode = "payment", ClientReferenceId = User.FindFirstValue(ClaimTypes.NameIdentifier),           
-             };
+                CustomerEmail = User.Identity.Name,
+                SuccessUrl = "https://Localhost:7002/Home",
+                Mode = "payment",
+                ClientReferenceId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+            };
 
             foreach (var item in ItemsInOrder)
             {
@@ -230,7 +263,8 @@ namespace AaronColacoAsp.NETProject.Controllers
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
-                        UnitAmount = (long)item.Items.Price * 100, Currency = "nzd",
+                        UnitAmount = (long)item.Items.Price * 100,
+                        Currency = "nzd",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
                             Name = item.Items.Name
@@ -239,7 +273,7 @@ namespace AaronColacoAsp.NETProject.Controllers
                     Quantity = item.Quantity
                 };
                 Options.LineItems.Add(OrderedItem);
-                
+
             }
 
             var service = new SessionService();
@@ -251,6 +285,8 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
 
+
+
         }
     }
-    }
+}

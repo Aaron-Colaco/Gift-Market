@@ -70,7 +70,7 @@
                 @Html.DisplayFor(modelItem => item.Status.Name)
             </td>
             <td>
-                    <a asp-controller="OrderItems" asp-action="Index" asp-route-id="@item.OrderId">See Items</a>
+                    <a asp-controller="OrderItems" asp-action="OpenCart">See Items</a>
                 </td>
 
             @if(item.Status.StatusId == 1){
