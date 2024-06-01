@@ -12,7 +12,7 @@
     <form asp-action="SearchByCustomer" asp-controller="Orders">
 
 
-        <h1>Search cusotmer</h1>
+        <h3 style="color: teal">Search Customer by name or emai</h3>
         <input name="CustomerName" type="text" placeholder="Search Customer by name or email" />
 
         <input type="submit" class="btn btn-primary" />
@@ -108,17 +108,21 @@
                 </td>
         </tr>
 }
-        <form asp-action="Index" style="margin-left:90%; margin-top:3%;">
-            @{
-                for (int i = 1; i < ViewBag.Pages; i++)
-                {
-                    <input style="background-color: teal; color:black;" name="Page" value="@i" type="submit" />
-                }
-
-
-            }
-        </form>
+       
 
 </tbody>
+
+   
+
 </table>
 
+<form asp-action="Index" style="margin-left:90%; margin-top:3%;">
+    @{
+        for (int i = 1; i < ViewBag.Pages; i++)
+        {
+            <input style="background-color: teal; color:black;" name="Page" value="@i" type="submit" />
+        }
+
+
+    }
+</form>

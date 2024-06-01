@@ -150,11 +150,17 @@
                 <p>  @Html.DisplayFor(modelItem => item.Categorys.Name) </p>
 
 
-                <form asp-controller="OrderItems" asp-action="AddToCart">
+                @if (!User.IsInRole("Admin"))
+                {
+
+
+                    <form asp-controller="OrderItems" asp-action="AddToCart">
+
 
                     <input type="hidden" name="ItemId" value="@item.ItemId" />
                     <input type="submit" value="Add To Cart" class="AddToCart" />
                 </form>
+                }
 
                 @if (User.IsInRole("Admin"))
                 {

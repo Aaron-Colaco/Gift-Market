@@ -61,7 +61,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             ViewBag.Pages = (int)Math.Ceiling((double)Items.Count() / ItemsPerPage);
 
             ViewBag.Category = _context.Category;
-            return View(await Items.Skip((page - 1) * ItemsPerPage).Take(6).ToListAsync());
+            return View(await Items.Skip((Page - 1) * ItemsPerPage).Take(6).ToListAsync());
 
         }
 
