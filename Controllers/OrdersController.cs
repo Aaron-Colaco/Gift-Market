@@ -30,6 +30,7 @@ namespace AaronColacoAsp.NETProject.Controllers
         var Results = _context.Order.Where(a => a.Customers.FullName.Contains(CustomerName) || a.Customers.Email.Contains(CustomerName) && a.StatusId != 1).Include(a => a.Customers).Include(a => a.Status);
         return View("Index", await Results.ToListAsync());
        }
+        [Authorize(Roles = "Admin")]
         public async Task< IActionResult> FilterOrdersByDate(DateTime Date1, DateTime Date2)
         {
 
@@ -38,19 +39,71 @@ namespace AaronColacoAsp.NETProject.Controllers
         }
 
             // GET: Orders
-            public async Task<IActionResult> Index()
+            public async Task<IActionResult> Index(string sortOrder, int Page = 1)
         {
+
+            var OrderData = from a in _context.Order
+                            select a;
+
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+
+            switch (sortOrder)
+            {
+              
+                case "Date":
+                    OrderData = OrderData.OrderBy(a => a.OrderTime);
+                    break;
+                case "date_desc":
+                    OrderData = OrderData.OrderByDescending(s => s.OrderTime);
+                    break;
+                default:
+                    OrderData = OrderData.OrderByDescending(s => s.OrderTime);
+                    break;
+            }
+
             if (User.IsInRole("Admin"))
             {
-                var Order = _context.Order.Where(a => a.StatusId != 1).Include(o => o.Status).Include(a => a.Customers);
-                return View(await Order.ToListAsync());
+                OrderData = OrderData.Include(o => o.Status).Include(a => a.Customers);
+          
             }
             else
             {
-                var Order = _context.Order.Include(o => o.Status).Include(a => a.Customers).Where(a => a.CustomerId == User.FindFirstValue(ClaimTypes.NameIdentifier));
-                return View(await Order.ToListAsync());
+                OrderData = OrderData.Include(o => o.Status).Include(a => a.Customers).Where(a => a.CustomerId == User.FindFirstValue(ClaimTypes.NameIdentifier));
+           
             }
-          
+
+
+            const int ItemsPerPage = 20;
+            ViewBag.Pages = (int)Math.Ceiling((double)OrderData.Count() / ItemsPerPage);
+
+
+            return View(await OrderData.Skip((Page - 1) * ItemsPerPage).Take(20).AsNoTracking().ToListAsync());
+
+
+
+
+
+
+
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         public IActionResult CheckOut(string id)

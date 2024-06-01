@@ -21,7 +21,7 @@
 
     <form asp-controller="Orders" asp-action="FilterOrdersByDate">
 
-        <h3 style="color: forestgreen">Select Two Dates To See Orders In That Range</h3>
+        <h3 style="color: teal">Select Two Dates To See Orders In That Range</h3>
 
 
         <label for="Date 1">Date 1 </label>
@@ -40,7 +40,7 @@
     <thead>
         <tr>
             <th>
-              Order Created
+                <a style="color:teal"asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.OrderTime)</a>
             </th>
             <th>
               Total Price
@@ -48,6 +48,10 @@
             <th>
               Satatus 
             </th>
+            <th>
+                Email
+            </th>
+
            
            
            
@@ -69,13 +73,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status.Name)
             </td>
+
             <td>
-                    <a asp-controller="OrderItems" asp-action="OpenCart">See Items</a>
+                    @Html.DisplayFor(modelItem => item.Customers.Email)
+            </td>
+            <td>
+                    <a asp-controller="OrderItems" asp-route-id="@item.OrderId" asp-action="Index">See Items</a>
                 </td>
+
+
 
             @if(item.Status.StatusId == 1){
                 <td>
-                    @Html.DisplayFor(modelItem => item.Customers.Email)
+                  
                         <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
         
                 </td>
@@ -98,7 +108,17 @@
                 </td>
         </tr>
 }
-  
+        <form asp-action="Index" style="margin-left:90%; margin-top:3%;">
+            @{
+                for (int i = 1; i < ViewBag.Pages; i++)
+                {
+                    <input style="background-color: teal; color:black;" name="Page" value="@i" type="submit" />
+                }
+
+
+            }
+        </form>
 
 </tbody>
 </table>
+

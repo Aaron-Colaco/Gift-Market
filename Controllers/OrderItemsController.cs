@@ -28,13 +28,15 @@ namespace AaronColacoAsp.NETProject.Controllers
         }
 
 
-        public async Task<IActionResult> OpenCart()
+        public async Task<IActionResult> OpenCart(string order)
         {
+                var Order = await GetOrder();
+                return View("Index", Order);
+            
+          
 
 
-            var Order = await GetOrder();
-
-            return View("Index", Order);
+   
         }
 
 
@@ -157,12 +159,18 @@ namespace AaronColacoAsp.NETProject.Controllers
             }
         }
 
-        public async Task<IActionResult> Index(bool CartFull = false, bool MaxQuantity = false)
+        public async Task<IActionResult> Index(string id,bool CartFull = false, bool MaxQuantity = false)
         {
 
 
-            string id = await CheckUserOrders();
             var Order = _context.Order.Where(a => a.OrderId == id).FirstOrDefault();
+
+            if(Order.CustomerId != User.FindFirstValue(ClaimTypes.NameIdentifier) && !User.IsInRole("Admin")){
+
+                return View ("Cant find Order that Belongs to you");
+
+            }
+             
 
 
             ViewBag.CartFull = CartFull;
@@ -170,10 +178,10 @@ namespace AaronColacoAsp.NETProject.Controllers
             ViewBag.StatusId = Order.StatusId;
             ViewBag.TotalRrice = Order.TotalPrice;
 
-            var OrderItems = await GetOrder();
+            var OrderItems = _context.OrderItem.Where(a => a.OrderId == Order.OrderId);
 
 
-            return View(GetOrder);
+            return View(OrderItems.ToListAsync());
         }
 
         public async Task<IActionResult> ProcessOrder(string FullName, string PhoneNumber, string BoxColour, string RibbionColour, String GiftMessage, string RecipientPhone, string RecipientName, string DeliveryAddress, string City, int PostalCode)

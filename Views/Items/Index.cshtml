@@ -180,13 +180,11 @@
 
 <div>
 
-    <form asp-action="Index" style="margin-left:90%">
+    <form asp-action="Index" style="margin-left:90%; margin-top:3%;">
         @{
             for (int i = 1; i < ViewBag.Pages; i++)
             {
-
                 <input style="background-color: teal; color:black;"name="Page" value="@i" type="submit" />
-
             }
 
 

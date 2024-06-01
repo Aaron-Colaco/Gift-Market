@@ -51,7 +51,7 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
 
-        public async Task<IActionResult> Index(int page = 1, int Item = 1, bool displayPopUp = false)
+        public async Task<IActionResult> Index(int Page = 1, int Item = 1, bool displayPopUp = false)
         {
             ViewBag.Item = _context.Item.Where(a => a.ItemId == Item).FirstOrDefault();
             ViewBag.Dp = displayPopUp;
