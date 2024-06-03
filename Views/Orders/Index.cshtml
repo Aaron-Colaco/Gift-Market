@@ -81,18 +81,23 @@
                     <a asp-controller="OrderItems" asp-route-id="@item.OrderId" asp-action="Index">See Items</a>
                 </td>
 
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="StatusUpdate" asp-route-id="@item.OrderId">Update</a>
+                    </td>
+                }
 
 
             @if(item.Status.StatusId == 1){
                 <td>
-                  
+                         
                         <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
         
                 </td>
             }
             
-          
-
+            
             <td>
          
                     @if (item.StatusId != 1)

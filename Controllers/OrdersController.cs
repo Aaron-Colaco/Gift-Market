@@ -11,6 +11,9 @@ using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using System.Security.Claims;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using System.Configuration;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Stripe;
 
 namespace AaronColacoAsp.NETProject.Controllers
 {
@@ -65,7 +68,7 @@ namespace AaronColacoAsp.NETProject.Controllers
 
             if (User.IsInRole("Admin"))
             {
-                OrderData = OrderData.Include(o => o.Status).Include(a => a.Customers);
+                OrderData = OrderData.Where(a => a.StatusId != 1).Include(o => o.Status).Include(a => a.Customers);
           
             }
             else
@@ -77,7 +80,7 @@ namespace AaronColacoAsp.NETProject.Controllers
 
             const int ItemsPerPage = 20;
             ViewBag.Pages = (int)Math.Ceiling((double)OrderData.Count() / ItemsPerPage);
-
+            ViewBag.PageNumber = Page;
 
             return View(await OrderData.Skip((Page - 1) * ItemsPerPage).Take(20).AsNoTracking().ToListAsync());
 
@@ -134,49 +137,16 @@ namespace AaronColacoAsp.NETProject.Controllers
             return View(order);
         }
 
-     // GET: Orders/Create
-        [Authorize]
-        public IActionResult Create()
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> StatusUpdate(string id)
         {
-           
-            ViewData["StatusId"] = new SelectList(_context.Status, "StatusId", "StatusId");
-            return View();
-        }
+            ViewBag.OrderId = id;
+            var Order = _context.Order.Where(a => a.OrderId == id).Include(a => a.Customers).First();
+            ViewBag.Customer = Order.Customers.FullName;
+            ViewBag.Date = Order.OrderTime;
+            ViewBag.Status = _context.Status;
 
-        
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderTime,TotalPrice,StatusId")] Order order)
-        {
-            if (!ModelState.IsValid)
-            {
-                order.CustomerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                _context.Add(order);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CustomerId"] = new SelectList(_context.Customer, "Id", "Id", order.CustomerId);
-            ViewData["StatusId"] = new SelectList(_context.Status, "StatusId", "StatusId", order.StatusId);
-            return View(order);
-        }
-
-        // GET: Orders/Edit/5
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var order = await _context.Order.FindAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-            ViewData["CustomerId"] = new SelectList(_context.Customer, "Id", "Id", order.CustomerId);
-            ViewData["StatusId"] = new SelectList(_context.Status, "StatusId", "StatusId", order.StatusId);
-            return View(order);
+            return View("StatusUpdate");
         }
 
         // POST: Orders/Edit/5
@@ -184,37 +154,16 @@ namespace AaronColacoAsp.NETProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("OrderId,OrderTime,TotalPrice,StatusId,CustomerId")] Order order)
+        public async Task<IActionResult> UpdateOrder(int Status, string OrderId)
         {
-            if (id != order.OrderId)
-            {
-                return NotFound();
-            }
+            var order = _context.Order.Where(a => a.OrderId == OrderId).FirstOrDefault();
+            order.StatusId = Status;
+            _context.SaveChanges();
 
-            if (!ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(order);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!OrderExists(order.OrderId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CustomerId"] = new SelectList(_context.Customer, "Id", "Id", order.CustomerId);
-            ViewData["StatusId"] = new SelectList(_context.Status, "StatusId", "StatusId", order.StatusId);
-            return View(order);
+            return RedirectToAction(nameof(Index));
+
         }
+
 
         // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(string id)

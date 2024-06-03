@@ -61,17 +61,22 @@
                     }
                     <h3> @CostOfItem </h3>
 
-                    <form asp-action="Delete" style="margin-top:-13%; margin-left:40%">
+                    @{
+                        if (OrderItem.Orders.StatusId == 1)
+                        {
+                            <form asp-action="Delete" style="margin-top:-13%; margin-left:40%">
 
-                        <input type="hidden" name="ItemId" value="@OrderItem.ItemId"/>
-                        <input type="submit" value="❌" />
+                                <input type="hidden" name="ItemId" value="@OrderItem.ItemId"/>
+                                <input type="submit" value="❌" />
 
-                    </form>
+                            </form>
+                        }
+                    }
                 </td>
 
 
         </tr>
-}
+        }
     </tbody>
 </table>
 
