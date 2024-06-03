@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
- 
+    decimal OrderCost = 0;
 }
 
 <h1>My Cart </h1>
@@ -57,7 +57,8 @@
                 <td>
                     @{
                         decimal CostOfItem = OrderItem.Items.Price * OrderItem.Quantity;
-                                                              
+                        OrderCost = OrderCost + CostOfItem;                                              
+                    }                                      
                     }
                     <h3> @CostOfItem </h3>
 
