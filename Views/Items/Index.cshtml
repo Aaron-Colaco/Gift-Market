@@ -186,11 +186,18 @@
 
 <div>
 
-    <form asp-action="Index" style="margin-left:90%; margin-top:3%;">
+    <form asp-action="Index" style="margin-left:90%; margin-top:5%; display:flex">
         @{
             for (int i = 1; i < ViewBag.Pages; i++)
             {
-                <input style="background-color: teal; color:black;"name="Page" value="@i" type="submit" />
+                @if (i == ViewBag.PageNUmber ){
+
+                    <input name="Page" value="@i" type="submit" style="background-color: black; color:white; padding: 5px 10px; border: none; border-radius: 3px; width:8%; margin:3%;"/>
+
+
+            }else{
+                    <input name="Page" value="@i" type="submit" style="background-color: teal; color:black; padding: 5px 10px; border: none; border-radius: 3px; width:8%; margin:3%;" />
+            }
             }
 
 

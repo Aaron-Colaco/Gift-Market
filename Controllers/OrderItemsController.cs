@@ -60,7 +60,8 @@ namespace AaronColacoAsp.NETProject.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                return RedirectPermanent("/Identity/Account/Register");
+                //to the hosted site after 60 day trial will brake
+                return RedirectPermanent("http://aaronshoptest-001-site1.etempurl.com/Identity/Account/Register");
             }
 
 
@@ -178,10 +179,10 @@ namespace AaronColacoAsp.NETProject.Controllers
             ViewBag.StatusId = Order.StatusId;
             ViewBag.TotalRrice = Order.TotalPrice;
 
-            var OrderItems = _context.OrderItem.Where(a => a.OrderId == Order.OrderId);
+            var OrderItem =  await _context.OrderItem.Where(a => a.OrderId == Order.OrderId).Include(a => a.Items).ToListAsync();
 
 
-            return View(OrderItems.ToListAsync());
+            return View(OrderItem);
         }
 
         public async Task<IActionResult> ProcessOrder(string FullName, string PhoneNumber, string BoxColour, string RibbionColour, String GiftMessage, string RecipientPhone, string RecipientName, string DeliveryAddress, string City, int PostalCode)

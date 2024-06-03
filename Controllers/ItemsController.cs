@@ -60,6 +60,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             const int ItemsPerPage = 6;
             ViewBag.Pages = (int)Math.Ceiling((double)Items.Count() / ItemsPerPage);
 
+            ViewBag.PageNUmber = Page;
             ViewBag.Category = _context.Category;
             return View(await Items.Skip((Page - 1) * ItemsPerPage).Take(6).ToListAsync());
 
