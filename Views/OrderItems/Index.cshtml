@@ -59,8 +59,8 @@
                         decimal CostOfItem = OrderItem.Items.Price * OrderItem.Quantity;
                         OrderCost = OrderCost + CostOfItem;                                              
                     }                                      
-                    }
-                    <h3> @CostOfItem </h3>
+                    
+                    <h3> $@CostOfItem </h3>
 
                     @{
                         if (OrderItem.Orders.StatusId == 1)
@@ -73,17 +73,19 @@
                             </form>
                         }
                     }
-                </td>
 
+                </td>
+                
 
         </tr>
         }
+        
     </tbody>
 </table>
 
 
 
-<h3>Order Cost @ViewBag.TotalPrice</h3>
+<h3>Order Cost @OrderCost</h3>
 
 @{
 
