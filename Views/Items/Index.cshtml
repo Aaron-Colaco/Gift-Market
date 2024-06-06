@@ -107,23 +107,29 @@
             <input type="submit" Value="Filter" style="background-color: #245b68; color:white;" class="btn btn-outline-primary" />
         </form>
         <br />
-
+        <form asp-action="FilterByCategroy">
         @{
 
             foreach (var Category in ViewBag.Category)
             {
-                <a class="FilterButtons" asp-action="FilterByCategroy" asp-route-id=@Category.CategoryId>@Category.Name</a>
+                    <input type="submit" class="FilterButtons" name="Category" value="@Category.Name" />
             }
         }
         <a class="FilterButtons" asp-action="Index">See All</a>
-
+ </form>
 
     </div>
 
 
     <div class="ItemsBox">
 
-
+        @{
+            if (Model.FirstOrDefault() == null)
+            {
+                <h1> Products Not Found</h1>
+               <a class="FilterButtons" asp-action="Index">See Products Here</a>
+            }
+        }
 
         @foreach (var item in Model)
         {
@@ -139,8 +145,8 @@
                 <img class="ItemImgage" src="@item.ImageURL" />
 
 
-                <br />
-                @Html.DisplayFor(modelItem => item.Name)
+                <br />       <br />
+                <h1 style="font-size:1rem;">@Html.DisplayFor(modelItem => item.Name)</h1>
 
                 <h1> @Html.DisplayFor(modelItem => item.Price)</h1>
 
@@ -186,17 +192,17 @@
 
 <div>
 
-    <form asp-action="Index" style="margin-left:90%; margin-top:5%; display:flex">
+    <form asp-action="Index" style="margin-left:88%; margin-top:8%; display:flex">
         @{
             for (int i = 1; i < ViewBag.Pages; i++)
             {
                 @if (i == ViewBag.PageNUmber ){
 
-                    <input name="Page" value="@i" type="submit" style="background-color: black; color:white; padding: 5px 10px; border: none; border-radius: 3px; width:8%; margin:3%;"/>
+                    <input name="Page" value="@i" type="submit" style="background-color: black; color:white; text-align:center; padding: 5px 10px; border: none; border-radius: 3px; width:50%; margin:3%; text-align:center;" />
 
 
             }else{
-                    <input name="Page" value="@i" type="submit" style="background-color: teal; color:black; padding: 5px 10px; border: none; border-radius: 3px; width:8%; margin:3%;" />
+                    <input name="Page" value="@i" type="submit" style="background-color: teal; color:white; padding: 5px 10px; border: none; border-radius: 3px; width:35%; margin:3%; text-align:center;" />
             }
             }
 
@@ -213,7 +219,7 @@
             grid-column-gap: 3%;
             margin-left: 10%;
             width: 96%;
-            grid-row-gap: 1%;
+            grid-row-gap: 0.8%;
         }
     }
 
@@ -236,7 +242,7 @@
         .ItemsBox {
             display: grid;
             grid-column-gap: 3%;
-            grid-row-gap: 3%;
+            grid-row-gap: 5%;
         }
     }
 
@@ -251,12 +257,18 @@
     .ItemImgage {
         height: 60%;
         width: 70%;
+        transition: all 2s;
     }
 
+    .ItemImgage:hover {
+        transform: scale(1.2);
+    }
     .FilterButtons {
         text-decoration: none;
         color: #245b73;
         font-size: 2rem;
+       border:none;
+       background: none;
     }
 
 

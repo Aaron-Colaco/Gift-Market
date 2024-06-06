@@ -21,8 +21,8 @@ namespace AaronColacoAsp.NETProject.Controllers
             _context = context;
         }
 
-
-
+        public const int ItemsPerPage = 6;
+  
         public async Task<IActionResult> Search(string SearchTerm)
         {
             var Results = _context.Item.Where(i => i.Name.Contains(SearchTerm)).Include(i => i.Categorys);
@@ -32,18 +32,23 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
 
-        public async Task<IActionResult> FilterByCategroy(int id)
+        public async Task<IActionResult> FilterByCategroy(string Category,int Page = 1)
         {
-            var Results = _context.Item.Where(i => i.CategoryId == id).Include(i => i.Categorys);
+            var Results = _context.Item.Where(i => i.Categorys.Name == Category).Include(i => i.Categorys);
+
+     
             ViewBag.Category = _context.Category;
             return View("Index", await Results.ToListAsync());
+
+       
         }
 
-        public async Task<IActionResult> Filter(int MinPrice, int MaxPrice)
+        public async Task<IActionResult> Filter(int MinPrice, int MaxPrice, int Page = 1)
         {
             var Results = _context.Item.Where(i => i.Price >= MinPrice && i.Price <= MaxPrice).Include(i => i.Categorys);
+ 
+           
             ViewBag.Category = _context.Category;
-
             return View("Index", await Results.ToListAsync());
         }
 
@@ -57,7 +62,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             ViewBag.Dp = displayPopUp;
             var Items = _context.Item.Include(i => i.Categorys);
 
-            const int ItemsPerPage = 6;
+
             ViewBag.Pages = (int)Math.Ceiling((double)Items.Count() / ItemsPerPage);
 
             ViewBag.PageNUmber = Page;

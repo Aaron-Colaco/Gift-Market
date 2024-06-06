@@ -55,13 +55,12 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
 
-        [Authorize]
         public async Task<IActionResult> AddToCart(int ItemId)
         {
             if (!User.Identity.IsAuthenticated)
             {
                 //to the hosted site after 60 day trial will brake
-                return RedirectPermanent("http://aaronshoptest-001-site1.etempurl.com/Identity/Account/Register");
+                return RedirectPermanent("/Identity/Account/Register");
             }
 
 

@@ -20,7 +20,7 @@ namespace AaronColacoAsp.NETProject.Models
             [Required,DataType(DataType.Currency),Range(1,500)]
             public decimal CostToProduce { get; set; }
 
-            [MaxLength(1000),DataType(DataType.Url)]
+            [MaxLength(1000)]
             public string ImageURL { get; set; }
            
             [MaxLength(100)]
