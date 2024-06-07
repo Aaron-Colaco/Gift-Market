@@ -88,13 +88,7 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
 
-            if (ExistingItem != null && ExistingItem.Quantity >= 8)
-            {
-                ViewBag.MaxQuantiy = true;
-                return RedirectToAction("Index", new { id = OrderId, MaxQuantity = true });
-
-            }
-
+           
             else if (ExistingItem != null)
             {
                 ExistingItem.Quantity++;
