@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Configuration;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Stripe;
+using System.Net.Mail;
 
 namespace AaronColacoAsp.NETProject.Controllers
 {
@@ -156,9 +157,14 @@ namespace AaronColacoAsp.NETProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateOrder(int Status, string OrderId)
         {
-            var order = _context.Order.Where(a => a.OrderId == OrderId).FirstOrDefault();
+            var order = _context.Order.Where(a => a.OrderId == OrderId).Include(a => a.Status).Include(a => a.Customers).FirstOrDefault();
             order.StatusId = Status;
+            string OrderStatus = _context.Status.Where(a => a.StatusId == Status).Select(a => a.Name).First();
+
             _context.SaveChanges();
+
+            HomeController.SendEmailToCusotmer(order.Customers.Email, "<h1>Dear " + order.Customers.FullName + "<h1><h5>Your order is now " + OrderStatus + "</h5>","<h5>Update on" +order.Customers.FullName + "Order</h5>") ;
+
 
             return RedirectToAction(nameof(Index));
 

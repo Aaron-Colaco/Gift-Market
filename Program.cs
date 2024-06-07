@@ -88,10 +88,17 @@ namespace AaronColacoAsp.NETProject
                     await userManager.AddToRoleAsync(user, "Admin");
 
                 }
+
+
+
                
             }
 
             app.Run();
+
+
+
+
 
         }
     }

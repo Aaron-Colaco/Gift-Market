@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Stripe;
 using Stripe.Checkout;
+using Stripe.Climate;
 using System.Security.Claims;
+using static System.Net.WebRequestMethods;
 using SessionCreateOptions = Stripe.Checkout.SessionCreateOptions;
 
 namespace AaronColacoAsp.NETProject.Controllers
@@ -30,13 +32,13 @@ namespace AaronColacoAsp.NETProject.Controllers
 
         public async Task<IActionResult> OpenCart(string order)
         {
-                var Order = await GetOrder();
-                return View("Index", Order);
-            
-          
+            var Order = await GetOrder();
+            return View("Index", Order);
 
 
-   
+
+
+
         }
 
 
@@ -141,7 +143,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             if (UserOrder == null)
             {
 
-                var NewOrder = new Order
+                var NewOrder = new Models.Order
                 {
                     CustomerId = Customer,
                     StatusId = 1,
@@ -159,18 +161,19 @@ namespace AaronColacoAsp.NETProject.Controllers
             }
         }
 
-        public async Task<IActionResult> Index(string id,bool CartFull = false, bool MaxQuantity = false)
+        public async Task<IActionResult> Index(string id, bool CartFull = false, bool MaxQuantity = false)
         {
 
 
             var Order = _context.Order.Where(a => a.OrderId == id).FirstOrDefault();
 
-            if(Order.CustomerId != User.FindFirstValue(ClaimTypes.NameIdentifier) && !User.IsInRole("Admin")){
+            if (Order.CustomerId != User.FindFirstValue(ClaimTypes.NameIdentifier) && !User.IsInRole("Admin"))
+            {
 
-                return View ("Cant find Order that Belongs to you");
+                return View("Cant find Order that Belongs to you");
 
             }
-             
+
 
 
             ViewBag.CartFull = CartFull;
@@ -178,7 +181,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             ViewBag.StatusId = Order.StatusId;
             ViewBag.TotalRrice = Order.TotalPrice;
 
-            var OrderItem =  await _context.OrderItem.Where(a => a.OrderId == Order.OrderId).Include(a => a.Items).ToListAsync();
+            var OrderItem = await _context.OrderItem.Where(a => a.OrderId == Order.OrderId).Include(a => a.Items).ToListAsync();
 
 
             return View(OrderItem);
@@ -194,8 +197,7 @@ namespace AaronColacoAsp.NETProject.Controllers
 
             Customer.FullName = FullName;
             Customer.PhoneNumber = PhoneNumber;
-            OrderToProcess.StatusId = 2;
-            OrderToProcess.OrderTime = DateTime.Now;
+           
             OrderToProcess.DeliveryAddress = DeliveryAddress;
             OrderToProcess.City = City;
             OrderToProcess.PostalCode = PostalCode;
@@ -223,11 +225,8 @@ namespace AaronColacoAsp.NETProject.Controllers
 
             };
             _context.GiftRecipient.Add(GiftRecipient);
-
+    
             await _context.SaveChangesAsync();
-
-
-
 
             return RedirectToAction("Payment", new { OrderId = OrderId });
 
@@ -248,7 +247,42 @@ namespace AaronColacoAsp.NETProject.Controllers
             return listOrderItems;
         }
 
+      
+         
+       
+        public async Task<IActionResult>Success()
+        {
+
+            string OrderId = await CheckUserOrders();
+            var UserOrder = _context.Order.Where(a => a.OrderId == OrderId).Include(a => a.Customers).FirstOrDefault();
+
+            UserOrder.StatusId = 2;
+            UserOrder.OrderTime = DateTime.Now;
+
   
+
+            string EmailBody = "<h1>Dear " + UserOrder.Customers.FullName + ",</h1><p>Thank you for your order here at Kiwi Gift Market. We will work on processing your order as soon as we can.</p><p>Your total cost was $" + UserOrder.TotalPrice.ToString() + ".</p>";
+
+            HomeController.SendEmailToCusotmer(UserOrder.Customers.Email, EmailBody, "Thanks " + UserOrder.Customers.FullName);
+
+            _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+     
+      public async Task Cancel()
+        {
+            string OrderId = await CheckUserOrders();
+            var UserOrder = _context.Order.Where(a => a.OrderId == OrderId).First();
+
+            _context.Remove(UserOrder);
+            _context.SaveChanges();
+        }
+
+
+
         public IActionResult Payment(string OrderId)
         {
             StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
@@ -260,11 +294,14 @@ namespace AaronColacoAsp.NETProject.Controllers
             {
                 LineItems = new List<SessionLineItemOptions>(),
                 CustomerEmail = User.Identity.Name,
-                SuccessUrl = "https://Localhost:7002/Home",
+                SuccessUrl = "https://localhost:7002/OrderItems/Success",
+                CancelUrl = "https://localhost:7002/OrderItems/Cancel",
                 Mode = "payment",
                 ClientReferenceId = User.FindFirstValue(ClaimTypes.NameIdentifier),
             };
+ 
 
+            
             foreach (var item in ItemsInOrder)
             {
                 var OrderedItem = new SessionLineItemOptions()
