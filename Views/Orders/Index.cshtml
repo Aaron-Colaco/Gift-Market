@@ -44,10 +44,10 @@
 
 
         <label for="Date 1">Date 1 </label>
-        <input required type="datetime-local" name="Date1" min="@min" max="@max" placeholder="00/00/000" />
+                <input required type="datetime-local" name="Date1" min="@min.ToString("yyyy-MM-dd")T00:00" max="@max.ToString("yyyy-MM-dd")T00:00" placeholder="00/00/000" />
 
         <label for="date">Date 2 </label>
-        <input required type="datetime-local" name="Date2" min="@min" max="@max" placeholder="00/00/000" />
+                <input required type="datetime-local" name="Date2" min="@min.ToString("yyyy-MM-dd")T00:00" max="@max.ToString("yyyy-MM-dd")T00:00"  placeholder="00/00/000" />
 
 
         <input type="submit" />

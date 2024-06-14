@@ -17,13 +17,13 @@
 
     <label for="Date1">Date 1</label>
 
-    <input required type="datetime-local" min="@min.ToString("yyyy-mm-dd")" id="Date1" name="Date1" placeholder="00/00/0000" />
+    <input required type="datetime-local" min="@min.ToString("yyyy-MM-dd")T00:00" max="@max.ToString("yyyy-MM-dd")T00:00" id="Date1" name="Date1" placeholder="00/00/0000" />
 
 
 
     <label for="Date2">Date 2</label>
 
-    <input required type="datetime-local" id="Date2" name="Date2" placeholder="00/00/0000" />
+    <input required type="datetime-local" min="@min.ToString("yyyy-MM-dd")T00:00" max="@max.ToString("yyyy-MM-dd")T00:00" id="Date2" name="Date2" placeholder="00/00/0000" />
 
 
 
