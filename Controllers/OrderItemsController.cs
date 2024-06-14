@@ -61,7 +61,6 @@ namespace AaronColacoAsp.NETProject.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                //to the hosted site after 60 day trial will brake
                 return RedirectPermanent("/Identity/Account/Register");
             }
 
@@ -181,7 +180,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             return View(OrderItem);
         }
 
-        public async Task<IActionResult> ProcessOrder(string FullName, string PhoneNumber, string BoxColour, string RibbionColour, String GiftMessage, string RecipientPhone, string RecipientName, string DeliveryAddress, string City, int PostalCode)
+        public async Task<IActionResult> ProcessOrder(string FullName, string PhoneNumber, string BoxColour, string RibbionColour, string RecipientPhone, string RecipientName, string DeliveryAddress, int PostalCode, string GiftMessage = " ", string City = "Auckland")
         {
 
             string OrderId = await CheckUserOrders();
@@ -261,18 +260,22 @@ namespace AaronColacoAsp.NETProject.Controllers
 
             _context.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Home");
+         
+
+            return RedirectToAction("Index", "Orders");
         }
 
 
      
-      public async Task Cancel()
+      public async Task<IActionResult> Cancel()
         {
             string OrderId = await CheckUserOrders();
             var UserOrder = _context.Order.Where(a => a.OrderId == OrderId).First();
 
             _context.Remove(UserOrder);
             _context.SaveChanges();
+            return  RedirectToAction("Index", "Home");
+
         }
 
 

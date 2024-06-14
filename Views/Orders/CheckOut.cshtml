@@ -48,6 +48,46 @@
             input[type="submit"]:hover {
                 background-color: #00796b;
             }
+
+    input[type="color"]{
+        border-radius: 28px;
+        height: 4vh;
+        width: 3%;
+        border:none;
+        overflow: hidden;
+    }
+
+
+    textarea {
+        border-radius: 28px;
+        border-color: black;
+    }
+
+
+
+
+
+
+    @@media only screen and (max-Width: 1200px) {
+
+        textarea {
+            margin: auto;
+            width: 100%;
+        }
+    }
+
+
+
+    @@media only screen and (min-Width: 1200px) {
+
+
+
+        textarea {
+            margin: auto;
+            width: 50%;
+        }
+    }
+
     </style>
 
 
@@ -119,7 +159,7 @@
 
             <br /> <br />
 
-<textarea required name="GiftMessage" maxlength="100" style="height: 30vh; width:90%;"></textarea>
+<textarea name="GiftMessage" maxlength="100" style="height: 30vh; width:90%;"></textarea>
 
 
 
@@ -177,7 +217,7 @@
 
         <label for="City">City</label>
 
-        <input id="City" name="City" required minlength="2" maxlength="30" value="Auckland" /><br>
+        <input id="City" type="text" name="City" required minlength="2" maxlength="30" value="Auckland" disabled/><br>
 
 
 
@@ -200,63 +240,6 @@
     <style>
 
 
-textarea{
-
-border-radius: 28px;
-
-border-color: black;
-
-}
-
-
-
-#BoxColour, #RibbonColour {
-
-border-radius: 50px;
-
-border: none;
-
-height: 3vh;
-
-width: 3%;
-border-width:10%;
-border-radius: 50%;
-overflow: hidden;
-
-}
-
-
-
-@@media only screen and (max-Width: 1200px) {
-
-textarea {
-
-margin: auto;
-
-width: 100%;
-
-}
-
-
-
-}
-
-
-
-@@media only screen and (min-Width: 1200px) {
-
-
-
-textarea {
-
-margin: auto;
-
-width: 50%;
-
-
-}
-
-}
 
 </style>
     <script >
