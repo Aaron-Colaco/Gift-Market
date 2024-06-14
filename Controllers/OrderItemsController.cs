@@ -89,7 +89,7 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
            
-            else if (ExistingItem != null)
+           if (ExistingItem != null)
             {
                 ExistingItem.Quantity++;
             }

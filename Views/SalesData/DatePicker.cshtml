@@ -1,6 +1,12 @@
 
 @{
     ViewData["Title"] = "DatePicker";
+   
+    DateTime min = DateTime.Today.AddMonths((-12));
+
+    DateTime max = DateTime.Today.AddMonths((12));
+        
+
 }
 
 
@@ -9,11 +15,17 @@
     <h1>Please Select Two Dates to see Sales Data From</h1>
 
 
-    <label for="Date 1">Date 1 </label>
-    <input required type="datetime-local" name="Date1" placeholder="00/00/000" />
-   
-    <label for="date">Date 2 </label>
-    <input required type="datetime-local" name="Date2" placeholder="00/00/000" />
+    <label for="Date1">Date 1</label>
+
+    <input required type="datetime-local" min="@min.ToString("yyyy-mm-dd")" id="Date1" name="Date1" placeholder="00/00/0000" />
+
+
+
+    <label for="Date2">Date 2</label>
+
+    <input required type="datetime-local" id="Date2" name="Date2" placeholder="00/00/0000" />
+
+
 
 
     <input type="submit" /> 

@@ -13,7 +13,7 @@ namespace AaronColacoAsp.NETProject.Models
             public string Name { get; set; }
 
 
-            [Required,DataType(DataType.Currency),Range(1,600)]
+            [Required,DataType(DataType.Currency),Range(1,500)]
             public decimal Price { get; set; }
 
 

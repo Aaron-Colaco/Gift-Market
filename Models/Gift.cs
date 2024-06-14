@@ -9,7 +9,7 @@ namespace AaronColacoAsp.NETProject.Models
         public string GiftId { get; set; }
 
         [MaxLength(200)]
-        public string Message { get; set; } = "";
+        public string Message { get; set; } = " ";
 
         [MaxLength(100)]
         public string RibbonColour { get; set; }
