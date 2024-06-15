@@ -9,95 +9,104 @@ using AaronColacoAsp.NETProject.Data;
 using AaronColacoAsp.NETProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Globalization;
+using System.Reflection.Metadata;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Buffers.Text;
+using Humanizer;
 
 namespace AaronColacoAsp.NETProject.Controllers
 {
+    //Controller for managing Items
     public class ItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
+        //Constructor to Initialaize the Database Context.
         public ItemsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public const int ItemsPerPage = 6;
-  
-        public async Task<IActionResult> Search(string SearchTerm)
+        // Decalres the constant number of Items Per Page as 6
+        public const int ITEMSPERPAGE = 6;
+
+        
+        //Index Method takes in Page Number and ItemId which is set to one by default as parameters as well as boolean called display up which is set to false by deafult.
+        public async Task<IActionResult> Index(int page = 1, int itemId = 1, bool displayPopUp = false)
         {
-            var Results = _context.Item.Where(i => i.Name.Contains(SearchTerm)).Include(i => i.Categorys);
+            //Finds the item in the database where the item has an id that matches the ItemId passed into the method and stores it the he view bag
+            ViewBag.Item = _context.Item.Where(a => a.ItemId == itemId).FirstOrDefault();
+            //Stores the value of the display pop-up boolean in the view bag 
+            ViewBag.displayPopUp = displayPopUp;
+            //Find all the items in the database as well as their category stored in a variable called items
+            var Items = _context.Item.Include(i => i.Categorys);
+
+            //Calculates the number of pages needed based on the number of products in the database.
+            ViewBag.Pages = (int)Math.Ceiling((double)Items.Count() / ITEMSPERPAGE);
+
+            //Stores the number of pages needed in the view bag.
+            ViewBag.PageNUmber = page;
+
+            //Stores the categorys in the database in the viewbag.
             ViewBag.Category = _context.Category;
+
+            //Return the index view, skip the (page number passed into the method) -1 * 6 amount of items. Then take 6 items to list on the items view/page.
+            return View(await Items.Skip((page - 1) * ITEMSPERPAGE).Take(ITEMSPERPAGE).ToListAsync());
+
+        }
+
+
+
+
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+
+            //Finds all the products in the database whose name contains the search term which is passed into the search method storing it in a variable.
+            var Results = _context.Item.Where(i => i.Name.Contains(searchTerm)).Include(i => i.Categorys);
+            //Stores the categorys in the database in the viewbag.
+            ViewBag.Category = _context.Category;
+            //reutrn the Index view passing the reuslts.
             return View("Index", await Results.ToListAsync());
         }
 
 
 
-        public async Task<IActionResult> FilterByCategroy(string Category,int Page = 1)
+        public async Task<IActionResult> FilterByCategroy(string category)
         {
-            var Results = _context.Item.Where(i => i.Categorys.Name == Category).Include(i => i.Categorys);
-
-     
+            
+            //Finds all the products in the database whose category name matches the category passed into the method 
+            var Results = _context.Item.Where(i => i.Categorys.Name == category).Include(i => i.Categorys);
+            //Stores the categorys in the database in the viewbag.
             ViewBag.Category = _context.Category;
+            //reutrn the Index view passing the reuslts.
             return View("Index", await Results.ToListAsync());
 
        
         }
 
-        public async Task<IActionResult> Filter(int MinPrice, int MaxPrice, int Page = 1)
+        public async Task<IActionResult> Filter(int minPrice, int maxPrice)
         {
-            var Results = _context.Item.Where(i => i.Price >= MinPrice && i.Price <= MaxPrice).Include(i => i.Categorys);
- 
            
+            //Finds all the products in the database whose price's are between the min and max price passed into the method
+            var Results = _context.Item.Where(i => i.Price >= minPrice && i.Price <= maxPrice).Include(i => i.Categorys);
+
+            //Stores the categorys in the database in the viewbag.
             ViewBag.Category = _context.Category;
+            //reutrn the Index view passing the reuslts.
             return View("Index", await Results.ToListAsync());
         }
 
 
 
-
-
-        public async Task<IActionResult> Index(int Page = 1, int Item = 1, bool displayPopUp = false)
-        {
-            ViewBag.Item = _context.Item.Where(a => a.ItemId == Item).FirstOrDefault();
-            ViewBag.Dp = displayPopUp;
-            var Items = _context.Item.Include(i => i.Categorys);
-
-
-            ViewBag.Pages = (int)Math.Ceiling((double)Items.Count() / ItemsPerPage);
-
-            ViewBag.PageNUmber = Page;
-            ViewBag.Category = _context.Category;
-            return View(await Items.Skip((Page - 1) * ItemsPerPage).Take(6).ToListAsync());
-
-        }
-
-
-        // GET: Items/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var item = await _context.Item
-                .Include(i => i.Categorys)
-                .FirstOrDefaultAsync(m => m.ItemId == id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-            return View(item);
-        }
-
-
-
+        //only let Users In the Admin Role Access this Method
         [Authorize(Roles = "Admin")]
 
+        
         public IActionResult Create()
         {
+            //Stores the Categorys in ViewData 
             ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Name");
+            //Reuturns the create View
             return View();
         }
 
@@ -106,33 +115,42 @@ namespace AaronColacoAsp.NETProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+
+        //Only let Users In the Admin Role Access this Method
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("ItemId,Name,Price,CostToProduce,ImageURL,Description,CategoryId")] Item item)
         {
+            // Check if the model state is valid
             if (!ModelState.IsValid)
             {
+                //Add the new item to the database and save changes
                 _context.Add(item);
                 await _context.SaveChangesAsync();
+                // Redirect to the Index method
                 return RedirectToAction(nameof(Index));
             }
+            //deafualt mvc code used for populating the drop down list for categorys.
             ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", item.Categorys.Name);
+            //Return the index view
             return View(item);
         }
 
-        // GET: Items/Edit/5
+
+
+        //only lets Users In the Admin Role Access this Method
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
+            //if id parameter null return not found
             if (id == null)
             {
                 return NotFound();
             }
-
+           // Find the item by the id passed into the method.
             var item = await _context.Item.FindAsync(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
+
+            //deafualt mvc code used for populating the drop down list for categorys.
             ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Name");
             return View(item);
         }
@@ -142,55 +160,45 @@ namespace AaronColacoAsp.NETProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+
+        //only lets Users In the Admin Role Access this Method
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ItemId,Name,Price,CostToProduce,ImageURL,Description,CategoryId")] Item item)
         {
-            if (id != item.ItemId)
-            {
-                return NotFound();
-            }
-
+   
             if (!ModelState.IsValid)
             {
                 try
                 {
+                    //Update the item in the context and save changes
                     _context.Update(item);
                     await _context.SaveChangesAsync();
                 }
+
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.ItemId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                  
                 }
+                // Redirect to the Index action
                 return RedirectToAction(nameof(Index));
             }
+            //deafualt mvc code used for populating the drop down list for categorys.
             ViewData["CategoryList"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", item.Categorys.Name);
             return View(item);
         }
 
-        // GET: Items/Delete/5
-        [Authorize(Roles = "Admin")]
+         //restricts access to Admin role only
+         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
+
+            // Find the item b the id passed into the method.
             var item = await _context.Item
                 .Include(i => i.Categorys)
                 .FirstOrDefaultAsync(m => m.ItemId == id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-
+            // Return the view with the item details
             return View(item);
         }
 
@@ -200,13 +208,17 @@ namespace AaronColacoAsp.NETProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+           // Find the item by the id passed into the method
             var item = await _context.Item.FindAsync(id);
+
+            // If item is found, remove it from the database
             if (item != null)
             {
                 _context.Item.Remove(item);
             }
-
+            // Save changes
             await _context.SaveChangesAsync();
+            // Redirect to the Index method
             return RedirectToAction(nameof(Index));
         }
 

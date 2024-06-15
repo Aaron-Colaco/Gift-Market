@@ -22,40 +22,48 @@ namespace AaronColacoAsp.NETProject.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult SalesDashboard(DateTime Date1, DateTime Date2)
         {
+            // Retrieve orders bettwen date 1 and date 2 which values are passed into the method. Exclude orders with status id of one as thse ordr have not been paid for yet.
+            var orderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2).Where(a => a.StatusId !=1);
+            // Retrieve gift data from orders bettwen date 1 and date 2 which values  are passed into the method. Exclude orders with status id of one as thse ordr have not been paid for yet.
+            var giftData = _context.Gift.Where(a => a.Order.OrderTime >= Date1 && a.Order.OrderTime <= Date2).Where(a => a.Order.StatusId != 1);
+            // Retrieve ordersitems data where order date are bettwen date 1 and date 2 which are passed into the method. Exclude orders with status id of one as thse ordr have not been paid for yet.
+            var orderItemData = _context.OrderItem.Where(a => a.Orders.OrderTime >= Date1 && a.Orders.OrderTime <= Date2).Where(a => a.Orders.StatusId != 1);
 
-            var OrderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2).Where(a => a.StatusId !=1);
-            var GiftData = _context.Gift.Where(a => a.Order.OrderTime >= Date1 && a.Order.OrderTime <= Date2).Where(a => a.Order.StatusId != 1);
-            var OrderItemData = _context.OrderItem.Where(a => a.Orders.OrderTime >= Date1 && a.Orders.OrderTime <= Date2).Where(a => a.Orders.StatusId != 1); 
+            //Calculate total sales by summing the product of price * quantity
+            decimal totalSales = orderItemData.Sum(a => a.Items.Price * a.Quantity);
+            ViewBag.totalSales = totalSales;
+            // Calculate total expenses by summing up the (product of cost to produce * quantity)
+            decimal totalExpense = orderItemData.Sum(a => a.Items.CostToProduce * a.Quantity);
+            ViewBag.totalExpense = totalExpense;
 
-           
-            decimal TotalSales = OrderItemData.Sum(a => a.Items.Price * a.Quantity);
-            ViewBag.TotalSales = TotalSales;
+            // Calculate profit the difference between total sales and total expenses
+            decimal profit = totalSales - totalExpense;
+            ViewBag.profit = profit;
 
-            decimal TotalExpense = OrderItemData.Sum(a => a.Items.CostToProduce * a.Quantity);
-            ViewBag.TotalExpense = TotalExpense;
+            //count the number of gifts sent.
+            int totalGifts = giftData.Count();
+            ViewBag.totalGifts = totalGifts;
 
+            // Calculate the total number of items sold
+            var totalProductsSold = orderItemData.Sum(a => a.Quantity);
+            ViewBag.TotalProductsSold = totalProductsSold;
 
-            decimal Profit = TotalSales - TotalExpense;
-            ViewBag.Profit = Profit;
-
-            int TotalGifts = GiftData.Count();
-            ViewBag.TotalGifts = TotalGifts;
-
-            var TotalProductsSold = OrderItemData.Sum(a => a.Quantity);
-            ViewBag.TotalProductsSold = TotalProductsSold;
-
-            decimal AverageOrderCost;
-            if (TotalProductsSold == 0)
+            // Calculate the average order cost (if pitems were sold)
+            decimal averageOrderCost;
+            if (totalProductsSold == 0)
             {
-                AverageOrderCost = 0;
+                //if not products are sold set average cost to 0.
+                averageOrderCost = 0;
             }
             else
             {
-                AverageOrderCost = OrderData.Average(a => a.TotalPrice);
+                averageOrderCost = orderData.Average(a => a.TotalPrice);
             }
 
-            ViewBag.AverageOrderCost = AverageOrderCost;
+            ViewBag.averageOrderCost = averageOrderCost;
+            //store the data in the view bag so it can be accesed in the view.
 
+            //return the salesDashboard view
             return View();
 
 

@@ -15,6 +15,7 @@ using System.Configuration;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Stripe;
 using System.Net.Mail;
+using NuGet.Protocol;
 
 namespace AaronColacoAsp.NETProject.Controllers
 {
@@ -27,145 +28,138 @@ namespace AaronColacoAsp.NETProject.Controllers
         {
             _context = context;
         }
-
+        //Restricts Method to Admin Only
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> SearchByCustomer(string CustomerName)
       {
-        var Results = _context.Order.Where(a => a.Customers.FullName.Contains(CustomerName) || a.Customers.Email.Contains(CustomerName) && a.StatusId != 1).Include(a => a.Customers).Include(a => a.Status);
-        return View("Index", await Results.ToListAsync());
+            //searches for orders where the customer's full name or email contains the CustomerName vlaue passed into the method.
+            // Excludes orders with a status ID of 1 as these order have no yet been payed for.
+            var Results = _context.Order.Where(a => a.Customers.FullName.Contains(CustomerName) || a.Customers.Email.Contains(CustomerName) && a.StatusId != 1).Include(a => a.Customers).Include(a => a.Status);
+             //Returns reuslts to the index page.
+            return View("Index", await Results.ToListAsync());
        }
-        [Authorize(Roles = "Admin")]
+
+
+        [Authorize(Roles = "Admin")]//Restricts Method to Admin Only
         public async Task< IActionResult> FilterOrdersByDate(DateTime Date1, DateTime Date2)
         {
 
+            //  Find Orders with dates between the specified start date (Date1) and end date (Date2) passed into the method. Excludes orders with a status ID of 1 as these order have no yet been payed for.
+
             var OrderData = _context.Order.Where(a => a.OrderTime >= Date1 && a.OrderTime <= Date2 && a.StatusId != 1).Include(a => a.Status).Include(a => a.Customers);
+            //retuns OrderData to the index view 
             return View("Index", await OrderData.ToListAsync());
         }
 
-            // GET: Orders
+           
             public async Task<IActionResult> Index(string sortOrder, int Page = 1)
         {
 
             var OrderData = from a in _context.Order
                             select a;
 
+            // Set up sorting parameters for the view.
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
-
+            // Switch statement to handle different sorting options.
             switch (sortOrder)
             {
               
                 case "Date":
+                    // Sort orders by ascending order time.
                     OrderData = OrderData.OrderBy(a => a.OrderTime);
                     break;
                 case "date_desc":
+                    // Sort orders by descending order time.
                     OrderData = OrderData.OrderByDescending(s => s.OrderTime);
                     break;
                 default:
+                    // Default sorting (descending order time).
                     OrderData = OrderData.OrderByDescending(s => s.OrderTime);
                     break;
             }
 
+            //If user is a admin return all orders where th status id is not one and inlcude the related customers.
             if (User.IsInRole("Admin"))
             {
                 OrderData = OrderData.Where(a => a.StatusId != 1).Include(o => o.Status).Include(a => a.Customers);
           
             }
-            else
+            else // if user is not admin only display their order, by using thier id to find only orders that belong to them(the logged in user).
             {
                 OrderData = OrderData.Include(o => o.Status).Include(a => a.Customers).Where(a => a.CustomerId == User.FindFirstValue(ClaimTypes.NameIdentifier));
            
             }
 
 
-            const int ItemsPerPage = 20;
-            ViewBag.Pages = (int)Math.Ceiling((double)OrderData.Count() / ItemsPerPage);
+            const int ITEMSPERPAGE = 20;
+
+
+            //Calculates the number of pages needed based on the number of orders in the database.
+            ViewBag.Pages = (int)Math.Ceiling((double)OrderData.Count() / ITEMSPERPAGE);
+            //Stores the number of pages needed in the view bag.
             ViewBag.PageNumber = Page;
+            //Return the index view, skip the (page number passed into the method) -1 * 6 amount of orders.  Then take 20 orders to list on the items view/page.
+            return View(await OrderData.Skip((Page - 1) * ITEMSPERPAGE).Take(20).AsNoTracking().ToListAsync());
 
-            return View(await OrderData.Skip((Page - 1) * ItemsPerPage).Take(20).AsNoTracking().ToListAsync());
-
-
-
-
-
-
-
-
-        
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 
         }
 
+
+
+        //returns the check out form view
         public IActionResult CheckOut(string id)
         {
-
-            ViewBag.OrderId = id;
-            return View(CheckOut);
-
+            return View();
         }
-        // GET: Orders/Details/5
+      
+
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            //find order bassed on the id passed into the method
+      
             var order = await _context.Order
                 .Include(o => o.Status)
                 .Include(a => a.Customers)
                 .Include(a => a.Gifts).ThenInclude(a => a.giftRecipient)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-
+          
+           // return order to details page
             return View(order);
         }
 
+        //restricts method to admin use only
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> StatusUpdate(string id)
         {
+            //stores informtion about the order based on the id passed into the method, in the view bag so it an be accesed from the view.
             ViewBag.OrderId = id;
-            var Order = _context.Order.Where(a => a.OrderId == id).Include(a => a.Customers).First();
-            ViewBag.Customer = Order.Customers.FullName;
-            ViewBag.Date = Order.OrderTime;
+            var order = _context.Order.Where(a => a.OrderId == id).Include(a => a.Customers).First();
+            ViewBag.Customer = order.Customers.FullName;
+            ViewBag.Date = order.OrderTime;
+            //return status in the database to the view.
             ViewBag.Status = _context.Status;
-
+            //returns the status update view.
             return View("StatusUpdate");
         }
 
-        // POST: Orders/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateOrder(int Status, string OrderId)
+        public async Task<IActionResult> UpdateOrder(int status, string orderId)
         {
-            var order = _context.Order.Where(a => a.OrderId == OrderId).Include(a => a.Status).Include(a => a.Customers).FirstOrDefault();
-            order.StatusId = Status;
-            string OrderStatus = _context.Status.Where(a => a.StatusId == Status).Select(a => a.Name).First();
-
+            //Find order bassed on id passed into the method and also include the customer related to the order.
+            var order = _context.Order.Where(a => a.OrderId == orderId).Include(a => a.Status).Include(a => a.Customers).FirstOrDefault();
+            //set statusId of the order to the statusId passed into the method.
+            order.StatusId = status;
+            string OrderStatus = _context.Status.Where(a => a.StatusId == status).Select(a => a.Name).First();
+            //save changes
             _context.SaveChanges();
+            //Call the SendEmailToCustomer method and pass in the customers email, a subject and body to email the customer about their status update.
+            HomeController.SendEmailToCustomer(order.Customers.Email, "<h1>Dear " + order.Customers.FullName + "<h1><h5>Your order is now " + OrderStatus + "</h5>","<h5>Update on" +order.Customers.FullName + "Order</h5>") ;
 
-            HomeController.SendEmailToCusotmer(order.Customers.Email, "<h1>Dear " + order.Customers.FullName + "<h1><h5>Your order is now " + OrderStatus + "</h5>","<h5>Update on" +order.Customers.FullName + "Order</h5>") ;
-
-
+            //return to the index action.
             return RedirectToAction(nameof(Index));
 
         }
@@ -174,35 +168,28 @@ namespace AaronColacoAsp.NETProject.Controllers
         // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            //Find Order bassed on the id passed into the method.
             var order = await _context.Order
                 .Include(o => o.Customers)
                 .Include(o => o.Status)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-
+            // return Delete view passing in the order.
             return View(order);
         }
 
-        // POST: Orders/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
+            //find the order bassed on the id passed In.
             var order = await _context.Order.FindAsync(id);
-            if (order != null)
-            {
-                _context.Order.Remove(order);
-            }
-
+           
+         //Removes the Order from the database and saves changes
+             _context.Order.Remove(order);
             await _context.SaveChangesAsync();
+
+            //return to the index action.
             return RedirectToAction(nameof(Index));
         }
 

@@ -4,29 +4,25 @@
     ViewData["Title"] = "Index";
 }
 @{
-    if (ViewBag.Dp == true)
+    if (ViewBag.displayPopUp == true)//display the following html content if the viewbag display PopUp equals ture
     {
 
         <div class="centeredPopUP">
             <h1>Your Item as been added to cart</h1>
 
-            @ViewBag.Item.Name
-            $@ViewBag.Item.Price
-
-
-
+            @ViewBag.Item.Name  <!--Display the Item Name from the View Bag-->
+            $@ViewBag.Item.Price <!--Display the Item Price from the View Bag-->
+            <!--two forms with buttons, one to go back to index the other to redrict to the open cart action-->
             <form asp-action="Index">
                 <input type="submit" class="continue-shopping-btn active" value="Continue Shopping " />
             </form>
             <form asp-action="OpenCart" asp-controller="OrderItems">
                 <input type="submit" value="Go to Cart" class="add-to-cart-btn" />
-
-
             </form>
 
 
         </div>
-
+        <!--While pop up is displayed blur backgorund and hide add to cart buttons-->
         <style>
 
             .centeredPopUP {
@@ -70,10 +66,18 @@
 
 }
 @{
+    <!--If Cart is full display cart full and hide add to cart buttons-->
     if (ViewBag.MaxQuantiy == true)
     {
         <h1>Your Cart Is Full</h1>
     }
+    <style>
+        .AddToCart, {
+            display: none;
+        }
+    </style>
+}
+
 }
 
 <div class="ItemsPage">
@@ -81,7 +85,7 @@
 
 
     <div>
-        @if (User.IsInRole("Admin"))
+        @if (User.IsInRole("Admin"))//If the user is admin display
         {
             <a asp-action="Create">Create New</a>
         }
@@ -89,34 +93,36 @@
 
 
 
-
+        <!--Form that passes the user input to the items Controller Search method-->
         <form asp-action="Search" asp-controller="Items">
 
-            <input style="border-width: 2px; border-style:solid; height:4vh; border-radius:2px;" name="SearchTerm" type="text" placeholder="Search Item" />
+            <input style="border-width: 2px; border-style:solid; height:4vh; border-radius:2px;" name="searchTerm" type="text" placeholder="Search Item" />
             <input value="Search" style=" background-color: #245b73; color:white;" class="btn btn-outline-primary" type="submit" />
 
         </form>
         <br />
-
+        <!--Form that passes the user input to the items Controller filter method-->
         <form asp-action="Filter" asp-controller="Items">
 
 
-            <input style="width: 5%; border-width: 2px; border-style:solid; height:4vh; border-radius:2px;" name="MinPrice" type="number" placeholder="Min" max="300" min="0" />
-
-            <input style="width: 5%; border-width: 2px; border-style:solid; height:4vh; border-radius:2px;" name="MaxPrice" type="number" placeholder="Max" />
+            <input style="width: 5%; border-width: 2px; border-style:solid; height:4vh; border-radius:2px;" name="minPrice" type="number" placeholder="Min" max="300" min="0" />
+            <input style="width: 5%; border-width: 2px; border-style:solid; height:4vh; border-radius:2px;" name="maxPrice" type="number" placeholder="Max" />
             <input type="submit" Value="Filter" style="background-color: #245b68; color:white;" class="btn btn-outline-primary" />
         </form>
         <br />
         <form asp-action="FilterByCategroy">
-        @{
+            @{
+                //For each Cateogry stored in the view bag display an input in the form with the value being the category name.
+                // When the user clicks a category the form will be sumbited to the Filter Action in the Items controller passing in the value into the method Cateogry parrameter.
 
-            foreach (var Category in ViewBag.Category)
-            {
+                foreach (var Category in ViewBag.Category)
+                {
                     <input type="submit" class="FilterButtons" name="Category" value="@Category.Name" />
+                }
             }
-        }
-        <a class="FilterButtons" asp-action="Index">See All</a>
- </form>
+            <!--Reaload's the home page-->
+            <a class="FilterButtons" asp-action="Index">See All</a>
+        </form>
 
     </div>
 
@@ -124,10 +130,11 @@
     <div class="ItemsBox">
 
         @{
+            //If no product are found display no products and proivde the user a link to reload the items page.
             if (Model.FirstOrDefault() == null)
             {
                 <h1> Products Not Found</h1>
-               <a class="FilterButtons" asp-action="Index">See Products Here</a>
+                <a class="FilterButtons" asp-action="Index">See Products Here</a>
             }
         }
 
@@ -163,12 +170,12 @@
                     <form asp-controller="OrderItems" asp-action="AddToCart">
 
 
-                    <input type="hidden" name="ItemId" value="@item.ItemId" />
-                    <input type="submit" value="Add To Cart" class="AddToCart" />
-                </form>
+                        <input type="hidden" name="itemId" value="@item.ItemId" />
+                        <input type="submit" value="Add To Cart" class="AddToCart" />
+                    </form>
                 }
 
-                @if (User.IsInRole("Admin"))
+                @if (User.IsInRole("Admin"))//if the user is in the admin role display this content
                 {
 
                     <p> cost to produce   @Html.DisplayFor(modelItem => item.CostToProduce) </p>
@@ -194,19 +201,25 @@
 
     <form asp-action="Index" style="margin-left:88%; margin-top:8%; display:flex">
         @{
+            // Loop through the number of pages creating a sumbit button, starting from 1 up to the value of ViewBag.Pages
             for (int i = 1; i < ViewBag.Pages; i++)
             {
-                @if (i == ViewBag.PageNUmber ){
-
+                // Check if the current page number(i) is equal to the active page ViewBag.PageNumber
+                @if (i == ViewBag.PageNUmber)
+                {
+                    // render a input submit button for the current page with value of i.
                     <input name="Page" value="@i" type="submit" style="background-color: black; color:white; text-align:center; padding: 5px 10px; border: none; border-radius: 3px; width:50%; margin:3%; text-align:center;" />
 
 
-            }else{
+                }
+                else
+                {
+                    // Render a submit button for the pthers page with a different styling form the active page with the value of i.
                     <input name="Page" value="@i" type="submit" style="background-color: teal; color:white; padding: 5px 10px; border: none; border-radius: 3px; width:35%; margin:3%; text-align:center;" />
-            }
+                }
             }
 
-
+            //When the user clicks a submit button it will pass the vlaue(page number ) to the index method.
         }
     </form>
 
@@ -260,15 +273,16 @@
         transition: all 2s;
     }
 
-    .ItemImgage:hover {
-        transform: scale(1.2);
-    }
+        .ItemImgage:hover {
+            transform: scale(1.2);
+        }
+
     .FilterButtons {
         text-decoration: none;
         color: #245b73;
         font-size: 2rem;
-       border:none;
-       background: none;
+        border: none;
+        background: none;
     }
 
 
