@@ -2,22 +2,18 @@
 
 @{
     ViewData["Title"] = "Index";
-    decimal OrderCost = 0;
+    decimal orderCost = 0;
 }
 
 <h1>My Cart </h1>
 
 
 @{
+    //if the cart is full display message
     if (ViewBag.cartFull == true)
     {
         <h1>Your cart is Full Please Checkout or Remove Items</h1>
     }
-
-
-
-
-
 }
 
 
@@ -42,7 +38,8 @@
     </thead>
     <tbody>
 
-        @foreach (var OrderItem in Model) {
+        @foreach (var OrderItem in Model)
+        {
         <tr>
              <td>
               @OrderItem.Items.Name
@@ -56,18 +53,20 @@
             </td>
                 <td>
                     @{
-                        decimal CostOfItem = OrderItem.Items.Price * OrderItem.Quantity;
-                        OrderCost = OrderCost + CostOfItem;                                              
+                        //calculate the line item price for the order, displays it and also updates the order cost variable with the total order cost.
+                        decimal costOfItem = OrderItem.Items.Price * OrderItem.Quantity;
+                        orderCost = orderCost + costOfItem;                                              
                     }                                      
                     
-                    <h3> $@CostOfItem </h3>
+                    <h3> $@costOfItem </h3>
 
                     @{
+                        //if the order has not yet been paid for give the user the opition to delete it.
                         if (OrderItem.Orders.StatusId == 1)
                         {
                             <form asp-action="Delete" style="margin-top:-13%; margin-left:40%">
 
-                                <input type="hidden" name="ItemId" value="@OrderItem.ItemId"/>
+                                <input type="hidden" name="itemId" value="@OrderItem.ItemId"/>
                                 <input type="submit" value="❌" />
 
                             </form>
@@ -84,36 +83,35 @@
 </table>
 
 
-
-<h3>Order Cost @OrderCost</h3>
+<!--Display the Order Cost-->
+<h3>Order Cost @orderCost</h3>
 
 @{
 
-    var firstOrder = Model.FirstOrDefault();
+    var firstOrderItem = Model.FirstOrDefault();
 
-    if (firstOrder != null){
+    //check if the user as any order by checking if any items exist.
+    if (firstOrderItem != null)
+    {
     
-    
-    if(firstOrder.Orders.StatusId == 1)
-    {
-        <a style="color:teal;" asp-controller="Orders" asp-action="CheckOut" asp-route-id="@ViewBag.OrderId">CheckOut</a>
-    }
-    else
-    {
-        <h2>
-            Thank You for Your Order
-        </h2>
-    }
+    //if an order exists, that has more then one item and the status id equals one display the check out button.
+        if(firstOrderItem.Orders.StatusId == 1)
+        {
+        <a style="color:teal;" asp-controller="Orders" asp-action="CheckOut" asp-route-id="@ViewBag.orderId">CheckOut</a>
+        }
+        else//if user order status dosent equal one display thank you for order message
+        {
+        <h3>
+            Thank You for Your Order, it is now @firstOrderItem.Orders.Status.Name
+        </h3>
+        }
 
     }
-
-    if (ViewBag.MaxQuantity == true)
+    else // if user has no items in thier order.
     {
-        <script>
-            alert("The max you can order of that items is 8");
-
-        </script>
+        <h3>You have no items in your order</h3>
     }
+
 
 
 }

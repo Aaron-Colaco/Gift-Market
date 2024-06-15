@@ -148,7 +148,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             }
         }
 
-        public async Task<IActionResult> Index(string id, bool CartFull = false)
+        public async Task<IActionResult> Index(string id, bool cartFull = false)
         {
 
             //Find order where the order id == the id passed into the method.
@@ -163,12 +163,12 @@ namespace AaronColacoAsp.NETProject.Controllers
             }
              
             //Store the cart full parameter in the view bag as well as the order status.
-            ViewBag.CartFull = CartFull;
+            ViewBag.CartFull = cartFull;
             ViewBag.StatusId = order.StatusId;
             ViewBag.TotalRrice = order.TotalPrice;
 
             //retrieves all OrderItems related to the order from the database, including their items and returns it to the index view
-            var OrderItem = await _context.OrderItem.Where(a => a.OrderId == order.OrderId).Include(a => a.Items).ToListAsync();
+            var OrderItem = await _context.OrderItem.Where(a => a.OrderId == order.OrderId).Include(a => a.Items).Include(a=> a.Orders).ThenInclude(a => a.Status).ToListAsync();
             return View(OrderItem);
         }
 
@@ -265,11 +265,11 @@ namespace AaronColacoAsp.NETProject.Controllers
       public async Task<IActionResult> Cancel()
         {
             //Calls the checkUserOrders method and finds the user's order whith the string order id the method returns.
-            string OrderId = await CheckUserOrders();
-            var UserOrder = _context.Order.Where(a => a.OrderId == OrderId).First();
+            string orderId = await CheckUserOrders();
+            var userOrder = _context.Order.Where(a => a.OrderId == orderId).First();
 
             //Remove the User's Order from the database and ave changes
-             _context.Remove(UserOrder);
+             _context.Remove(userOrder);
             await  _context.SaveChangesAsync();
             //Return action to the Order Controller index method.
             return RedirectToAction("Index", "Home");
@@ -300,7 +300,7 @@ namespace AaronColacoAsp.NETProject.Controllers
             // Add each ordered item to the session line items for the stripe API.
             foreach (var item in itemsInOrder)
             {
-                var OrderedItem = new SessionLineItemOptions()
+                var orderedItem = new SessionLineItemOptions()
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
@@ -313,7 +313,7 @@ namespace AaronColacoAsp.NETProject.Controllers
                     },
                     Quantity = item.Quantity //pases the quantity
                 };
-                Options.LineItems.Add(OrderedItem);
+                Options.LineItems.Add(orderedItem);
 
             }
 
@@ -327,12 +327,12 @@ namespace AaronColacoAsp.NETProject.Controllers
         }
 
 
-        public async Task<IActionResult> Delete(int ItemId)
+        public async Task<IActionResult> Delete(int itemId)
         {
             //Gets the orderItems of the users order from the return method
             var OrderItems = await GetOrder();
             //Finds the item to remove in the user order, bassed on the item passed into the method.
-            var OrderItemToRemove = OrderItems.Where(a => a.ItemId == ItemId).FirstOrDefault();
+            var OrderItemToRemove = OrderItems.Where(a => a.ItemId == itemId).FirstOrDefault();
             //removes item from order and save changes to database,
             _context.OrderItem.Remove(OrderItemToRemove);
             _context.SaveChanges();

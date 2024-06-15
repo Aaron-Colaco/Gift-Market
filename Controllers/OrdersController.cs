@@ -109,8 +109,7 @@ namespace AaronColacoAsp.NETProject.Controllers
 
 
 
-        //returns the check out form view
-        public IActionResult CheckOut(string id)
+        public IActionResult CheckOut()
         {
             return View();
         }

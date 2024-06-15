@@ -4,8 +4,9 @@
     ViewData["Title"] = "Index";
 }
 @{
-    if (ViewBag.displayPopUp == true)//display the following html content if the viewbag display PopUp equals ture
-    {
+    //display the following html content if the viewbag display PopUp equals ture
+    if (ViewBag.displayPopUp == true){
+    
 
         <div class="centeredPopUP">
             <h1>Your Item as been added to cart</h1>
@@ -70,15 +71,16 @@
     if (ViewBag.MaxQuantiy == true)
     {
         <h1>Your Cart Is Full</h1>
+        <style>
+            .AddToCart {
+                display: none;
+            }
+        </style>
     }
-    <style>
-        .AddToCart, {
-            display: none;
-        }
-    </style>
+   
 }
 
-}
+
 
 <div class="ItemsPage">
     <h1>Shop & <br />Gift</></h1>

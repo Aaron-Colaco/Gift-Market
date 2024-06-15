@@ -16,7 +16,7 @@ namespace AaronColacoAsp.NETProject.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string OrderItemId { get; set; }
 
-        [Range(0,10),Required]        
+             
         public int Quantity { get; set; } = 1;
 
         [ForeignKey("Order")]
