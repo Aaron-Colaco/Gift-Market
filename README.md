@@ -35,7 +35,7 @@ I invested a considerable amount of time and effort into my first ASP.NET MVC pr
 
 <img width="112" alt="image" src="https://github.com/Aaron-Colaco/AaronColacoAsp.NETProject/assets/124656145/be5ee00f-ce6d-4c01-9d42-bedb96812d26">
 
-<h3>Sets To Run</h3>
+<h3>To Run</h3>
 <p>
 To run the project, preferably using Visual Studio, and to execute the database update command, follow these steps. Please note that the local host version does not work on macOS. You must download SQL Server and modify the connection string.
 </p>
