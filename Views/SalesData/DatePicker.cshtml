@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "DatePicker";
    
+    //calculates the max and min dates for the form, to be the current date as the max and the min as one year prior to today.
     DateTime min = DateTime.Today.AddMonths((-12));
-
-    DateTime max = DateTime.Today.AddMonths((12));
+    DateTime max = DateTime.Now;
         
 
 }
@@ -17,13 +17,13 @@
 
     <label for="Date1">Date 1</label>
 
-    <input required type="datetime-local" min="@min.ToString("yyyy-MM-dd")T00:00" max="@max.ToString("yyyy-MM-dd")T00:00" id="Date1" name="Date1" placeholder="00/00/0000" />
+    <input required type="datetime-local" min="@min.ToString("yyyy-MM-dd")T00:00" max="@max.ToString("yyyy-MM-dd")T23:59" id="Date1" name="Date1" placeholder="00/00/0000" />
 
 
 
     <label for="Date2">Date 2</label>
 
-    <input required type="datetime-local" min="@min.ToString("yyyy-MM-dd")T00:00" max="@max.ToString("yyyy-MM-dd")T00:00" id="Date2" name="Date2" placeholder="00/00/0000" />
+    <input required type="datetime-local" min="@min.ToString("yyyy-MM-dd")T00:00" max="@max.ToString("yyyy-MM-dd")T23:59" id="Date2" name="Date2" placeholder="00/00/0000" />
 
 
 
