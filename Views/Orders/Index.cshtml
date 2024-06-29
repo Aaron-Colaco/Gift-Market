@@ -17,7 +17,7 @@
         <a asp-asp-controller="Items" asp-action="Index">See Products Here</a>
         </div>
     }
-  
+
     else{
    
 //if user is a admin display the option to serach
@@ -103,12 +103,18 @@
                                 Thank you, Your Order is now @Html.DisplayFor(modelItem => item.Status.Name)
                             </td>
                         }
-                        else
+                        else if (item.StatusId == 1 && !User.IsInRole("Admin"))
                         {
                             <td>  Waiting to be Checked out</td>
                         }
+                        else if (item.StatusId != 1 && User.IsInRole("Admin"))
+                        {
+                            <td>
+                            @item.Status.Name
+                            </td>
+                        }
 
-        <td>
+          <td>
                 @if (User.IsInRole("Admin"))
                 {
                     <td>
@@ -127,29 +133,22 @@
         
                 </td>
             }
-            
-            
-   
-         
-                    @if (item.StatusId != 1)
-                    {
-
+            else {
+                         
                      
                             <td>
                                 <a asp-controller="OrderItems" asp-route-id="@item.OrderId" asp-action="Index">See Items</a>
                                 <a asp-action="Details" asp-route-id="@item.OrderId">Details</a>
                              </td>
-                            }
-                            else
-                            {
+                       }
+                         
                             <td>
                                 <a asp-controller="OrderItems" asp-route-id="@item.OrderId" asp-action="Index">See Items</a>
                             </td>
-                            }
+                     
 
                        
-             
-            </td>
+      
                
         </tr>
 }
