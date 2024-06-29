@@ -17,7 +17,7 @@
         <div id="GiftDetials">
 
 
-
+            <!--Hidden Input pass OrderId to controller-->
             <input name="orderId" value="@ViewBag.OrderId" type="hidden" />
 
 
@@ -25,7 +25,8 @@
 
 
             <label for="BoxColour">Pick Gift Box Colour</label>
-
+        
+            <!--Colour Selector that calls Js Function/method to change colour of svg image-->
             <input name="boxColour" required type="color" id="boxColour" onchange="ChangeBox()" />
 
             <br />
@@ -43,6 +44,7 @@
 
 
 
+            <!--SVG image-->
 
             <svg style="margin-left: 25%;" class="GiftBox" height="40vh" width="50%" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                  viewBox="0 0 512 512" xml:space="preserve"> 
@@ -60,7 +62,7 @@
             <label for="GiftMessage">Add a card with a personalized message to your gift</label>
 
             <br /> <br />
-
+            <!--Text Area for gift message -->
 <textarea name="GiftMessage" maxlength="100" style="height: 30vh; width:90%;"></textarea>
 
 
@@ -72,7 +74,7 @@
             <h3>Please Enter Recipeint Details</h3>
 
         <label for="recipientPhone">Enter Recipients Phone Number</label>
-
+        <!--Same as above phone number vailidation using regx-->
             <input type="text" name="recipientPhone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" title="eg 0226565505 " required />
 
             <br>
@@ -103,6 +105,7 @@
 
         <label for="PhoneNumber">Enter Your Phone Number</label>
 
+    <!--     // Phone number feild, validated with a regular expression   -->
         <input type="text" name="recipientPhone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" title="eg 0226565505 " required />
 
         <br /> <br />
@@ -118,7 +121,7 @@
         <input type="text" id="DeliveryAddress" placeholder="123 Road" name="deliveryAddress" required minlength="8" maxlength="60" title="eg 4a 123 road Avondale" /> <br>
 
         <label for="City">City</label>
-
+        <!--Sets the min and max lenght for the feild aslo sets the feild to required-->
         <input id="City" type="text" name="city" required minlength="2" maxlength="30" value="Auckland" disabled/><br>
 
 
@@ -136,9 +139,40 @@
     </form>
 
 
+</style>
+<script>
+    function ChangeRibbion() {
+        // Select all objects with the class name ribbon
+        let ribbon = document.querySelectorAll(".ribbon");
+        // Get the value of the ribbonColour input
+        let ribbonColour = document.querySelector("#ribbonColour");
+
+        // Loop through each ribbon object
+        for (var i = 0; i < ribbon.length; i++) {
+            // change the fill color of each of the ribbon objects
+            ribbon[i].style.fill = ribbonColour.value;
+        }
+    }
+
+    function ChangeBox() {
+        // Select all objects with the class name giftBox
+        let giftBox = document.querySelectorAll(".giftBox");
+        // Get the value of the "boxColour" input
+        let giftBoxColour = document.querySelector("#boxColour");
+
+        // Loop through each gift box element
+        for (var i = 0; i < giftBox.length; i++) {
+            // Update the fill color of the gift box
+            giftBox[i].style.fill = giftBoxColour.value;
+        }
+
+    }
 
 
+</script>
 
+
+    <<!--CSS CODE-->
     <style>
 
     .CheckoutForm {
@@ -226,35 +260,3 @@
     }
 
 
-
-</style>
-    <script >
-    function ChangeRibbion() {
-        // Select all objects with the class name ribbon
-        let ribbon = document.querySelectorAll(".ribbon");
-        // Get the value of the ribbonColour input
-        let ribbonColour = document.querySelector("#ribbonColour");
-
-        // Loop through each ribbon object
-        for (var i = 0; i < ribbon.length; i++) {
-         // change the fill color of each of the ribbon objects
-            ribbon[i].style.fill = ribbonColour.value;
-        }
-    }
-
-    function ChangeBox() {
-        // Select all objects with the class name giftBox
-        let giftBox = document.querySelectorAll(".giftBox");
-        // Get the value of the "boxColour" input
-        let giftBoxColour = document.querySelector("#boxColour");
-
-        // Loop through each gift box element
-        for (var i = 0; i < giftBox.length; i++) {
-            // Update the fill color of the gift box
-            giftBox[i].style.fill = giftBoxColour.value;
-        }
-       
-    }
-
-    
-    </script >

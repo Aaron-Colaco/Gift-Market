@@ -28,7 +28,7 @@
 
 
         <h3 style="color: teal">Search Customer by name or emai</h3>
-        <input name="CustomerName" type="text" placeholder="Search Customer by name or email" />
+        <input maxlength="50" name="CustomerName" type="text" placeholder="Search Customer by name or email" />
 
         <input type="submit" class="btn btn-primary" />
     </form>
@@ -37,21 +37,24 @@
        <form asp-controller="Orders" asp-action="FilterOrdersByDate">
 
         <h3 style="color: teal">Select Two Dates To See Orders In That Range</h3>
-        @{
-           //calculates the max and min dates for the form, to be the current date as the max and the min as one year prior to today. 
-             DateTime min = DateTime.Today.AddMonths((-12));
+                @{
+                    // Calculates the minimum date for the form to be one year prior to today
+                    DateTime min = DateTime.Today.AddMonths(-12);
 
-             DateTime max = DateTime.Today.AddMonths((12));
-        } 
+                    // Sets the maximum date for the form to be the current date and time
+                    DateTime max = DateTime.Now;
+                } 
 
 
         <label for="Date 1">Date 1 </label>
-                <!-- The input field for Date 1 -->
-                <input required type="datetime-local" name="Date1" min="@min.ToString("yyyy-MM-dd")T00:00" max="@max.ToString("yyyy-MM-dd")T00:00" placeholder="00/00/000" />
+                <!-- Date input field with required attribute, min and max dates calculated above, and placeholder -->
+                <input required type="datetime-local" min="@min.ToString("yyyy-MM-dd")T00:00" max="@max.ToString("yyyy-MM-ddTHH:mm")" id="Date1" name="Date1" placeholder="00/00/0000" />
 
-        <label for="date">Date 2 </label>
-                <!-- The input field for Date 2 -->
-                <input required type="datetime-local" name="Date2" min="@min.ToString("yyyy-MM-dd")T00:00" max="@max.ToString("yyyy-MM-dd")T00:00"  placeholder="00/00/000" />
+
+
+                <label for="Date2">Date 2</label>
+                <!-- Date input field with required attribute, min and max dates calculated above, and placeholder -->
+                <input required type="datetime-local" min="@min.ToString("yyyy-MM-dd")T00:00" max="@max.ToString("yyyy-MM-ddTHH:mm")" id="Date2" name="Date2" placeholder="00/00/0000" />
 
 
         <input type="submit" />

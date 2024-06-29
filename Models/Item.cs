@@ -7,31 +7,34 @@ namespace AaronColacoAsp.NETProject.Models
         public class Item
         {
            [Key]
-            public int ItemId { get; set; }
-            
+        //Sets the feild as the primary key feild (unique identifer).
+        public int ItemId { get; set; }
+
+            //Sets the name feild for the item as required and also sets the max length.
             [Required, MaxLength (50)]
             public string Name { get; set; }
 
-
+           //Sets the range to (1 to 500) and also sets the data type of the price feild to currency
             [Required,DataType(DataType.Currency),Range(1,500)]
             public decimal Price { get; set; }
 
-
-            [Required,DataType(DataType.Currency),Range(1,500)]
+        //Sets the range to (1 to 500) and also sets the data type of the price feild to currency
+        [Required,DataType(DataType.Currency),Range(1,500)]
             public decimal CostToProduce { get; set; }
-
-            [MaxLength(1000)]
+        //Sets the max lenght to 100 characters for this feild.
+        [MaxLength(1000)]
             public string ImageURL { get; set; }
            
             [MaxLength(100)]
             public string Description { get; set; }
 
-            [ForeignKey("Category"),Required]
+
+           //Refers the foreign key in the category table to set up the one to many realastionship.
+           [ForeignKey("Category"),Required]
             public int CategoryId { get; set; }
             public Category Categorys { get; set; }
 
-            [Range(1,100)]
-            public int stockLevel { get; set; } = 0;
+        
 
 
 

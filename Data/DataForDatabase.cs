@@ -27,7 +27,7 @@ namespace AaronColacoAsp.NETProject.Data
                 //check if any items already exist
 
 
-                if (Context.Category.Any() || Context.Item.Any() || Context.Status.Any() || Context.Order.Any() || Context.OrderItem.Any() || Context.Gift.Any() || Context.GiftRecipient.Any() || Context.OrderNote.Any() )
+                if (Context.Category.Any() || Context.Item.Any() || Context.Status.Any() || Context.Order.Any() || Context.OrderItem.Any() || Context.Gift.Any() || Context.GiftRecipient.Any())
                 {
                     return;
                 }

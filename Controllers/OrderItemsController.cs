@@ -99,6 +99,10 @@ namespace AaronColacoAsp.NETProject.Controllers
 
            //Find the Order where the OrderId is equal to the orderId string.
             var Order = _context.Order.Where(a => a.OrderId == orderId).First();
+
+            // Call the Items In order method again to update the var itemsInOrder
+            itemsInOrder = await GetOrder();
+
             //Set the total Price of the order to the sum of the( items Price * Items Quantity) in the var itemsInOrder.
             Order.TotalPrice = itemsInOrder.Sum(a => a.Items.Price * a.Quantity);
 
@@ -189,35 +193,54 @@ namespace AaronColacoAsp.NETProject.Controllers
             orderToProcess.DeliveryAddress = deliveryAddress;
             orderToProcess.City = city;
             orderToProcess.PostalCode = postalCode;
-            
-            //Create a new gift using the infromation in the realted parameters passed in.
-            var Gift = new Gift
-            {
-                GiftId = orderId,
-                OrderId = orderId,
-                BoxColour = boxColour,
-                RibbonColour = ribbionColour,
-                Message = giftMessage
-            };
-            //add the gift to the database and save changes
-            _context.Gift.Add(Gift);
-
-            await _context.SaveChangesAsync();
-
 
             //Create a new gift using the infromation in the realted parameters passed in.
-            var GiftRecipient = new GiftRecipient
-            {
-                RecipientId = orderId,
-                GiftId = Gift.GiftId,
-                Name = recipientName,
-                PhoneNumber = recipientPhone
+            var gift = _context.Gift.Where(a => a.GiftId == orderId).FirstOrDefault();
+            var giftRecipient = _context.GiftRecipient.Where(a => a.RecipientId == orderId).FirstOrDefault();
 
-            };
-            //add the gift Recipent and save changes
-            _context.GiftRecipient.Add(GiftRecipient);
-    
+            //if a gift dose not exist create one
+            if (gift == null)
+            {
+
+
+                var Gift = new Gift
+                {
+                    GiftId = orderId,
+                    OrderId = orderId,
+                    BoxColour = boxColour,
+                    RibbonColour = ribbionColour,
+                    Message = giftMessage
+                };
+                //add the gift to the database and save changes
+                _context.Gift.Add(Gift);
+
+                await _context.SaveChangesAsync();
+
+
+                //Create a new gift using the infromation in the realted parameters passed in.
+                var GiftRecipient = new GiftRecipient
+                {
+                    RecipientId = orderId,
+                    GiftId = Gift.GiftId,
+                    Name = recipientName,
+                    PhoneNumber = recipientPhone
+
+                };
+                //add the gift Recipent and save changes
+                _context.GiftRecipient.Add(GiftRecipient);
+            }
+            //if a gift already has been created update it.
+            else
+            {
+                gift.BoxColour = boxColour;
+                gift.RibbonColour = ribbionColour;
+                gift.Message = giftMessage;
+                giftRecipient.Name = recipientName;
+                giftRecipient.PhoneNumber = recipientPhone;
+            }
+            //save changes in database
             await _context.SaveChangesAsync();
+
 
             //Redirect to the Pyament Method passing in the order Id
             return RedirectToAction("Payment", new { OrderId = orderId });
