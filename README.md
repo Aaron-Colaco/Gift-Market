@@ -37,5 +37,5 @@ I invested a considerable amount of time and effort into my first ASP.NET MVC pr
 
 <h3>To Run</h3>
 <p>
-To run the project, preferably using Visual Studio, and to execute the database update command, follow these steps. Please note that the local host version does not work on macOS. You must download SQL Server and modify the connection string.
+To run the project, open the soultion in Visual Studio. Navigate to the Package Manager Console **Tools > NuGet Package Manager > Package Manager Console** and execute the update-database command to apply migrations and seed data. Please note that the local host version of the project is not compatible with MacOS. MacOS users must download SQL Server and adjust the connection string accordingly.
 </p>
