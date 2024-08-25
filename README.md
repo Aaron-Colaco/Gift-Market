@@ -5,7 +5,6 @@
 <p>Developed using C#, ASP.NET MVC .NET 8, using Entity Framework Core(ORM), as well as LINQ, SQL, JavaScript, HTML, CSS, and Bootstrap.</p>
 I invested a considerable amount of time and effort into my first ASP.NET MVC project. I successfully familiarized myself with the MVC architecture and the ASP.NET Core framework, as well as the LINQ language. I also enhanced my skills in JavaScript, HTML, and CSS. Developing this project significantly expanded my knowledge in object-oriented programming, database concepts, and program logic. I am particularly proud of implementing a fully functional payment system and robust add-to-cart feature.</p>
 
-<img width="400" alt="image" src="https://github.com/Aaron-Colaco/AaronColacoAsp.NETProject/assets/124656145/eafa95f8-bb6b-4454-9e0a-698fc68c2d5d">
 
 
 <h3>Items Page</h3>
